@@ -116,18 +116,22 @@ namespace TIMEFRAME_windows.SERVICES
         {
             try
             {
-                Logger.Write("--- ADDING NEW PROJECT ---");
+                Logger.Write("--- ADDING NEW PROJECT (BackendService - AddProject) ---");
 
                 HttpResponseMessage response = await client.PostAsJsonAsync("api/projects", project);
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString() + Environment.NewLine + response.ReasonPhrase, "Adding new Project in database");
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString() + Environment.NewLine +
+                        Environment.NewLine +
+                        "Content        : " + response.Content + Environment.NewLine +
+                        "RequestMessage : " + response.RequestMessage + Environment.NewLine + 
+                        "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Project in database");
                 }
             }
             catch (Exception e)
             {
-                Logger.Write("!ERROR occurred while adding new project : " + Environment.NewLine +
+                Logger.Write("!ERROR occurred while adding new project (BackendService - AddProject) : " + Environment.NewLine +
                     e.ToString());
             }
         }

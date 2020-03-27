@@ -226,7 +226,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int selProjectID
         {
             get { return _selProjectID; }
-            set { if (value != _selProjectID) { _selProjectID = value; RaisePropertyChangedEvent("selProjectID"); selProject = availProjects[selProjectID]; } }
+            set { if (value != _selProjectID) { _selProjectID = value; RaisePropertyChangedEvent("selProjectID"); 
+                    if(selProjectID >0)
+                    {
+                        selProject = availProjects[selProjectID];
+                    }
+                    else
+                    {
+                        selProject = null;
+                    } } }
         }
         public Project selProject
         {
@@ -876,8 +884,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Project
                 Project newProject = new Project()
                 {
-                    CustomerId = project_addedit_selCustID,
-                    Customer = project_addedit_selCust,
+                    CustomerId = project_addedit_selCust.Id,
+                    //Customer = project_addedit_selCust,
                     Name = project_addedit_Name,
                     Description = project_addedit_Description,
                     CreationDate = DateTime.Now,
@@ -886,7 +894,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine + 
                     "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine + 
-                    "Customer      = " + newProject.Customer.Name + Environment.NewLine + 
+                    //"Customer      = " + newProject.Customer.Name + Environment.NewLine + 
                     "Name          = " + newProject.Name + Environment.NewLine + 
                     "Description   = " + newProject.Description + Environment.NewLine + 
                     "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine + 
@@ -897,9 +905,28 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 // Update in current app session
                 newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
+                newProject.Customer = project_addedit_selCust;
                 allProjects.Add(newProject);
 
-                allCustomers.Single(x => x.Id == project_addedit_selCustID).Projects.Add(newProject);
+                if (allCustomers.Single(x => x.Id == newProject.CustomerId) != null)
+                {
+                    if (allCustomers.Single(x => x.Id == newProject.CustomerId).Projects == null)
+                    {
+                        allCustomers.Single(x => x.Id == newProject.CustomerId).Projects = new Collection<Project>
+                        {
+                            newProject
+                        };
+                    }
+                    else
+                    {
+                        allCustomers.Single(x => x.Id == newProject.CustomerId).Projects.Add(newProject);
+                    }
+                }
+                else
+                {
+                    Logger.Write("allCustomers.Single(x => x.Id == newProject.CustomerId) returns NULL!");
+                }
+                
 
                 // Update UI
                 project_addedit_selCustID = -1;
@@ -910,7 +937,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
             catch (Exception e)
             {
-                Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
+                Logger.Write("!ERROR occurred while trying to start adding new Project: " + Environment.NewLine +
                     e.ToString());
             }
         }
