@@ -1,0 +1,108 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>TimeFrame__Logo.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="IMAGES\Add_Simple_black.png" />
+    <None Remove="IMAGES\Database_Black.png" />
+    <None Remove="IMAGES\Database_White.png" />
+    <None Remove="IMAGES\EditButton_Black.png" />
+    <None Remove="IMAGES\Erase.png" />
+    <None Remove="IMAGES\Export_black_transp.png" />
+    <None Remove="IMAGES\Folder.png" />
+    <None Remove="IMAGES\Img_Log.png" />
+    <None Remove="IMAGES\Img_OpenFolder.png" />
+    <None Remove="IMAGES\OpenAir_Logo_transp.png" />
+    <None Remove="IMAGES\Open_black.png" />
+    <None Remove="IMAGES\Person_Black.png" />
+    <None Remove="IMAGES\Play.png" />
+    <None Remove="IMAGES\Remove_cross_black.png" />
+    <None Remove="IMAGES\Report.ico" />
+    <None Remove="IMAGES\Report_black_transp.png" />
+    <None Remove="IMAGES\Save.png" />
+    <None Remove="IMAGES\SelectAll_Black.png" />
+    <None Remove="IMAGES\Settings_adj.png" />
+    <None Remove="IMAGES\Settings_black.PNG" />
+    <None Remove="IMAGES\SortArrowDOWN_Black.png" />
+    <None Remove="IMAGES\SortArrowUP_black.png" />
+    <None Remove="IMAGES\Statistics_Black.png" />
+    <None Remove="IMAGES\Statistics_DarkBlue.png" />
+    <None Remove="IMAGES\Statistics_White.png" />
+    <None Remove="IMAGES\Stop.jpg" />
+    <None Remove="IMAGES\Task_Black.png" />
+    <None Remove="IMAGES\Task_White.png" />
+    <None Remove="IMAGES\Team2_Black.png" />
+    <None Remove="IMAGES\TimeFrame__Logo.png" />
+    <None Remove="IMAGES\TimeFrame__TimeEntry.png" />
+    <None Remove="VIEWS\Task2.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="IMAGES\Add_Simple_black.png" />
+    <Resource Include="IMAGES\Database_Black.png" />
+    <Resource Include="IMAGES\Database_White.png" />
+    <Resource Include="IMAGES\EditButton_Black.png" />
+    <Resource Include="IMAGES\Erase.png" />
+    <Resource Include="IMAGES\Export_black_transp.png" />
+    <Resource Include="IMAGES\Folder.png" />
+    <Resource Include="IMAGES\Img_Log.png" />
+    <Resource Include="IMAGES\Img_OpenFolder.png" />
+    <Resource Include="IMAGES\OpenAir_Logo_transp.png" />
+    <Resource Include="IMAGES\Open_black.png" />
+    <Resource Include="IMAGES\Person_Black.png" />
+    <Resource Include="IMAGES\Play.png" />
+    <Resource Include="IMAGES\Remove_cross_black.png" />
+    <Resource Include="IMAGES\Report.ico" />
+    <Resource Include="IMAGES\Report_black_transp.png" />
+    <Resource Include="IMAGES\Save.png" />
+    <Resource Include="IMAGES\SelectAll_Black.png" />
+    <Resource Include="IMAGES\Settings_adj.png" />
+    <Resource Include="IMAGES\Settings_black.PNG" />
+    <Resource Include="IMAGES\SortArrowDOWN_Black.png" />
+    <Resource Include="IMAGES\SortArrowUP_black.png" />
+    <Resource Include="IMAGES\Statistics_Black.png" />
+    <Resource Include="IMAGES\Statistics_DarkBlue.png" />
+    <Resource Include="IMAGES\Statistics_White.png" />
+    <Resource Include="IMAGES\Stop.jpg" />
+    <Resource Include="IMAGES\Task_Black.png" />
+    <Resource Include="IMAGES\Task_White.png" />
+    <Resource Include="IMAGES\Team2_Black.png" />
+    <Resource Include="IMAGES\TimeFrame__Logo.png" />
+    <Resource Include="IMAGES\TimeFrame__TimeEntry.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

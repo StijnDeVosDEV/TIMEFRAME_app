@@ -1,0 +1,319 @@
+﻿<Window x:Name="V_Main1" x:Class="TIMEFRAME_windows.VIEWS.V_Main"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TIMEFRAME_windows.VIEWS"
+        xmlns:VIEWMODELS="clr-namespace:TIMEFRAME_windows.VIEWMODELS"
+        mc:Ignorable="d"
+        Title="TIMEFRAME" Width="800" Height="500">
+    <Window.DataContext>
+        <VIEWMODELS:VM_Main></VIEWMODELS:VM_Main>
+    </Window.DataContext>
+    <Grid x:Name="Grid_Main">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+            <RowDefinition Height="17"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="Grid_Core" Height="150">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel x:Name="StackPanel_Logo_User" VerticalAlignment="Center">
+                <Image x:Name="Img_Logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
+                <Grid x:Name="Grid_User">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="45"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="User:" Height="29" Width="75" VerticalAlignment="Center" VerticalContentAlignment="Top"/>
+                    <Label Content="&lt;username&gt;" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
+                </Grid>
+            </StackPanel>
+            <Grid x:Name="Grid_Record" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="StackPanel_RecordSettings" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <Label Content="Customer" FontSize="9" Padding="5,5,5,1"/>
+                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,0" Text="Customer..." Background="{x:Null}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerID}"/>
+                    <Label Content="Project" FontSize="9" Padding="5,5,5,1"/>
+                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,0" Background="{x:Null}" ItemsSource="{Binding availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectID}"/>
+                    <Label Content="Task" FontSize="9" Padding="5,5,5,1"/>
+                    <ComboBox x:Name="Combo_Task" Background="{x:Null}" ItemsSource="{Binding availTaskEntries}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryID}"/>
+                </StackPanel>
+                <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
+                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand"/>
+                        <Label x:Name="Label_PlayTime" Content="&lt;hh:mm&gt;" HorizontalContentAlignment="Center" Cursor="Hand"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
+                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand"/>
+                        <Label x:Name="Label_StopTime" Content="&lt;hh:mm&gt;" HorizontalContentAlignment="Center" Cursor="Hand"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_TimeEntry" Margin="20,0,0,0" VerticalAlignment="Center">
+                        <StackPanel x:Name="StackPanel_Duration" Orientation="Horizontal">
+                            <Image x:Name="Img_TimeEntryLogo" Height="30" Source="/IMAGES/TimeFrame__TimeEntry.png" Cursor="Hand"/>
+                            <Label x:Name="Label_Duration" Content=".. h  .. m  .. s" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
+                        </StackPanel>
+                        <StackPanel x:Name="StackPanel_Save_Delete" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                            <Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand"/>
+                            <Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Grid x:Name="Grid_ExtraButtons">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image x:Name="Img_Expand2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Width="25" Source="/IMAGES/SortArrowUP_black.png" Cursor="Hand" MouseDown="Img_Expand2_MouseDown"/>
+                    </Grid>
+                </StackPanel>
+                <Border x:Name="Border_Divider" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Left"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_Content" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border x:Name="Border_Top" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top"/>
+            <StackPanel x:Name="StackPanel_ContentButtons" Background="#FF556A80">
+                <Image x:Name="Img_Configuration" Source="/IMAGES/Database_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Configuration_MouseDown" MouseEnter="Img_Configuration_MouseEnter" MouseLeave="Img_Configuration_MouseLeave"/>
+                <Image x:Name="Img_Reports" Source="/IMAGES/Statistics_Black.png" Cursor="Hand" MouseDown="Img_Reports_MouseDown" MouseEnter="Img_Reports_MouseEnter" MouseLeave="Img_Reports_MouseLeave"/>
+                <Image x:Name="Img_Settings" Source="/IMAGES/Settings_black.PNG" Cursor="Hand" MouseDown="Img_Settings_MouseDown" MouseEnter="Img_Settings_MouseEnter" MouseLeave="Img_Settings_MouseLeave"/>
+            </StackPanel>
+            <Border x:Name="Border_PrimaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
+            <Grid x:Name="Grid_Configuration" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="StackPanel_ConfigurationMenus" Margin="10,0,10,0">
+                    <StackPanel x:Name="StackPanel_Config_Customer" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_Customer_MouseEnter" MouseLeave="StackPanel_Config_Customer_MouseLeave" UseLayoutRounding="False" MouseDown="StackPanel_Config_Customer_MouseDown">
+                        <Image x:Name="Img_Config_Customer" Height="25" Source="/IMAGES/Team2_Black.png"/>
+                        <Label x:Name="Label_Config_Customer" Content="Customers" FontWeight="Normal" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_Config_Project" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_Project_MouseEnter" MouseLeave="StackPanel_Config_Project_MouseLeave" MouseDown="StackPanel_Config_Project_MouseDown">
+                        <Image x:Name="Img_Config_Project" Width="25" Source="/IMAGES/Folder.png"/>
+                        <Label x:Name="Label_Config_Project" Content="Projects" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_Config_Task" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_Task_MouseEnter" MouseLeave="StackPanel_Config_Task_MouseLeave" MouseDown="StackPanel_Config_Task_MouseDown">
+                        <Image x:Name="Img_Config_Task" Width="25" Source="/IMAGES/SelectAll_Black.png"/>
+                        <Label Content="Tasks" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_Config_TimeEntry" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_TimeEntry_MouseEnter" MouseLeave="StackPanel_Config_TimeEntry_MouseLeave" MouseDown="StackPanel_Config_TimeEntry_MouseDown">
+                        <Image x:Name="Img_Config_TimeEntry" Width="25" Source="/IMAGES/TimeFrame__TimeEntry.png"/>
+                        <Label x:Name="Label_Config_TimeEntry" Content="Time Entries" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+                <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
+                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Customers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Grid x:Name="Grid_ConfigCustomers_content" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selID}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False"/>
+                        <StackPanel x:Name="StackPanel_Customers_buttons" Grid.Column="1">
+                            <Image x:Name="Img_Customers_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Customers_Add_MouseDown"/>
+                            <Image x:Name="Img_Customers_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Customers_Edit_MouseDown" IsEnabled="{Binding customer_edit_IsEnabled}"/>
+                            <Image x:Name="Img_Customers_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="{Binding customer_delete_IsEnabled}">
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding DeleteCustomer, Mode=Default}"/>
+                                </Image.InputBindings>
+                            </Image>
+                        </StackPanel>
+                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000" Visibility="{Binding customer_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                            <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
+                                <Label Content="Add new Customer" FontWeight="Bold" Foreground="White"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
+                                <Label Content="Surname" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
+                                <Label Content="Email" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
+                                <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigCustomers_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add customer" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddCustomer, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigCustomers_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_AddEdit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid x:Name="Grid_ConfigCustomers_Edit" Background="#BF000000" Visibility="{Binding customer_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                            <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Properties">
+                                <Label Content="Edit Customer" FontWeight="Bold" Foreground="White"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_Edit_Name" Text="{Binding customer_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
+                                <Label Content="Surname" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_Edit_Surname" Text="{Binding customer_edit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
+                                <Label Content="Email" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_Edit_Email" Text="{Binding customer_edit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Email_TextChanged"/>
+                                <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigCustomers_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit customer" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigCustomers_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_Edit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Projects" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Grid x:Name="Grid_ConfigProjects_content" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects}"/>
+                        <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
+                            <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
+                            <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
+                            <Image x:Name="Img_Projects_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="{Binding project_delete_IsEnabled}"/>
+                        </StackPanel>
+                        <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BF000000" Visibility="{Binding project_addedit_Visibility}">
+                            <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
+                                <Label Content="Add new Project" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
+                                <Label Content="Customer" Foreground="White"/>
+                                <ComboBox x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustID}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
+                                <Label Content="Description" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_AddEdit_Description" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_AddEdit_Description_TextChanged" Text="{Binding project_addedit_Description}"/>
+                                <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigProjects_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigProjects_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_AddEdit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BF000000" Visibility="{Binding project_edit_Visibility}" d:IsHidden="True">
+                            <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
+                                <Label Content="Edit Project" FontWeight="Bold" Foreground="White"/>
+                                <Label Content="Customer" Foreground="White"/>
+                                <ComboBox x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
+                                <Label Content="Description" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_Edit_Description" Text="{Binding project_edit_Description}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
+                                <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigProjects_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigProjects_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_Edit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Tasks" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Grid x:Name="Grid_ConfigTasks_content" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="DataGrid_Tasks"/>
+                        <StackPanel x:Name="StackPanel_Tasks_buttons" Grid.Column="1">
+                            <Image x:Name="Img_Tasks_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand"/>
+                            <Image x:Name="Img_Tasks_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
+                            <Image x:Name="Img_Tasks_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1" d:IsHidden="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="0"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Time Entries" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Grid x:Name="Grid_ConfigTimeEntries_content" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid x:Name="DataGrid_TimeEntries"/>
+                        <StackPanel x:Name="StackPanel_TimeEntries_buttons" Grid.Column="1">
+                            <Image x:Name="Img_TimeEntries_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand"/>
+                            <Image x:Name="Img_TimeEntries_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
+                            <Image x:Name="Img_TimeEntries_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid x:Name="Grid_Settings" Grid.Column="1" d:IsHidden="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="StackPanel_Settings_Menu" Margin="10,0,10,0">
+                    <StackPanel x:Name="StackPanel_LogFileButton" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_LogFileButton_MouseEnter" MouseLeave="StackPanel_LogFileButton_MouseLeave" MouseDown="StackPanel_LogFileButton_MouseDown">
+                        <Image x:Name="Img_LogFileButton" Height="20" Source="/IMAGES/Report_black_transp.png"/>
+                        <Label Content="Log file" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+                <Border x:Name="Border_SettingsMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
+                <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1">
+                    <TextBlock x:Name="TextBlock_LogFile" Grid.Column="1" HorizontalAlignment="Stretch" Text="&lt;Log content...&gt;" TextWrapping="Wrap" VerticalAlignment="Stretch" Padding="10,10,10,0" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                </ScrollViewer>
+            </Grid>
+            <Grid x:Name="Grid_Reports" Grid.Column="1" d:IsHidden="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="StackPanel_ReportsMenu" Margin="10,0,10,0">
+                    <StackPanel x:Name="StackPanel_OpenAirButton" Margin="0,10,0,0" Orientation="Horizontal" MouseEnter="StackPanel_OpenAirButton_MouseEnter" MouseLeave="StackPanel_OpenAirButton_MouseLeave" Cursor="Hand">
+                        <Image x:Name="Img_OpenAir" Height="20" Source="/IMAGES/OpenAir_Logo_transp.png" Width="Auto"/>
+                        <Label Content="OpenAir" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_TotalsButton" Orientation="Horizontal" Cursor="Hand" Margin="0,10,0,0" MouseEnter="StackPanel_TotalsButton_MouseEnter" MouseLeave="StackPanel_TotalsButton_MouseLeave">
+                        <Image x:Name="Img_Totals" Height="30" Source="/IMAGES/Task_Black.png" Width="Auto"/>
+                        <Label Content="Totals" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+                <Border BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
+            <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
+        </Grid>
+        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility}">
+            <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
+                <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>
