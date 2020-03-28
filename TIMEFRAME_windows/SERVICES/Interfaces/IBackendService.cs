@@ -27,6 +27,10 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
 
         // GET all Projects
         public Task<List<Project>> GetProjects();
+
+        public Task EditProject(Project project);
+
+        public Task DeleteProject(int projectID);
         #endregion
 
         #region TASK ENTRIES

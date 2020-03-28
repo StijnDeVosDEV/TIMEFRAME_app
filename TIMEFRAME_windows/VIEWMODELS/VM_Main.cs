@@ -156,6 +156,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             project_addedit_selCustindex = -1;
             project_edit_selCustindex = -1;
+            project_addedit_Visibility = Visibility.Hidden;
+            project_edit_Visibility = Visibility.Hidden;
+            
 
             // Initializations
             InitializeData();
@@ -940,7 +943,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
             catch (Exception e)
             {
-                Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
+                Logger.Write("!ERROR occurred while trying to start editing existing customer: " + Environment.NewLine +
                     e.ToString());
             }
         }
@@ -962,7 +965,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
             catch (Exception e)
             {
-                Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
+                Logger.Write("!ERROR occurred while trying to start deleting existing customer: " + Environment.NewLine +
                     e.ToString());
             }
         }
@@ -995,28 +998,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 // Update in current app session
                 newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
-                //newProject.Customer = project_addedit_selCust;
                 allProjects.Add(newProject);
-
-                //if (allCustomers.Single(x => x.Id == newProject.Customer.Id) != null)
-                //{
-                //    if (allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects == null)
-                //    {
-                //        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects = new Collection<Project>
-                //        {
-                //            newProject
-                //        };
-                //    }
-                //    else
-                //    {
-                //        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects.Add(newProject);
-                //    }
-                //}
-                //else
-                //{
-                //    Logger.Write("allCustomers.Single(x => x.Id == newProject.CustomerId) returns NULL!");
-                //}
-                
 
                 // Update UI
                 project_addedit_selCustindex = -1;
@@ -1032,9 +1014,35 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        private void Perform_EditProject()
+        private async void Perform_EditProject()
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Get modified Project
+                Project modProject = config_project_selProject;
+
+                modProject.Name = project_edit_Name;
+                modProject.Description = project_edit_Description;
+                modProject.CustomerId = project_edit_selCust.Id;
+
+                // Update in database
+                await myBackendService.EditProject(modProject);
+
+                // Update in current app session
+                allProjects[allProjects.IndexOf(allProjects.Single(x => x.Id == config_project_selProject.Id))] = modProject;
+
+
+                // Update UI
+                project_edit_Visibility = Visibility.Hidden;
+                UpdateConfigurationComponent();
+
+                Logger.Write("Perform_EditProject -  Project edited");
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start editing existing project: " + Environment.NewLine +
+                    e.ToString());
+            }
         }
 
         private void Perform_DeleteProject()

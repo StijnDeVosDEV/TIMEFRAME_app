@@ -165,6 +165,34 @@ namespace TIMEFRAME_windows.SERVICES
                 return allProjects;
             }
         }
+
+        // PUT Project
+        public async Task EditProject(Project project)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync("api/projects/" + project.Id.ToString(), project);
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while modifying project : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        // DELETE Project
+        public async Task DeleteProject(int projectID)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync("api/projects/" + projectID.ToString());
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while deleting project : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
         #endregion
 
         #region TASK ENTRIES

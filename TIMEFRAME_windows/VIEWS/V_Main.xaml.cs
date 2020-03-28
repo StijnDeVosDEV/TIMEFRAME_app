@@ -398,6 +398,22 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Update_CustomerConfig_EditButton();
         }
+
+
+        private void Combo_Project_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_ProjectConfig_EditButton();
+        }
+
+        private void TB_Project_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_ProjectConfig_EditButton();
+        }
+
+        private void TB_Project_Edit_Description_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_ProjectConfig_EditButton();
+        }
         #endregion
 
 
