@@ -244,8 +244,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         }
         #endregion
 
-
-
         #region RECORD Component
         public ObservableCollection<Project> availProjects
         {
@@ -830,10 +828,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     case dataCategory.Project:
                         project_edit_Name = config_project_selProject.Name;
                         project_edit_Description = config_project_selProject.Description;
-                        //project_edit_selCustindex = allCustomers.IndexOf(allCustomers.Single(x => x.Id == config_project_selProject.Id));
-                        if (config_project_selProject.Customer != null)
+                        //project_edit_selCustindex = allCustomers.IndexOf(allCustomers.Single(x => x.Id == config_project_selProject.CustomerId));
+                        if (config_project_selProject.CustomerId > -1)
                         {
-                            project_edit_selCustindex = config_project_selProject.Customer.Id;
+                            project_edit_selCustindex = allCustomers.IndexOf(allCustomers.Single(x => x.Id == config_project_selProject.CustomerId));
                         }
                         else
                         {
