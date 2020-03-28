@@ -166,5 +166,115 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
         #endregion
+
+        #region TASK ENTRIES
+        public async Task AddTaskEntry(TaskEntry taskEntry)
+        {
+            try
+            {
+                Logger.Write("--- ADDING NEW TASK ENTRY (BackendService - AddTaskEntry) ---");
+
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/taskentries", taskEntry);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString() + Environment.NewLine +
+                        Environment.NewLine +
+                        "Content        : " + response.Content + Environment.NewLine +
+                        "RequestMessage : " + response.RequestMessage + Environment.NewLine +
+                        "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Task Entry in database");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while adding new task entry (BackendService - AddTaskEntry) : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        public async Task<List<TaskEntry>> GetTaskEntries()
+        {
+            List<TaskEntry> allTaskEntries = null;
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + @"api/taskentries");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    allTaskEntries = await response.Content.ReadAsAsync<List<TaskEntry>>();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                }
+
+                return allTaskEntries;
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while getting all task entries : " + Environment.NewLine +
+                    e.ToString());
+                System.Windows.MessageBox.Show("Leaving GetTaskEntries() : ERROR: " + Environment.NewLine +
+                    e.ToString());
+                return allTaskEntries;
+            }
+        }
+        #endregion
+
+        #region TIME ENTRIES
+        public async Task AddTimeEntry(TimeEntry timeEntry)
+        {
+            try
+            {
+                Logger.Write("--- ADDING NEW TIME ENTRY (BackendService - AddTimeEntry) ---");
+
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/timeentries", timeEntry);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString() + Environment.NewLine +
+                        Environment.NewLine +
+                        "Content        : " + response.Content + Environment.NewLine +
+                        "RequestMessage : " + response.RequestMessage + Environment.NewLine +
+                        "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Time Entry in database");
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while adding new time entry (BackendService - AddTimeEntry) : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        public async Task<List<TimeEntry>> GetTimeEntries()
+        {
+            List<TimeEntry> allTimeEntries = null;
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + @"api/timeentries");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    allTimeEntries = await response.Content.ReadAsAsync<List<TimeEntry>>();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                }
+
+                return allTimeEntries;
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while getting all time entries : " + Environment.NewLine +
+                    e.ToString());
+                System.Windows.MessageBox.Show("Leaving GetTimeEntries() : ERROR: " + Environment.NewLine +
+                    e.ToString());
+                return allTimeEntries;
+            }
+        }
+        #endregion
     }
 }

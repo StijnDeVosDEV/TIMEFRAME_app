@@ -39,11 +39,11 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="StackPanel_RecordSettings" VerticalAlignment="Center" Margin="20,0,0,0">
                     <Label Content="Customer" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,0" Text="Customer..." Background="{x:Null}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerID}"/>
+                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,0" Text="Customer..." Background="{x:Null}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex}"/>
                     <Label Content="Project" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,0" Background="{x:Null}" ItemsSource="{Binding availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectID}"/>
+                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,0" Background="{x:Null}" ItemsSource="{Binding availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectindex}"/>
                     <Label Content="Task" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Task" Background="{x:Null}" ItemsSource="{Binding availTaskEntries}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryID}"/>
+                    <ComboBox x:Name="Combo_Task" Background="{x:Null}" ItemsSource="{Binding availTaskEntries}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryindex}"/>
                 </StackPanel>
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
@@ -123,7 +123,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selID}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
+                        <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selindex}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding Projects.Name}" Header="Linked Projects"/>
                             </DataGrid.Columns>
@@ -189,7 +189,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects}"/>
+                        <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects}" SelectedIndex="{Binding config_project_selindex}"/>
                         <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
                             <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
                             <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
@@ -199,7 +199,7 @@
                             <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
                                 <Label Content="Add new Project" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
                                 <Label Content="Customer" Foreground="White"/>
-                                <ComboBox x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustID}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged"/>
+                                <ComboBox x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustindex}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged"/>
                                 <Label Content="Name" Foreground="White"/>
                                 <TextBox x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
                                 <Label Content="Description" Foreground="White"/>
@@ -218,7 +218,7 @@
                             <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
                                 <Label Content="Edit Project" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Customer" Foreground="White"/>
-                                <ComboBox x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name"/>
+                                <ComboBox x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding project_edit_selCustindex}"/>
                                 <Label Content="Name" Foreground="White"/>
                                 <TextBox x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
                                 <Label Content="Description" Foreground="White"/>
@@ -313,9 +313,14 @@
         <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
             <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
-        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility}">
+        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility}" d:IsHidden="True">
             <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
                 <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Content="Close" Cursor="Hand" HorizontalContentAlignment="Center" Foreground="White" FontStyle="Italic" FontSize="16">
+                    <Label.InputBindings>
+                        <MouseBinding Gesture="LeftClick" Command="{Binding CloseLoadingScreen, Mode=Default}"/>
+                    </Label.InputBindings>
+                </Label>
             </StackPanel>
         </Grid>
 

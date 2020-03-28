@@ -17,12 +17,19 @@ namespace TIMEFRAME_windows.VIEWMODELS
         //  -----------------------------
         //  Private variable declarations
         //  -----------------------------
-        // UI related
+        // General
+        // -------
         private ObservableCollection<Customer> _allCustomers;
-        private List<Customer> _allcustomers_placeholder;
+        private List<Customer> _allCustomers_fromDB;
 
         private ObservableCollection<Project> _allProjects;
-        private List<Project> _allprojects_placeholder;
+        private List<Project> _allProjects_fromDB;
+
+        private ObservableCollection<TaskEntry> _allTaskEntries;
+        private List<TaskEntry> _allTaskEntries_fromDB;
+
+        private ObservableCollection<TimeEntry> _allTimeEntries;
+        private List<TimeEntry> _allTimeEntries_fromDB;
 
         private string _UInotification;
         private Visibility _LoadingScreen_Visibility;
@@ -34,11 +41,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<Project> _availProjects;
         private ObservableCollection<TaskEntry> _availTaskEntries;
 
-        private int _selCustomerID;
+        private int _selCustomerindex;
         private Customer _selCustomer;
-        private int _selProjectID;
+        private int _selProjectindex;
         private Project _selProject;
-        private int _selTaskEntryID;
+        private int _selTaskEntryindex;
         private TaskEntry _selTaskEntry;
 
         // CONFIG block
@@ -49,7 +56,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<TimeEntry> _db_shownTimeEntries;
 
         // CUSTOMER CONFIG
-        private int _config_customer_selID;
+        private int _config_customer_selindex;
         private Customer _config_customer_selCustomer;
         // Customer: add/edit
         private Visibility _customer_addedit_Visibility;
@@ -68,18 +75,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private bool _customer_delete_IsEnabled;
 
         // PROJECT CONFIG
-        private int _config_project_selID;
+        private int _config_project_selindex;
         private Project _config_project_selProject;
         // Project: add/edit
         private Visibility _project_addedit_Visibility;
-        private int _project_addedit_selCustID;
+        private int _project_addedit_selCustindex;
         private Customer _project_addedit_selCust;
         private string _project_addedit_Name;
         private string _project_addedit_Description;
         // Project: edit
         private bool _project_edit_IsEnabled;
         private Visibility _project_edit_Visibility;
-        private int _project_edit_selCustID;
+        private int _project_edit_selCustindex;
         private Customer _project_edit_selCust;
         private string _project_edit_Name;
         private string _project_edit_Description;
@@ -94,6 +101,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private VIEWMODELS.Base.GEN_RelayCommand _AddProject;
         private VIEWMODELS.Base.GEN_RelayCommand _EditProject;
         private VIEWMODELS.Base.GEN_RelayCommand _DeleteProject;
+
+        private VIEWMODELS.Base.GEN_RelayCommand _CloseLoadingScreen;
 
         // Services
         private IBackendService myBackendService;
@@ -118,9 +127,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
             myBackendService = new BackendService();
 
             allCustomers = new ObservableCollection<Customer>();
-            allcustomers_placeholder = new List<Customer>();
+            allCustomers_fromDB = new List<Customer>();
             allProjects = new ObservableCollection<Project>();
-            allprojects_placeholder = new List<Project>();
+            allProjects_fromDB = new List<Project>();
+            allTaskEntries = new ObservableCollection<TaskEntry>();
+            allTaskEntries_fromDB = new List<TaskEntry>();
+            allTimeEntries = new ObservableCollection<TimeEntry>();
+            allTimeEntries_fromDB = new List<TimeEntry>();
 
             availProjects = new ObservableCollection<Project>();
             availTaskEntries = new ObservableCollection<TaskEntry>();
@@ -129,9 +142,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
             //selProject = new Project();
             //selTaskEntry = new TaskEntry();
 
-            //selCustomerID = -1;
-            //selProjectID = -1;
-            //selTaskEntryID = -1;
+            //selCustomerindex = -1;
+            //selProjectindex = -1;
+            //selTaskEntryindex = -1;
 
             db_shownCustomers = new ObservableCollection<Customer>();
             db_shownProjects = new ObservableCollection<Project>();
@@ -140,6 +153,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
             customer_addedit_Visibility = Visibility.Visible;
             customer_edit_IsEnabled = false;
             customer_edit_Visibility = Visibility.Visible;
+
+            project_addedit_selCustindex = -1;
+            project_edit_selCustindex = -1;
 
             // Initializations
             InitializeData();
@@ -159,6 +175,62 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Public variable declarations
         // ----------------------------
         #region GENERAL
+        public ObservableCollection<Customer> allCustomers
+        {
+            get { return _allCustomers; }
+            set { if (value != _allCustomers) { _allCustomers = value; RaisePropertyChangedEvent("allCustomers"); } }
+        }
+
+        public List<Customer> allCustomers_fromDB
+        {
+            get { return _allCustomers_fromDB; }
+            set { if (value != _allCustomers_fromDB) { _allCustomers_fromDB = value; RaisePropertyChangedEvent("allCustomers_fromDB"); 
+                    ParseCustomerData(); 
+                } }
+        }
+
+        public ObservableCollection<Project> allProjects
+        {
+            get { return _allProjects; }
+            set { if (value != _allProjects) { _allProjects = value; RaisePropertyChangedEvent("allProjects"); } }
+        }
+
+        public List<Project> allProjects_fromDB
+        {
+            get { return _allProjects_fromDB; }
+            set { if (value != _allProjects_fromDB) { _allProjects_fromDB = value; RaisePropertyChangedEvent("allProjects_fromDB"); 
+                    ParseProjectData();
+                } }
+        }
+
+        public ObservableCollection<TaskEntry> allTaskEntries
+        {
+            get { return _allTaskEntries; }
+            set { if (value != _allTaskEntries) { _allTaskEntries = value; RaisePropertyChangedEvent("allTaskEntries"); } }
+        }
+
+        public List<TaskEntry> allTaskEntries_fromDB
+        {
+            get { return _allTaskEntries_fromDB; }
+            set { if (value != _allTaskEntries_fromDB) { _allTaskEntries_fromDB = value; RaisePropertyChangedEvent("allTaskEntries_fromDB");
+                    ParseTaskEntryData();
+                } }
+        }
+
+        public ObservableCollection<TimeEntry> allTimeEntries
+        {
+            get { return _allTimeEntries; }
+            set { if (value != _allTimeEntries) { _allTimeEntries = value; RaisePropertyChangedEvent("allTimeEntries"); } }
+        }
+
+        public List<TimeEntry> allTimeEntries_fromDB
+        {
+            get { return _allTimeEntries_fromDB; }
+            set { if (value != _allTimeEntries_fromDB) { _allTimeEntries_fromDB = value; RaisePropertyChangedEvent("allTimeEntries_fromDB");
+                    ParseTimeEntryData();
+                } }
+        }
+
         public string UInotification
         {
             get { return _UInotification; }
@@ -172,31 +244,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         }
         #endregion
 
+
+
         #region RECORD Component
-        public ObservableCollection<Customer> allCustomers
-        {
-            get { return _allCustomers; }
-            set { if (value != _allCustomers) { _allCustomers = value; RaisePropertyChangedEvent("allCustomers"); } }
-        }
-
-        public List<Customer> allcustomers_placeholder
-        {
-            get { return _allcustomers_placeholder; }
-            set { if(value != _allcustomers_placeholder) { _allcustomers_placeholder = value; RaisePropertyChangedEvent("allcustomers_placeholder"); ParseCustomerData(); } }
-        }
-
-        public ObservableCollection<Project> allProjects
-        {
-            get { return _allProjects; }
-            set { if (value != _allProjects) { _allProjects = value; RaisePropertyChangedEvent("allProjects"); ParseProjectData(); } }
-        }
-
-        public List<Project> allprojects_placeholder
-        {
-            get { return _allprojects_placeholder; }
-            set { if (value != _allprojects_placeholder) { _allprojects_placeholder = value; RaisePropertyChangedEvent("allprojects_placeholder"); ParseProjectData(); } }
-        }
-
         public ObservableCollection<Project> availProjects
         {
             get { return _availProjects; }
@@ -209,11 +259,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if(value!= _availTaskEntries) { _availTaskEntries = value; RaisePropertyChangedEvent("availTaskEntries"); } }
         }
 
-        public int selCustomerID
+        public int selCustomerindex
         {
-            get { return _selCustomerID; }
-            set { if(value!= _selCustomerID) { _selCustomerID = value; RaisePropertyChangedEvent("selCustomerID"); 
-                    if(selCustomerID > 0) { selCustomer = allCustomers[selCustomerID];}
+            get { return _selCustomerindex; }
+            set { if(value!= _selCustomerindex) { _selCustomerindex = value; RaisePropertyChangedEvent("selCustomerindex"); 
+                    if(selCustomerindex > -1) { selCustomer = allCustomers[selCustomerindex];}
                     else { selCustomer = null;}
                 } }
         }
@@ -223,13 +273,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if(value != _selCustomer) { _selCustomer = value; RaisePropertyChangedEvent("selCustomer"); UpdateRecordData(dataCategory.Customer); } }
         }
 
-        public int selProjectID
+        public int selProjectindex
         {
-            get { return _selProjectID; }
-            set { if (value != _selProjectID) { _selProjectID = value; RaisePropertyChangedEvent("selProjectID"); 
-                    if(selProjectID >0)
+            get { return _selProjectindex; }
+            set { if (value != _selProjectindex) { _selProjectindex = value; RaisePropertyChangedEvent("selProjectindex"); 
+                    if(selProjectindex > -1)
                     {
-                        selProject = availProjects[selProjectID];
+                        selProject = availProjects[selProjectindex];
                     }
                     else
                     {
@@ -242,10 +292,16 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if (value != _selProject) { _selProject = value; RaisePropertyChangedEvent("selProject"); UpdateRecordData(dataCategory.Project); } }
         }
 
-        public int selTaskEntryID
+        public int selTaskEntryindex
         {
-            get { return _selTaskEntryID; }
-            set { if (value != _selTaskEntryID) { _selTaskEntryID = value; RaisePropertyChangedEvent("selTaskEntryID"); selTaskEntry = availTaskEntries[selTaskEntryID]; } }
+            get { return _selTaskEntryindex; }
+            set { if (value != _selTaskEntryindex) { _selTaskEntryindex = value; RaisePropertyChangedEvent("selTaskEntryindex");
+                    if (selTaskEntryindex > -1)
+                    {
+                        selTaskEntry = availTaskEntries[selTaskEntryindex];
+                    }
+                    else { selTaskEntry = null; }
+                     } }
         }
         public TaskEntry selTaskEntry
         {
@@ -285,13 +341,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Configuration:  CUSTOMER
         // ------------------------
         // Configuration:  Customer SELECTION
-        public int config_customer_selID
+        public int config_customer_selindex
         {
-            get { return _config_customer_selID; }
-            set { if (value != _config_customer_selID) { _config_customer_selID = value; RaisePropertyChangedEvent("config_customer_selID");
-                    if (config_customer_selID > 0) 
+            get { return _config_customer_selindex; }
+            set { if (value != _config_customer_selindex) { _config_customer_selindex = value; RaisePropertyChangedEvent("config_customer_selindex");
+                    if (config_customer_selindex > -1) 
                     { 
-                        config_customer_selCustomer = db_shownCustomers[config_customer_selID];
+                        config_customer_selCustomer = db_shownCustomers[config_customer_selindex];
                         customer_edit_IsEnabled = true;
                         Update_EditSelectionData(dataCategory.Customer);
                         customer_delete_IsEnabled = true;
@@ -391,17 +447,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Configuration:  PROJECT
         // -----------------------
         // Configuration:  Project SELECTION
-        public int config_project_selID
+        public int config_project_selindex
         {
-            get { return _config_project_selID; }
+            get { return _config_project_selindex; }
             set
             {
-                if (value != _config_project_selID)
+                if (value != _config_project_selindex)
                 {
-                    _config_project_selID = value; RaisePropertyChangedEvent("config_project_selID");
-                    if (config_project_selID > 0)
+                    _config_project_selindex = value; RaisePropertyChangedEvent("config_project_selindex");
+                    if (config_project_selindex > -1)
                     {
-                        config_project_selProject = db_shownProjects[config_project_selID];
+                        config_project_selProject = db_shownProjects[config_project_selindex];
                         project_edit_IsEnabled = true;
                         Update_EditSelectionData(dataCategory.Project);
                         project_delete_IsEnabled = true;
@@ -431,13 +487,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        public int project_addedit_selCustID
+        public int project_addedit_selCustindex
         {
-            get { return _project_addedit_selCustID; }
-            set { if (value != _project_addedit_selCustID) { _project_addedit_selCustID = value; RaisePropertyChangedEvent("project_addedit_selCustID");
-                    if (project_addedit_selCustID > 0)
+            get { return _project_addedit_selCustindex; }
+            set { if (value != _project_addedit_selCustindex) { _project_addedit_selCustindex = value; RaisePropertyChangedEvent("project_addedit_selCustindex");
+                    if (project_addedit_selCustindex > -1)
                     {
-                        project_addedit_selCust = allCustomers[project_addedit_selCustID];
+                        project_addedit_selCust = allCustomers[project_addedit_selCustindex];
                     }
                     else { project_addedit_selCust = null; }
                 } }
@@ -483,17 +539,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 }
             }
         }
-        public int project_edit_selCustID
+        public int project_edit_selCustindex
         {
-            get { return _project_edit_selCustID; }
+            get { return _project_edit_selCustindex; }
             set
             {
-                if (value != _project_edit_selCustID)
+                if (value != _project_edit_selCustindex)
                 {
-                    _project_edit_selCustID = value; RaisePropertyChangedEvent("project_edit_selCustID");
-                    if (project_edit_selCustID > 0)
+                    _project_edit_selCustindex = value; RaisePropertyChangedEvent("project_edit_selCustindex");
+                    if (project_edit_selCustindex > -1)
                     {
-                        project_edit_selCust = allCustomers[project_edit_selCustID];
+                        project_edit_selCust = allCustomers[project_edit_selCustindex];
                     }
                     else { project_edit_selCust = null; }
                 }
@@ -537,6 +593,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand AddProject { get { return _AddProject; } }
         public ICommand EditProject { get { return _EditProject; } }
         public ICommand DeleteProject { get { return _DeleteProject; } }
+        public ICommand CloseLoadingScreen { get { return _CloseLoadingScreen; } }
         #endregion
 
 
@@ -551,25 +608,31 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private async Task InitializeData()
         {
             // Get all data from database
-            allcustomers_placeholder = await myBackendService.GetCustomers();
-            allprojects_placeholder = await myBackendService.GetProjects();
-            //alltaskentries_placeholder = await myBackendService.GetTaskEntries();
-            //alltimeentries_placeholder = await myBackendService.GetTimeEntries();
-            ParseTaskEntryData(); // DUMMY CALL
-            ParseTimeEntryData(); // DUMMY CALL
+            allCustomers_fromDB = await myBackendService.GetCustomers();
+            allProjects_fromDB = await myBackendService.GetProjects();
+            allTaskEntries_fromDB = await myBackendService.GetTaskEntries();
+            allTimeEntries_fromDB = await myBackendService.GetTimeEntries();
         }
 
         private void ParseCustomerData()
         {
             Logger.Write("PARSING CUSTOMER DATA:");
-            Logger.Write("allcustomers_placeholder.Count = " + allcustomers_placeholder.Count.ToString());
+            Logger.Write("allcustomers_placeholder.Count = " + allCustomers_fromDB.Count.ToString());
 
             allCustomers.Clear();
 
-            foreach (Customer customer in allcustomers_placeholder)
+            if (allCustomers_fromDB != null && allCustomers_fromDB.Count > 0)
             {
-                allCustomers.Add(customer);
-                Logger.Write("- Added:  " + customer.Name.ToUpper());
+                foreach (Customer customer in allCustomers_fromDB)
+                {
+                    allCustomers.Add(customer);
+                    Logger.Write("- Added:  " + customer.Name.ToUpper());
+                }
+            }
+            else
+            {
+                Logger.Write("allCustomers_fromDB = null or does not contain any data!");
+                ShowUINotification("No customers were found in storage!");
             }
 
             db_shownCustomers = allCustomers;
@@ -582,9 +645,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             allProjects.Clear();
 
-            if(allprojects_placeholder != null && allprojects_placeholder.Count > 0)
+            if(allProjects_fromDB != null && allProjects_fromDB.Count > 0)
             {
-                foreach (Project project in allprojects_placeholder)
+                foreach (Project project in allProjects_fromDB)
                 {
                     allProjects.Add(project);
                     Logger.Write("- Added:  " + project.Name.ToUpper());
@@ -592,8 +655,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
             else
             {
-                Logger.Write("allprojects_placeholder = null or does not contain any data!");
-                UInotification = "No projects were found in storage!";
+                Logger.Write("allProjects_fromDB = null or does not contain any data!");
+                ShowUINotification("No projects were found in storage!");
             }
 
             db_shownProjects = allProjects;
@@ -603,46 +666,46 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             Logger.Write("PARSING TASK ENTRY DATA:");
 
-            //allProjects.Clear();
+            allTaskEntries.Clear();
 
-            //if (allprojects_placeholder != null && allprojects_placeholder.Count > 0)
-            //{
-            //    foreach (Project project in allprojects_placeholder)
-            //    {
-            //        allProjects.Add(project);
-            //        Logger.Write("- Added:  " + project.Name.ToUpper());
-            //    }
-            //}
-            //else
-            //{
-            //    Logger.Write("allprojects_placeholder = null or does not contain any data!");
-            //    UInotification = "No projects were found in storage!";
-            //}
+            if (allTaskEntries_fromDB != null && allTaskEntries_fromDB.Count > 0)
+            {
+                foreach (TaskEntry taskEntry in allTaskEntries_fromDB)
+                {
+                    allTaskEntries.Add(taskEntry);
+                    Logger.Write("- Added:  " + taskEntry.Name.ToUpper());
+                }
+            }
+            else
+            {
+                Logger.Write("allTaskEntries_fromDB = null or does not contain any data!");
+                ShowUINotification("No Task Entries were found in storage!");
+            }
 
-            //db_shownProjects = allProjects;
+            db_shownTaskEntries = allTaskEntries;
         }
 
         private void ParseTimeEntryData()
         {
             Logger.Write("PARSING TIME ENTRY DATA:");
 
-            //allProjects.Clear();
+            allTimeEntries.Clear();
 
-            //if (allprojects_placeholder != null && allprojects_placeholder.Count > 0)
-            //{
-            //    foreach (Project project in allprojects_placeholder)
-            //    {
-            //        allProjects.Add(project);
-            //        Logger.Write("- Added:  " + project.Name.ToUpper());
-            //    }
-            //}
-            //else
-            //{
-            //    Logger.Write("allprojects_placeholder = null or does not contain any data!");
-            //    UInotification = "No projects were found in storage!";
-            //}
+            if (allTimeEntries_fromDB != null && allTimeEntries_fromDB.Count > 0)
+            {
+                foreach (TimeEntry timeEntry in allTimeEntries_fromDB)
+                {
+                    allTimeEntries.Add(timeEntry);
+                    Logger.Write("- Added time entry");
+                }
+            }
+            else
+            {
+                Logger.Write("allTimeEntries_fromDB = null or does not contain any data!");
+                ShowUINotification("No Time Entries were found in storage!");
+            }
 
-            //db_shownProjects = allProjects;
+            db_shownTimeEntries = allTimeEntries;
 
 
             ToggleLoadingScreen_Visibility();
@@ -664,9 +727,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 {
                     case dataCategory.Customer:
                         availProjects.Clear();
-                        foreach (Project project in selCustomer.Projects)
+
+                        if (selCustomer.Projects != null && selCustomer.Projects.Count > 0)
                         {
-                            availProjects.Add(project);
+                            foreach (Project project in selCustomer.Projects)
+                            {
+                                availProjects.Add(project);
+                            }
+                        }
+                        else
+                        {
+                            Logger.Write("UPDATE RECORD DATA - CUSTOMER SELECTION - Get Project list of selected customer:  selCustomer.Projects is null or empty");
                         }
 
                         availTaskEntries.Clear();
@@ -675,11 +746,19 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                     case dataCategory.Project:
                         availTaskEntries.Clear();
-                        foreach (TaskEntry taskEntry in selProject.TaskEntries)
-                        {
-                            availTaskEntries.Add(taskEntry);
-                        }
 
+                        if (selProject.TaskEntries != null && selProject.TaskEntries.Count > 0)
+                        {
+                            foreach (TaskEntry taskEntry in selProject.TaskEntries)
+                            {
+                                availTaskEntries.Add(taskEntry);
+                            }
+                        }
+                        else
+                        {
+                            Logger.Write("UPDATE RECORD DATA - PROJECT SELECTION - Get Task Entry list of selected project:  selProject.TaskEntries is null or empty");
+                        }
+                        
                         selTaskEntry = null;
                         break;
 
@@ -703,6 +782,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             db_shownCustomers = allCustomers;
             db_shownProjects = allProjects;
+            db_shownTaskEntries = allTaskEntries;
+            db_shownTimeEntries = allTimeEntries;
         }
 
         private void Update_SecondaryViewVisibilities(dataCategory SecondaryViewShown, bool shouldADDopen)
@@ -737,6 +818,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             LoadingScreen_Visibility = LoadingScreen_Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
         }
 
+        private void ShowUINotification(string message)
+        {
+            UInotification = message;
+        }
+
         private void Update_EditSelectionData(dataCategory targetEditView)
         {
             try
@@ -752,7 +838,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     case dataCategory.Project:
                         project_edit_Name = config_project_selProject.Name;
                         project_edit_Description = config_project_selProject.Description;
-                        project_edit_selCustID = allCustomers.IndexOf(allCustomers.Single(x => x.Id == config_project_selProject.Id));
+                        //project_edit_selCustindex = allCustomers.IndexOf(allCustomers.Single(x => x.Id == config_project_selProject.Id));
+                        project_edit_selCustindex = config_project_selProject.Customer.Id;
 
                         break;
                     case dataCategory.TaskEntry:
@@ -784,6 +871,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _AddProject = new Base.GEN_RelayCommand(param => this.Perform_AddProject());
             _EditProject = new Base.GEN_RelayCommand(param => this.Perform_EditProject());
             _DeleteProject = new Base.GEN_RelayCommand(param => this.Perform_DeleteProject());
+
+            _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perfrom_CloseLoadingScreen());
+        }
+
+        private void Perfrom_CloseLoadingScreen()
+        {
+            ToggleLoadingScreen_Visibility();
         }
 
         private async void Perform_AddCustomer()
@@ -840,7 +934,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.EditCustomer(modCustomer);
 
                 // Update in current app session
-                allCustomers[modCustomer.Id - 1] = modCustomer;
+                allCustomers[allCustomers.IndexOf(allCustomers.Single(x => x.Id == modCustomer.Id))] = modCustomer;
 
 
                 // Update UI
@@ -863,9 +957,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 // Update in current app session
                 
-                allCustomers.Remove(SERVICES.HelperService.ConvertToList(allCustomers).Find(x => x.Id == config_customer_selCustomer.Id));
-                selCustomerID = -1;
-                config_customer_selID = -1;
+                allCustomers.Remove(allCustomers.Single(x => x.Id == config_customer_selCustomer.Id));
+                selCustomerindex = -1;
+                config_customer_selindex = -1;
 
                 // Update UI
                 UpdateConfigurationComponent();
@@ -929,7 +1023,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 
 
                 // Update UI
-                project_addedit_selCustID = -1;
+                project_addedit_selCustindex = -1;
                 project_addedit_Name = "";
                 project_addedit_Description = "";
                 project_addedit_Visibility = Visibility.Hidden;
