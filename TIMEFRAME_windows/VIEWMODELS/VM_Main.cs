@@ -839,7 +839,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         project_edit_Name = config_project_selProject.Name;
                         project_edit_Description = config_project_selProject.Description;
                         //project_edit_selCustindex = allCustomers.IndexOf(allCustomers.Single(x => x.Id == config_project_selProject.Id));
-                        project_edit_selCustindex = config_project_selProject.Customer.Id;
+                        if (config_project_selProject.Customer != null)
+                        {
+                            project_edit_selCustindex = config_project_selProject.Customer.Id;
+                        }
+                        else
+                        {
+                            project_edit_selCustindex = -1;
+                        }
 
                         break;
                     case dataCategory.TaskEntry:
@@ -986,9 +993,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     Status = "Active"
                 };
 
-                Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine + 
-                    "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine + 
-                    //"Customer      = " + newProject.Customer.Name + Environment.NewLine + 
+                Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine +
+                    "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine +
+                    //"Customer      = " + newProject.Customer.Name + Environment.NewLine +
                     "Name          = " + newProject.Name + Environment.NewLine + 
                     "Description   = " + newProject.Description + Environment.NewLine + 
                     "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine + 
@@ -1002,18 +1009,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 newProject.Customer = project_addedit_selCust;
                 allProjects.Add(newProject);
 
-                if (allCustomers.Single(x => x.Id == newProject.CustomerId) != null)
+                if (allCustomers.Single(x => x.Id == newProject.Customer.Id) != null)
                 {
-                    if (allCustomers.Single(x => x.Id == newProject.CustomerId).Projects == null)
+                    if (allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects == null)
                     {
-                        allCustomers.Single(x => x.Id == newProject.CustomerId).Projects = new Collection<Project>
+                        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects = new Collection<Project>
                         {
                             newProject
                         };
                     }
                     else
                     {
-                        allCustomers.Single(x => x.Id == newProject.CustomerId).Projects.Add(newProject);
+                        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects.Add(newProject);
                     }
                 }
                 else
