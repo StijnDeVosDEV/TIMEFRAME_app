@@ -189,7 +189,17 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_project_selindex}"/>
+                        <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_project_selindex}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                                <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                                <DataGridTextColumn Binding="{Binding Customer.Name, Mode=OneWay}" Header="Customer"/>
+                                <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer ID"/>
+                                <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
+                                <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
                             <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
                             <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
@@ -313,7 +323,7 @@
         <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
             <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
-        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility}" d:IsHidden="True">
+        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
             <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
                 <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <Label Content="Close" Cursor="Hand" HorizontalContentAlignment="Center" Foreground="White" FontStyle="Italic" FontSize="16">

@@ -660,7 +660,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 ShowUINotification("No projects were found in storage!");
             }
 
-            db_shownProjects = allProjects;
+            db_shownProjects = PopulateProjectsRelatedCustomerObjects(allProjects);
         }
 
         private void ParseTaskEntryData()
@@ -683,7 +683,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 ShowUINotification("No Task Entries were found in storage!");
             }
 
-            db_shownTaskEntries = allTaskEntries;
+            db_shownTaskEntries = PopulateTaskEntriesRelatedProjectObjects(allTaskEntries);
         }
 
         private void ParseTimeEntryData()
@@ -706,7 +706,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 ShowUINotification("No Time Entries were found in storage!");
             }
 
-            db_shownTimeEntries = allTimeEntries;
+            db_shownTimeEntries = PopulateTimeEntriesRelatedTaskEntryObjects(allTimeEntries);
 
 
             ToggleLoadingScreen_Visibility();
@@ -774,9 +774,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private void UpdateConfigurationComponent()
         {
             db_shownCustomers = allCustomers;
-            db_shownProjects = allProjects;
-            db_shownTaskEntries = allTaskEntries;
-            db_shownTimeEntries = allTimeEntries;
+            db_shownProjects = PopulateProjectsRelatedCustomerObjects(allProjects);
+            db_shownTaskEntries = PopulateTaskEntriesRelatedProjectObjects(allTaskEntries);
+            db_shownTimeEntries = PopulateTimeEntriesRelatedTaskEntryObjects(allTimeEntries);
         }
 
         private void Update_SecondaryViewVisibilities(dataCategory SecondaryViewShown, bool shouldADDopen)
@@ -855,6 +855,69 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 Logger.Write("!ERROR while trying to update record block data: " + Environment.NewLine +
                     e.ToString());
             }
+        }
+
+        private ObservableCollection<MODELS.Project> PopulateProjectsRelatedCustomerObjects(ObservableCollection<MODELS.Project> inpProjects)
+        {
+            ObservableCollection<MODELS.Project> popProjects = new ObservableCollection<MODELS.Project>();
+
+            try
+            {
+                foreach (MODELS.Project project in inpProjects)
+                {
+                    project.Customer = allCustomers.Single(x => x.Id == project.CustomerId);
+                    popProjects.Add(project);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR while trying to PopulateProjectsRelatedCustomerObjects: " + Environment.NewLine +
+                    e.ToString());
+            }
+
+            return popProjects;
+        }
+
+        private ObservableCollection<MODELS.TaskEntry> PopulateTaskEntriesRelatedProjectObjects(ObservableCollection<MODELS.TaskEntry> inpTaskEntries)
+        {
+            ObservableCollection<MODELS.TaskEntry> popTaskEntries = new ObservableCollection<MODELS.TaskEntry>();
+
+            try
+            {
+                foreach (MODELS.TaskEntry taskEntry in inpTaskEntries)
+                {
+                    taskEntry.Project = allProjects.Single(x => x.Id == taskEntry.ProjectId);
+                    popTaskEntries.Add(taskEntry);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR while trying to PopulateTaskEntriesRelatedProjectObjects: " + Environment.NewLine +
+                    e.ToString());
+            }
+
+            return popTaskEntries;
+        }
+
+        private ObservableCollection<TimeEntry> PopulateTimeEntriesRelatedTaskEntryObjects(ObservableCollection<TimeEntry> inpTimeEntries)
+        {
+            ObservableCollection<TimeEntry> popTimeEntries = new ObservableCollection<TimeEntry>();
+
+            try
+            {
+                foreach (TimeEntry timeEntry in inpTimeEntries)
+                {
+                    timeEntry.TaskEntry = allTaskEntries.Single(x => x.Id == timeEntry.TaskEntryId);
+                    popTimeEntries.Add(timeEntry);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR while trying to PopulateTimeEntriesRelatedTaskEntryObjects: " + Environment.NewLine +
+                    e.ToString());
+            }
+
+            return popTimeEntries;
         }
 
         //  ----------------------
