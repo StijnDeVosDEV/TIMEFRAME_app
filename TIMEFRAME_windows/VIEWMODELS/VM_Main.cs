@@ -728,38 +728,30 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     case dataCategory.Customer:
                         availProjects.Clear();
 
-                        if (selCustomer.Projects != null && selCustomer.Projects.Count > 0)
+                        foreach (Project project in allProjects)
                         {
-                            foreach (Project project in selCustomer.Projects)
+                            if (project.CustomerId == selCustomer.Id)
                             {
                                 availProjects.Add(project);
                             }
                         }
-                        else
-                        {
-                            Logger.Write("UPDATE RECORD DATA - CUSTOMER SELECTION - Get Project list of selected customer:  selCustomer.Projects is null or empty");
-                        }
 
                         availTaskEntries.Clear();
-                        selTaskEntry = null;
+                        selTaskEntryindex = -1;
                         break;
 
                     case dataCategory.Project:
                         availTaskEntries.Clear();
 
-                        if (selProject.TaskEntries != null && selProject.TaskEntries.Count > 0)
+                        foreach (TaskEntry taskentry in allTaskEntries)
                         {
-                            foreach (TaskEntry taskEntry in selProject.TaskEntries)
+                            if (taskentry.ProjectId == selProject.Id)
                             {
-                                availTaskEntries.Add(taskEntry);
+                                availTaskEntries.Add(taskentry);
                             }
                         }
-                        else
-                        {
-                            Logger.Write("UPDATE RECORD DATA - PROJECT SELECTION - Get Task Entry list of selected project:  selProject.TaskEntries is null or empty");
-                        }
-                        
-                        selTaskEntry = null;
+
+                        selTaskEntryindex = -1;
                         break;
 
                     case dataCategory.TaskEntry:
@@ -963,7 +955,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.DeleteCustomer(config_customer_selCustomer.Id);
 
                 // Update in current app session
-                
                 allCustomers.Remove(allCustomers.Single(x => x.Id == config_customer_selCustomer.Id));
                 selCustomerindex = -1;
                 config_customer_selindex = -1;
@@ -1006,27 +997,27 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 // Update in current app session
                 newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
-                newProject.Customer = project_addedit_selCust;
+                //newProject.Customer = project_addedit_selCust;
                 allProjects.Add(newProject);
 
-                if (allCustomers.Single(x => x.Id == newProject.Customer.Id) != null)
-                {
-                    if (allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects == null)
-                    {
-                        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects = new Collection<Project>
-                        {
-                            newProject
-                        };
-                    }
-                    else
-                    {
-                        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects.Add(newProject);
-                    }
-                }
-                else
-                {
-                    Logger.Write("allCustomers.Single(x => x.Id == newProject.CustomerId) returns NULL!");
-                }
+                //if (allCustomers.Single(x => x.Id == newProject.Customer.Id) != null)
+                //{
+                //    if (allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects == null)
+                //    {
+                //        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects = new Collection<Project>
+                //        {
+                //            newProject
+                //        };
+                //    }
+                //    else
+                //    {
+                //        allCustomers.Single(x => x.Id == newProject.Customer.Id).Projects.Add(newProject);
+                //    }
+                //}
+                //else
+                //{
+                //    Logger.Write("allCustomers.Single(x => x.Id == newProject.CustomerId) returns NULL!");
+                //}
                 
 
                 // Update UI
