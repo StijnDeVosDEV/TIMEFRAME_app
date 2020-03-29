@@ -161,7 +161,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             
 
             // Initializations
-            InitializeData();
+            LoadDatabaseData();
 
             // Load commands
             LoadCommands();
@@ -606,13 +606,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
         //    myBackendService = backendService;
         //}
 
-        private async Task InitializeData()
+        private async Task LoadDatabaseData()
         {
+            LoadingScreen_Visibility = Visibility.Visible;
+
             // Get all data from database
             allCustomers_fromDB = await myBackendService.GetCustomers();
             allProjects_fromDB = await myBackendService.GetProjects();
             allTaskEntries_fromDB = await myBackendService.GetTaskEntries();
             allTimeEntries_fromDB = await myBackendService.GetTimeEntries();
+
+            ToggleLoadingScreen_Visibility();
         }
 
         private void ParseCustomerData()
@@ -709,7 +713,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             db_shownTimeEntries = PopulateTimeEntriesRelatedTaskEntryObjects(allTimeEntries);
 
 
-            ToggleLoadingScreen_Visibility();
+            //ToggleLoadingScreen_Visibility();
         }
 
         private enum dataCategory
