@@ -527,7 +527,7 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Update_TaskEntryConfig_AddButton()
         {
-            if (TB_TaskEntry_AddEdit_Name.Text != "" && TB_TaskEntry_AddEdit_Description.Text != "" && Combo_TaksEntry_AddEdit_AvailProjects.SelectedIndex > -1)
+            if (TB_TaskEntry_AddEdit_Name.Text != "" && TB_TaskEntry_AddEdit_Description.Text != "" && Combo_TaskEntry_AddEdit_AvailProjects.SelectedIndex > -1)
             {
                 Img_ConfigTaskEntries_AddEdit_AddorEdit.IsEnabled = true;
             }
@@ -539,7 +539,10 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Update_TaskEntryConfig_EditButton()
         {
-            if (TB_TaskEntry_Edit_Name.Text != "" && TB_TaskEntry_Edit_Description.Text != "" && Combo_TaskEntry_Edit_AvailProjects.SelectedIndex > -1)
+            if (TB_TaskEntry_Edit_Name.Text != "" && 
+                TB_TaskEntry_Edit_Description.Text != "" && 
+                Combo_TaskEntry_Edit_AvailProjects.SelectedIndex > -1 && 
+                Combo_TaskEntry_Edit_AvailCustomers.SelectedIndex > -1)
             {
                 Img_ConfigTaskEntries_Edit_Edit.IsEnabled = true;
             }
@@ -604,6 +607,26 @@ namespace TIMEFRAME_windows.VIEWS
                 Img_Tasks_Edit.IsEnabled = false;
                 Img_Tasks_Delete.IsEnabled = false;
             }
+        }
+
+        private void Combo_TaksEntry_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
+        }
+
+        private void Combo_TaskEntry_Edit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
+        }
+
+        private void TB_TaskEntry_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
+        }
+
+        private void TB_TaskEntry_Edit_Description_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
         }
     }
 }

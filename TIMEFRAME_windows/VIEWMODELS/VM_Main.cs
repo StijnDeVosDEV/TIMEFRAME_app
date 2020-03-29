@@ -1495,9 +1495,36 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        private void Perform_EditTaskEntry()
+        private async void Perform_EditTaskEntry()
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Get modified Task Entry
+                TaskEntry modTaskEntry = config_taskentry_selTaskEntry;
+
+                modTaskEntry.Name = taskentry_edit_Name;
+                modTaskEntry.Description = taskentry_edit_Description;
+                modTaskEntry.ProjectId = taskentry_edit_selProj.Id;
+                modTaskEntry.Project = null;
+                modTaskEntry.Status = taskentry_edit_Status;
+
+                // Update in database
+                await myBackendService.EditTaskEntry(modTaskEntry);
+
+                // Update in current app session
+                allTaskEntries[allTaskEntries.IndexOf(allTaskEntries.Single(x => x.Id == modTaskEntry.Id))] = modTaskEntry;
+
+                // Update UI
+                taskentry_edit_Visibility = Visibility.Hidden;
+                UpdateConfigurationComponent();
+
+                Logger.Write("Perform_EditTaskEntry -  Task Entry edited");
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start editing existing task entry: " + Environment.NewLine +
+                    e.ToString());
+            }
         }
 
         private void Perform_DeleteTaskEntry()
