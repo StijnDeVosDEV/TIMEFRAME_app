@@ -1159,6 +1159,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                         break;
                     case dataCategory.TaskEntry:
+                        taskentry_edit_Name = config_taskentry_selTaskEntry.Name;
+                        taskentry_edit_Description = config_taskentry_selTaskEntry.Description;
+                        taskentry_edit_selCustindex = allCustomers.IndexOf(allCustomers.Single(y => y.Id == (allProjects.Single(x => x.Id == config_taskentry_selTaskEntry.ProjectId)).CustomerId));
+                        taskentry_edit_selProjindex = taskentry_edit_availProjects.IndexOf(config_taskentry_selTaskEntry.Project);
+                        if (config_taskentry_selTaskEntry.Status == "Active")
+                        {
+                            taskentry_edit_Status_IsActive = true;
+                        }
+                        else
+                        {
+                            taskentry_edit_Status_IsInactive = true;
+                        }
                         break;
                     case dataCategory.TimeEntry:
                         break;
