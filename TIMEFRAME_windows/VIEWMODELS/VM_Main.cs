@@ -190,9 +190,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
             db_shownTimeEntries = new ObservableCollection<TimeEntry>();
 
             config_customer_selindex = -1;
-            customer_addedit_Visibility = Visibility.Visible;
+            customer_addedit_Visibility = Visibility.Hidden;
             customer_edit_IsEnabled = false;
-            customer_edit_Visibility = Visibility.Visible;
+            customer_edit_Visibility = Visibility.Hidden;
 
             config_project_selindex = -1;
             project_addedit_selCustindex = -1;
@@ -208,6 +208,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             taskentry_edit_selCustindex = -1;
             taskentry_edit_selProjindex = -1;
             taskentry_edit_availProjects = new ObservableCollection<Project>();
+            taskentry_addedit_Visibility = Visibility.Hidden;
+            taskentry_edit_Visibility = Visibility.Hidden;
 
 
             // Initializations
@@ -1527,9 +1529,25 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        private void Perform_DeleteTaskEntry()
+        private async void Perform_DeleteTaskEntry()
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Delete in database
+                await myBackendService.DeleteTaskEntry(config_taskentry_selTaskEntry.Id);
+
+                // Delete in current session
+                allTaskEntries.Remove(config_taskentry_selTaskEntry);
+
+                // Update UI
+                config_taskentry_selindex = -1;
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start delete existing task entry: " + Environment.NewLine +
+                    e.ToString());
+            }
         }
 
 

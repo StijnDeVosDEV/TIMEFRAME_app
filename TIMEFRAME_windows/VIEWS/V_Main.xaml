@@ -274,7 +274,11 @@
                         <StackPanel x:Name="StackPanel_Tasks_buttons" Grid.Column="1">
                             <Image x:Name="Img_Tasks_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Tasks_Add_MouseDown"/>
                             <Image x:Name="Img_Tasks_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Tasks_Edit_MouseDown" IsEnabled="False"/>
-                            <Image x:Name="Img_Tasks_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="False"/>
+                            <Image x:Name="Img_Tasks_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="False">
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding DeleteTaskEntry, Mode=Default}"/>
+                                </Image.InputBindings>
+                            </Image>
                         </StackPanel>
                         <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" Background="#BF000000" Margin="0,0,30,0" Grid.ColumnSpan="2" Visibility="{Binding taskentry_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Properties">
