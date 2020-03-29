@@ -35,7 +35,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private Visibility _LoadingScreen_Visibility;
 
 
-        // Record block
+        // RECORD block
+        // ------------
         // ------------
         // Selection drop downs
         private ObservableCollection<Project> _availProjects;
@@ -50,12 +51,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         // CONFIG block
         // --------------
+        // --------------
         private ObservableCollection<Customer> _db_shownCustomers;
         private ObservableCollection<Project> _db_shownProjects;
         private ObservableCollection<TaskEntry> _db_shownTaskEntries;
         private ObservableCollection<TimeEntry> _db_shownTimeEntries;
 
         // CUSTOMER CONFIG
+        // ---------------
+        // Customer: selection
         private int _config_customer_selindex;
         private Customer _config_customer_selCustomer;
         // Customer: add/edit
@@ -75,6 +79,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private bool _customer_delete_IsEnabled;
 
         // PROJECT CONFIG
+        // --------------
+        // Project: selection
         private int _config_project_selindex;
         private Project _config_project_selProject;
         // Project: add/edit
@@ -92,6 +98,39 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private string _project_edit_Description;
         // Project: delete
         private bool _project_delete_IsEnabled;
+
+        // TASK ENTRY CONFIG
+        // -----------------
+        // Task Entry: selection
+        private int _config_taskentry_selindex;
+        private TaskEntry _config_taskentry_selTaskEntry;
+        // Task Entry: add/edit
+        private Visibility _taskentry_addedit_Visibility;
+        private int _taskentry_addedit_selCustindex;
+        private Customer _taskentry_addedit_selCust;
+        private ObservableCollection<Project> _taskentry_addedit_availProjects;
+        private int _taskentry_addedit_selProjindex;
+        private Project _taskentry_addedit_selProj;
+        private string _taskentry_addedit_Name;
+        private string _taskentry_addedit_Description;
+        private string _taskentry_addedit_Status;
+        private bool _taskentry_addedit_Status_IsActive;
+        private bool _taskentry_addedit_Status_IsInactive;
+        // Task Entry: edit
+        //private bool _taskentry_edit_IsEnabled;
+        private Visibility _taskentry_edit_Visibility;
+        private int _taskentry_edit_selCustindex;
+        private Customer _taskentry_edit_selCust;
+        private ObservableCollection<Project> _taskentry_edit_availProjects;
+        private int _taskentry_edit_selProjindex;
+        private Project _taskentry_edit_selProj;
+        private string _taskentry_edit_Name;
+        private string _taskentry_edit_Description;
+        private string _taskentry_edit_Status;
+        private bool _taskentry_edit_Status_IsActive;
+        private bool _taskentry_edit_Status_IsInactive;
+        // Task Entry: delete
+        //private bool _taskentry_delete_IsEnabled;
 
 
         // Commands
@@ -138,18 +177,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
             availProjects = new ObservableCollection<Project>();
             availTaskEntries = new ObservableCollection<TaskEntry>();
 
-            //selCustomer = new Customer();
-            //selProject = new Project();
-            //selTaskEntry = new TaskEntry();
-
-            //selCustomerindex = -1;
-            //selProjectindex = -1;
-            //selTaskEntryindex = -1;
+            selCustomerindex = -1;
+            selProjectindex = -1;
+            selTaskEntryindex = -1;
 
             db_shownCustomers = new ObservableCollection<Customer>();
             db_shownProjects = new ObservableCollection<Project>();
             db_shownTaskEntries = new ObservableCollection<TaskEntry>();
             db_shownTimeEntries = new ObservableCollection<TimeEntry>();
+
             customer_addedit_Visibility = Visibility.Visible;
             customer_edit_IsEnabled = false;
             customer_edit_Visibility = Visibility.Visible;
@@ -158,7 +194,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
             project_edit_selCustindex = -1;
             project_addedit_Visibility = Visibility.Hidden;
             project_edit_Visibility = Visibility.Hidden;
-            
+
+            taskentry_addedit_selCustindex = -1;
+            taskentry_addedit_selProjindex = -1;
+            taskentry_addedit_availProjects = new ObservableCollection<Project>();
+            taskentry_edit_selCustindex = -1;
+            taskentry_edit_selProjindex = -1;
+            taskentry_edit_availProjects = new ObservableCollection<Project>();
+
 
             // Initializations
             LoadDatabaseData();
@@ -581,6 +624,261 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _project_delete_IsEnabled; }
             set { if (value != _project_delete_IsEnabled) { _project_delete_IsEnabled = value; RaisePropertyChangedEvent("project_delete_IsEnabled"); } }
         }
+
+
+
+        // Configuration:  TASK ENTRY
+        // --------------------------
+        // Configuration:  Task Entry SELECTION
+        public int config_taskentry_selindex
+        {
+            get { return _config_taskentry_selindex; }
+            set { if (value != _config_taskentry_selindex) { _config_taskentry_selindex = value; 
+                    RaisePropertyChangedEvent("config_taskentry_selindex");
+                    if (config_taskentry_selindex > -1)
+                    {
+                        config_taskentry_selTaskEntry = db_shownTaskEntries[config_taskentry_selindex];
+                        Update_EditSelectionData(dataCategory.TaskEntry);
+                    }
+                    else { config_taskentry_selTaskEntry = null;}
+                } }
+        }
+
+        public TaskEntry config_taskentry_selTaskEntry
+        {
+            get { return _config_taskentry_selTaskEntry; }
+            set { if (value != _config_taskentry_selTaskEntry) { _config_taskentry_selTaskEntry = value; RaisePropertyChangedEvent("config_taskentry_selTaskEntry"); } }
+        }
+
+
+        // Configuration:  Task Entry ADD
+        public Visibility taskentry_addedit_Visibility
+        {
+            get { return _taskentry_addedit_Visibility; }
+            set { if (value != _taskentry_addedit_Visibility) { _taskentry_addedit_Visibility = value; RaisePropertyChangedEvent("taskentry_addedit_Visibility"); } }
+        }
+
+
+        public int taskentry_addedit_selCustindex
+        {
+            get { return _taskentry_addedit_selCustindex; }
+            set { if (value != _taskentry_addedit_selCustindex) { _taskentry_addedit_selCustindex = value; 
+                    RaisePropertyChangedEvent("taskentry_addedit_selCustindex");
+                    if (taskentry_addedit_selCustindex > -1)
+                    {
+                        // Assign new selected Customer object
+                        taskentry_addedit_selCust = allCustomers[taskentry_addedit_selCustindex];
+
+                        // Re-populate available Projects based on newly selected Customer object
+                        taskentry_addedit_selProjindex = -1;
+
+                        taskentry_addedit_availProjects.Clear();
+                        foreach (Project project in allProjects.Where(x => x.CustomerId == taskentry_addedit_selCust.Id))
+                        {
+                            taskentry_addedit_availProjects.Add(project);
+                        }
+                    }
+                } }
+        }
+
+        public Customer taskentry_addedit_selCust
+        {
+            get { return _taskentry_addedit_selCust; }
+            set { if (value != _taskentry_addedit_selCust) { _taskentry_addedit_selCust = value; RaisePropertyChangedEvent("taskentry_addedit_selCust"); } }
+        }
+
+        public ObservableCollection<Project> taskentry_addedit_availProjects
+        {
+            get { return _taskentry_addedit_availProjects; }
+            set { if (value != _taskentry_addedit_availProjects) { _taskentry_addedit_availProjects = value; RaisePropertyChangedEvent("taskentry_addedit_availProjects"); } }
+        }
+
+        public int taskentry_addedit_selProjindex
+        {
+            get { return _taskentry_addedit_selProjindex; }
+            set { if (value != _taskentry_addedit_selProjindex) { _taskentry_addedit_selProjindex = value; 
+                    RaisePropertyChangedEvent("taskentry_addedit_selProjindex");
+                    if (taskentry_addedit_selProjindex > -1)
+                    {
+                        taskentry_addedit_selProj = taskentry_addedit_availProjects[taskentry_addedit_selProjindex];
+                    }
+                    else { taskentry_addedit_selProj = null; }
+                } }
+        }
+
+        public Project taskentry_addedit_selProj
+        {
+            get { return _taskentry_addedit_selProj; }
+            set { if (value != _taskentry_addedit_selProj) { _taskentry_addedit_selProj = value; RaisePropertyChangedEvent("taskentry_addedit_selProj"); } }
+        }
+
+        public string taskentry_addedit_Name
+        {
+            get { return _taskentry_addedit_Name; }
+            set { if (value != _taskentry_addedit_Name) { _taskentry_addedit_Name = value; RaisePropertyChangedEvent("taskentry_addedit_Name"); } }
+        }
+
+        public string taskentry_addedit_Description
+        {
+            get { return _taskentry_addedit_Description; }
+            set { if (value != _taskentry_addedit_Description) { _taskentry_addedit_Description = value; RaisePropertyChangedEvent("taskentry_addedit_Description"); } }
+        }
+
+        public string taskentry_addedit_Status
+        {
+            get { return _taskentry_addedit_Status; }
+            set { if (value != _taskentry_addedit_Status) { _taskentry_addedit_Status = value; RaisePropertyChangedEvent("taskentry_addedit_Status"); } }
+        }
+
+        public bool taskentry_addedit_Status_IsActive
+        {
+            get { return _taskentry_addedit_Status_IsActive; }
+            set { if (value != _taskentry_addedit_Status_IsActive) { _taskentry_addedit_Status_IsActive = value; 
+                    RaisePropertyChangedEvent("taskentry_addedit_Status_IsActive");
+                    if (taskentry_addedit_Status_IsActive == true)
+                    {
+                        taskentry_addedit_Status_IsInactive = false;
+                        taskentry_addedit_Status = "Active";
+                    }
+                } }
+        }
+
+        public bool taskentry_addedit_Status_IsInactive
+        {
+            get { return _taskentry_addedit_Status_IsInactive; }
+            set { if (value != _taskentry_addedit_Status_IsInactive) { _taskentry_addedit_Status_IsInactive = value; 
+                    RaisePropertyChangedEvent("taskentry_addedit_Status_IsInactive");
+                    if (taskentry_addedit_Status_IsInactive == true)
+                    {
+                        taskentry_addedit_Status_IsActive = false;
+                        taskentry_addedit_Status = "Inactive";
+                    }
+                } }
+        }
+
+        // Configuration:  Task Entry EDIT
+        public Visibility taskentry_edit_Visibility
+        {
+            get { return _taskentry_edit_Visibility; }
+            set { if (value != _taskentry_edit_Visibility) { _taskentry_edit_Visibility = value; RaisePropertyChangedEvent("taskentry_edit_Visibility"); } }
+        }
+
+        public int taskentry_edit_selCustindex
+        {
+            get { return _taskentry_edit_selCustindex; }
+            set
+            {
+                if (value != _taskentry_edit_selCustindex)
+                {
+                    _taskentry_edit_selCustindex = value;
+                    RaisePropertyChangedEvent("taskentry_edit_selCustindex");
+                    if (taskentry_edit_selCustindex > -1)
+                    {
+                        // Assign new selected Customer object
+                        taskentry_edit_selCust = allCustomers[taskentry_edit_selCustindex];
+
+                        // Re-populate available Projects based on newly selected Customer object
+                        taskentry_edit_selProjindex = -1;
+
+                        taskentry_edit_availProjects.Clear();
+                        foreach (Project project in allProjects.Where(x => x.CustomerId == taskentry_edit_selCust.Id))
+                        {
+                            taskentry_edit_availProjects.Add(project);
+                        }
+                    }
+                }
+            }
+        }
+
+        public Customer taskentry_edit_selCust
+        {
+            get { return _taskentry_edit_selCust; }
+            set { if (value != _taskentry_edit_selCust) { _taskentry_edit_selCust = value; RaisePropertyChangedEvent("taskentry_edit_selCust"); } }
+        }
+
+        public ObservableCollection<Project> taskentry_edit_availProjects
+        {
+            get { return _taskentry_edit_availProjects; }
+            set { if (value != _taskentry_edit_availProjects) { _taskentry_edit_availProjects = value; RaisePropertyChangedEvent("taskentry_edit_availProjects"); } }
+        }
+
+        public int taskentry_edit_selProjindex
+        {
+            get { return _taskentry_edit_selProjindex; }
+            set
+            {
+                if (value != _taskentry_edit_selProjindex)
+                {
+                    _taskentry_edit_selProjindex = value;
+                    RaisePropertyChangedEvent("taskentry_edit_selProjindex");
+                    if (taskentry_edit_selProjindex > -1)
+                    {
+                        taskentry_edit_selProj = taskentry_edit_availProjects[taskentry_edit_selProjindex];
+                    }
+                    else { taskentry_edit_selProj = null; }
+                }
+            }
+        }
+
+        public Project taskentry_edit_selProj
+        {
+            get { return _taskentry_edit_selProj; }
+            set { if (value != _taskentry_edit_selProj) { _taskentry_edit_selProj = value; RaisePropertyChangedEvent("taskentry_edit_selProj"); } }
+        }
+
+        public string taskentry_edit_Name
+        {
+            get { return _taskentry_edit_Name; }
+            set { if (value != _taskentry_edit_Name) { _taskentry_edit_Name = value; RaisePropertyChangedEvent("taskentry_edit_Name"); } }
+        }
+
+        public string taskentry_edit_Description
+        {
+            get { return _taskentry_edit_Description; }
+            set { if (value != _taskentry_edit_Description) { _taskentry_edit_Description = value; RaisePropertyChangedEvent("taskentry_edit_Description"); } }
+        }
+
+        public string taskentry_edit_Status
+        {
+            get { return _taskentry_edit_Status; }
+            set { if (value != _taskentry_edit_Status) { _taskentry_edit_Status = value; RaisePropertyChangedEvent("taskentry_edit_Status"); } }
+        }
+
+        public bool taskentry_edit_Status_IsActive
+        {
+            get { return _taskentry_edit_Status_IsActive; }
+            set
+            {
+                if (value != _taskentry_edit_Status_IsActive)
+                {
+                    _taskentry_edit_Status_IsActive = value;
+                    RaisePropertyChangedEvent("taskentry_edit_Status_IsActive");
+                    if (taskentry_edit_Status_IsActive == true)
+                    {
+                        taskentry_edit_Status_IsInactive = false;
+                        taskentry_edit_Status = "Active";
+                    }
+                }
+            }
+        }
+
+        public bool taskentry_edit_Status_IsInactive
+        {
+            get { return _taskentry_edit_Status_IsInactive; }
+            set
+            {
+                if (value != _taskentry_edit_Status_IsInactive)
+                {
+                    _taskentry_edit_Status_IsInactive = value;
+                    RaisePropertyChangedEvent("taskentry_edit_Status_IsInactive");
+                    if (taskentry_edit_Status_IsInactive == true)
+                    {
+                        taskentry_edit_Status_IsActive = false;
+                        taskentry_edit_Status = "Inactive";
+                    }
+                }
+            }
+        }
         #endregion
 
 
@@ -774,6 +1072,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
+        private void UpdateRecordComponent()
+        {
+            selCustomerindex = -1;
+        }
 
         private void UpdateConfigurationComponent()
         {
@@ -1112,9 +1414,25 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        private void Perform_DeleteProject()
+        private async void Perform_DeleteProject()
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Delete in database
+                await myBackendService.DeleteProject(config_project_selProject.Id);
+
+                // Delete in current session
+                allProjects.Remove(config_project_selProject);
+
+                // Update UI
+                config_project_selindex = -1;
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start delete existing project: " + Environment.NewLine +
+                    e.ToString());
+            }
         }
     }
 }

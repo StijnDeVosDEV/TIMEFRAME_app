@@ -39,11 +39,11 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="StackPanel_RecordSettings" VerticalAlignment="Center" Margin="20,0,0,0">
                     <Label Content="Customer" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,0" Text="Customer..." Background="{x:Null}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex}"/>
+                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,0" Text="Customer..." Background="{x:Null}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Project" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,0" Background="{x:Null}" ItemsSource="{Binding availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectindex}"/>
+                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,0" Background="{x:Null}" ItemsSource="{Binding availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Label Content="Task" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Task" Background="{x:Null}" ItemsSource="{Binding availTaskEntries}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryindex}"/>
+                    <ComboBox x:Name="Combo_Task" Background="{x:Null}" ItemsSource="{Binding availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
@@ -137,7 +137,7 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000" Visibility="{Binding customer_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000" Visibility="{Binding customer_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
                                 <Label Content="Add new Customer" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Name" Foreground="White"/>
@@ -203,7 +203,11 @@
                         <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
                             <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
                             <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
-                            <Image x:Name="Img_Projects_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="{Binding project_delete_IsEnabled}"/>
+                            <Image x:Name="Img_Projects_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="{Binding project_delete_IsEnabled}">
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding DeleteProject, Mode=Default}"/>
+                                </Image.InputBindings>
+                            </Image>
                         </StackPanel>
                         <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BF000000" Visibility="{Binding project_addedit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
@@ -224,7 +228,7 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BF000000" Visibility="{Binding project_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BF000000" Visibility="{Binding project_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
                                 <Label Content="Edit Project" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -248,7 +252,6 @@
                 <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
-                        <RowDefinition Height="0"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Content="Tasks" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
@@ -257,12 +260,64 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Tasks"/>
+                        <DataGrid x:Name="DataGrid_Tasks" SelectionChanged="DataGrid_Tasks_SelectionChanged"/>
                         <StackPanel x:Name="StackPanel_Tasks_buttons" Grid.Column="1">
-                            <Image x:Name="Img_Tasks_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand"/>
-                            <Image x:Name="Img_Tasks_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
-                            <Image x:Name="Img_Tasks_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0"/>
+                            <Image x:Name="Img_Tasks_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Tasks_Add_MouseDown"/>
+                            <Image x:Name="Img_Tasks_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Tasks_Edit_MouseDown" IsEnabled="False"/>
+                            <Image x:Name="Img_Tasks_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="False"/>
                         </StackPanel>
+                        <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" Background="#BF000000" Margin="0,0,30,0" Grid.ColumnSpan="2">
+                            <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Properties">
+                                <Label Content="Add new Task" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
+                                <Label Content="Customer" Foreground="White"/>
+                                <ComboBox x:Name="Combo_TaksEntry_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged" Margin="10,0,10,0"/>
+                                <Label Content="Project" Foreground="White"/>
+                                <ComboBox x:Name="Combo_TaksEntry_AddEdit_AvailProjects" ItemsSource="{Binding taskentry_addedit_availProjects}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding taskentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_TaskEntry_AddEdit_Name" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_TaskEntry_AddEdit_Name_TextChanged" Text="{Binding taskentry_addedit_Name}"/>
+                                <Label Content="Description" Foreground="White"/>
+                                <TextBox x:Name="TB_TaskEntry_AddEdit_Description" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_TaskEntry_AddEdit_Description_TextChanged" Text="{Binding taskentry_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Content="Status" Foreground="White"/>
+                                <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="White" IsChecked="{Binding taskentry_addedit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="White" Margin="10,0,0,0" IsChecked="{Binding taskentry_addedit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigTaskEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <!--<MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>-->
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigTaskEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid x:Name="Grid_ConfigTaskEntries_Edit" Background="#BF000000" Margin="0,0,30,0" Grid.ColumnSpan="2" d:IsHidden="True">
+                            <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Properties">
+                                <Label Content="Edit Task" FontWeight="Bold" Foreground="White"/>
+                                <Label Content="Customer" Foreground="White"/>
+                                <ComboBox x:Name="Combo_TaksEntry_Edit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged" Margin="10,0,10,0"/>
+                                <Label Content="Project" Foreground="White"/>
+                                <ComboBox x:Name="Combo_TaskEntry_Edit_AvailProjects" Margin="10,0,10,0" ItemsSource="{Binding taskentry_addedit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding taskentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Combo_Project_Edit_AvailCustomers_SelectionChanged"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_TaskEntry_Edit_Name" Text="{Binding taskentry_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_Edit_Name_TextChanged"/>
+                                <Label Content="Description" Foreground="White"/>
+                                <TextBox x:Name="TB_TaskEntry_Edit_Description" Text="{Binding taskentry_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_Edit_Description_TextChanged"/>
+                                <Label Content="Status" Foreground="White"/>
+                                <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                    <RadioButton x:Name="RB_TaskEntry_Edit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="White" IsChecked="{Binding taskentry_edit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <RadioButton x:Name="RB_TaskEntry_Edit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="White" Margin="10,0,0,0" IsChecked="{Binding taskentry_edit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                                <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigTaskEntries_Edit_Edit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditProject, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigTaskEntries_Edit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTaskEntries_Edit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1" d:IsHidden="True">

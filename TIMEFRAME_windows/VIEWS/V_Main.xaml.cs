@@ -524,5 +524,86 @@ namespace TIMEFRAME_windows.VIEWS
                 Img_ConfigProjects_Edit_Edit.IsEnabled = false;
             }
         }
+
+        private void Update_TaskEntryConfig_AddButton()
+        {
+            if (TB_TaskEntry_AddEdit_Name.Text != "" && TB_TaskEntry_AddEdit_Description.Text != "" && Combo_TaksEntry_AddEdit_AvailProjects.SelectedIndex > -1)
+            {
+                Img_ConfigTaskEntries_AddEdit_AddorEdit.IsEnabled = true;
+            }
+            else
+            {
+                Img_ConfigTaskEntries_AddEdit_AddorEdit.IsEnabled = false;
+            }
+        }
+
+        private void Update_TaskEntryConfig_EditButton()
+        {
+            if (TB_TaskEntry_Edit_Name.Text != "" && TB_TaskEntry_Edit_Description.Text != "" && Combo_TaskEntry_Edit_AvailProjects.SelectedIndex > -1)
+            {
+                Img_ConfigTaskEntries_Edit_Edit.IsEnabled = true;
+            }
+            else
+            {
+                Img_ConfigTaskEntries_Edit_Edit.IsEnabled = false;
+            }
+        }
+
+        private void Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_ConfigTaskEntries_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_Tasks_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_AddEdit.Visibility = (Grid_ConfigTaskEntries_AddEdit.Visibility == Visibility.Visible)
+                ? Visibility.Hidden
+                : Visibility.Visible;
+
+            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_Tasks_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_Edit.Visibility = (Grid_ConfigTaskEntries_Edit.Visibility == Visibility.Visible)
+                ? Visibility.Hidden
+                : Visibility.Visible;
+
+            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
+        }
+
+        private void Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_AddButton();
+        }
+
+        private void TB_TaskEntry_AddEdit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_AddButton();
+        }
+
+        private void TB_TaskEntry_AddEdit_Description_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_AddButton();
+        }
+
+        private void DataGrid_Tasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataGrid_Tasks.SelectedIndex > -1)
+            {
+                Img_Tasks_Edit.IsEnabled = true;
+                Img_Tasks_Delete.IsEnabled = true;
+            }
+            else
+            {
+                Img_Tasks_Edit.IsEnabled = false;
+                Img_Tasks_Delete.IsEnabled = false;
+            }
+        }
     }
 }
