@@ -140,6 +140,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private VIEWMODELS.Base.GEN_RelayCommand _AddProject;
         private VIEWMODELS.Base.GEN_RelayCommand _EditProject;
         private VIEWMODELS.Base.GEN_RelayCommand _DeleteProject;
+        private VIEWMODELS.Base.GEN_RelayCommand _AddTaskEntry;
+        private VIEWMODELS.Base.GEN_RelayCommand _EditTaskEntry;
+        private VIEWMODELS.Base.GEN_RelayCommand _DeleteTaskEntry;
 
         private VIEWMODELS.Base.GEN_RelayCommand _CloseLoadingScreen;
 
@@ -186,18 +189,22 @@ namespace TIMEFRAME_windows.VIEWMODELS
             db_shownTaskEntries = new ObservableCollection<TaskEntry>();
             db_shownTimeEntries = new ObservableCollection<TimeEntry>();
 
+            config_customer_selindex = -1;
             customer_addedit_Visibility = Visibility.Visible;
             customer_edit_IsEnabled = false;
             customer_edit_Visibility = Visibility.Visible;
 
+            config_project_selindex = -1;
             project_addedit_selCustindex = -1;
             project_edit_selCustindex = -1;
             project_addedit_Visibility = Visibility.Hidden;
             project_edit_Visibility = Visibility.Hidden;
 
+            config_taskentry_selindex = -1;
             taskentry_addedit_selCustindex = -1;
             taskentry_addedit_selProjindex = -1;
             taskentry_addedit_availProjects = new ObservableCollection<Project>();
+            taskentry_addedit_Status_IsActive = true;
             taskentry_edit_selCustindex = -1;
             taskentry_edit_selProjindex = -1;
             taskentry_edit_availProjects = new ObservableCollection<Project>();
@@ -892,6 +899,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand AddProject { get { return _AddProject; } }
         public ICommand EditProject { get { return _EditProject; } }
         public ICommand DeleteProject { get { return _DeleteProject; } }
+        public ICommand AddTaskEntry { get { return _AddTaskEntry; } }
+        public ICommand EditTaskEntry { get { return _EditTaskEntry; } }
+        public ICommand DeleteTaskEntry { get { return _DeleteTaskEntry; } }
         public ICommand CloseLoadingScreen { get { return _CloseLoadingScreen; } }
         #endregion
 
@@ -1237,17 +1247,19 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _AddCustomer = new Base.GEN_RelayCommand(param => this.Perform_AddCustomer());
             _EditCustomer = new Base.GEN_RelayCommand(param => this.Perform_EditCustomer());
             _DeleteCustomer = new Base.GEN_RelayCommand(param => this.Perform_DeleteCustomer());
+
             _AddProject = new Base.GEN_RelayCommand(param => this.Perform_AddProject());
             _EditProject = new Base.GEN_RelayCommand(param => this.Perform_EditProject());
             _DeleteProject = new Base.GEN_RelayCommand(param => this.Perform_DeleteProject());
 
+            _AddTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_AddTaskEntry());
+            _EditTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_EditTaskEntry());
+            _DeleteTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTaskEntry());
+
             _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perfrom_CloseLoadingScreen());
         }
 
-        private void Perfrom_CloseLoadingScreen()
-        {
-            ToggleLoadingScreen_Visibility();
-        }
+        
 
         private async void Perform_AddCustomer()
         {
@@ -1433,6 +1445,58 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 Logger.Write("!ERROR occurred while trying to start delete existing project: " + Environment.NewLine +
                     e.ToString());
             }
+        }
+
+        private async void Perform_AddTaskEntry()
+        {
+            try
+            {
+                // Create new Task Entry
+                TaskEntry newTaskEntry = new TaskEntry()
+                {
+                    ProjectId = taskentry_addedit_selProj.Id,
+                    Name = taskentry_addedit_Name,
+                    Description = taskentry_addedit_Description,
+                    CreationDate = DateTime.Now,
+                    Status = taskentry_addedit_Status
+                };
+
+                // Update in database
+                await myBackendService.AddTaskEntry(newTaskEntry);
+
+                // Update in current app session
+                newTaskEntry.Id = allTaskEntries.Count > 0 ? allTaskEntries.Select(x => x.Id).Max() + 1 : 1;
+                allTaskEntries.Add(newTaskEntry);
+
+                // Update UI
+                taskentry_addedit_selCustindex = -1;
+                taskentry_addedit_Name = "";
+                taskentry_addedit_Description = "";
+                taskentry_addedit_Status_IsActive = true;
+                taskentry_addedit_Visibility = Visibility.Hidden;
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start adding new Task Entry: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        private void Perform_EditTaskEntry()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Perform_DeleteTaskEntry()
+        {
+            throw new NotImplementedException();
+        }
+
+
+        private void Perfrom_CloseLoadingScreen()
+        {
+            ToggleLoadingScreen_Visibility();
         }
     }
 }

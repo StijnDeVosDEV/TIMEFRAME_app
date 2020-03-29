@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TIMEFRAME_windows.VIEWS"
         xmlns:VIEWMODELS="clr-namespace:TIMEFRAME_windows.VIEWMODELS"
         mc:Ignorable="d"
-        Title="TIMEFRAME" Width="800" Height="500">
+        Title="TIMEFRAME" Width="900" Height="600">
     <Window.DataContext>
         <VIEWMODELS:VM_Main></VIEWMODELS:VM_Main>
     </Window.DataContext>
@@ -177,7 +177,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -249,7 +249,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition/>
@@ -260,13 +260,23 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Tasks" SelectionChanged="DataGrid_Tasks_SelectionChanged"/>
+                        <DataGrid x:Name="DataGrid_Tasks" SelectionChanged="DataGrid_Tasks_SelectionChanged" ItemsSource="{Binding db_shownTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_taskentry_selindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
+                                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                                <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                                <DataGridTextColumn Binding="{Binding Project.Customer.Name}" Header="Customer"/>
+                                <DataGridTextColumn Binding="{Binding Project.Name}" Header="Project"/>
+                                <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
+                                <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <StackPanel x:Name="StackPanel_Tasks_buttons" Grid.Column="1">
                             <Image x:Name="Img_Tasks_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Tasks_Add_MouseDown"/>
                             <Image x:Name="Img_Tasks_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Tasks_Edit_MouseDown" IsEnabled="False"/>
                             <Image x:Name="Img_Tasks_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="False"/>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" Background="#BF000000" Margin="0,0,30,0" Grid.ColumnSpan="2">
+                        <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" Background="#BF000000" Margin="0,0,30,0" Grid.ColumnSpan="2" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Properties">
                                 <Label Content="Add new Task" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -285,7 +295,7 @@
                                 <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigTaskEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
                                         <Image.InputBindings>
-                                            <!--<MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>-->
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddTaskEntry, Mode=Default}"/>
                                         </Image.InputBindings>
                                     </Image>
                                     <Image x:Name="Img_ConfigTaskEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown"/>

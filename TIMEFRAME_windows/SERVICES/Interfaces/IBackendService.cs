@@ -39,6 +39,10 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
 
         // GET all Task Entries
         public Task<List<TaskEntry>> GetTaskEntries();
+
+        public Task EditTaskEntry(TaskEntry taskEntry);
+
+        public Task DeleteTaskEntry(int taskEntryID);
         #endregion
 
         #region TIME ENTRIES

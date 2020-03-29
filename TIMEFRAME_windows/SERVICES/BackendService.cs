@@ -248,6 +248,32 @@ namespace TIMEFRAME_windows.SERVICES
                 return allTaskEntries;
             }
         }
+
+        public async Task EditTaskEntry(TaskEntry taskEntry)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync("api/taskentries/" + taskEntry.Id.ToString(), taskEntry);
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while modifying task entry : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        public async Task DeleteTaskEntry(int taskEntryID)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync("api/taskentries/" + taskEntryID.ToString());
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while deleting task entry : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
         #endregion
 
         #region TIME ENTRIES
