@@ -136,7 +136,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // -----------------
         // Time Entry: selection
         private int _config_timeentry_selindex;
-        private TaskEntry _config_timeentry_selTimeEntry;
+        private TimeEntry _config_timeentry_selTimeEntry;
         // Time Entry: add/edit
         private Visibility _timeentry_addedit_Visibility;
         private int _timeentry_addedit_selCustindex;
@@ -146,7 +146,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private Project _timeentry_addedit_selProj;
         private ObservableCollection<TaskEntry> _timeentry_addedit_availTaskEntries;
         private int _timeentry_addedit_selTaskEntryindex;
-        private Project _timeentry_addedit_selTaskEntry;
+        private TaskEntry _timeentry_addedit_selTaskEntry;
         private DateTime _timeentry_addedit_DateStart;
         private DateTime _timeentry_addedit_DateStop;
         private TimeSpan _timeentry_addedit_Duration;
@@ -159,7 +159,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private Project _timeentry_edit_selProj;
         private ObservableCollection<TaskEntry> _timeentry_edit_availTaskEntries;
         private int _timeentry_edit_selTaskEntryindex;
-        private Project _timeentry_edit_selTaskEntry;
+        private TaskEntry _timeentry_edit_selTaskEntry;
         private DateTime _timeentry_edit_DateStart;
         private DateTime _timeentry_edit_DateStop;
         private TimeSpan _timeentry_edit_Duration;
@@ -244,6 +244,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
             taskentry_edit_availProjects = new ObservableCollection<Project>();
             taskentry_addedit_Visibility = Visibility.Hidden;
             taskentry_edit_Visibility = Visibility.Hidden;
+
+            config_timeentry_selindex = -1;
+            timeentry_addedit_selCustindex = -1;
+            timeentry_addedit_selProjindex = -1;
+            timeentry_addedit_selTaskEntryindex = -1;
+            timeentry_addedit_availProjects = new ObservableCollection<Project>();
+            timeentry_addedit_availTaskEntries = new ObservableCollection<TaskEntry>();
+            timeentry_edit_selCustindex = -1;
+            timeentry_edit_selProjindex = -1;
+            timeentry_edit_selTaskEntryindex = -1;
+            timeentry_edit_availProjects = new ObservableCollection<Project>();
+            timeentry_edit_availTaskEntries = new ObservableCollection<TaskEntry>();
 
 
             // Initializations
@@ -922,6 +934,299 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 }
             }
         }
+
+
+        // Configuration:  TIME ENTRY
+        // --------------------------
+        // Time Entry: selection
+        public int config_timeentry_selindex
+        {
+            get { return _config_timeentry_selindex; }
+            set { if (value != _config_timeentry_selindex) { _config_timeentry_selindex = value; 
+                    RaisePropertyChangedEvent("config_timeentry_selindex");
+                    if (config_timeentry_selindex > -1)
+                    {
+                        config_timeentry_selTimeEntry = db_shownTimeEntries[config_timeentry_selindex];
+                        Update_EditSelectionData(dataCategory.TimeEntry);
+                    }
+                    else { config_timeentry_selTimeEntry = null; }
+                } }
+        }
+
+        public TimeEntry config_timeentry_selTimeEntry
+        {
+            get { return _config_timeentry_selTimeEntry; }
+            set { if (value != _config_timeentry_selTimeEntry) { _config_timeentry_selTimeEntry = value; RaisePropertyChangedEvent("config_timeentry_selTimeEntry"); } }
+        }
+
+        // Time Entry: add/edit
+        public Visibility timeentry_addedit_Visibility
+        {
+            get { return _timeentry_addedit_Visibility; }
+            set { if (value != _timeentry_addedit_Visibility) { _timeentry_addedit_Visibility = value; RaisePropertyChangedEvent("timeentry_addedit_Visibility"); } }
+        }
+
+        public int timeentry_addedit_selCustindex
+        {
+            get { return _timeentry_addedit_selCustindex; }
+            set { if (value != _timeentry_addedit_selCustindex) { _timeentry_addedit_selCustindex = value; 
+                    RaisePropertyChangedEvent("timeentry_addedit_selCustindex");
+                    if (timeentry_addedit_selCustindex > -1)
+                    {
+                        // Assign selected Customer
+                        timeentry_addedit_selCust = allCustomers[timeentry_addedit_selCustindex];
+
+                        // Re-populate available Projects based on newly selected Customer object
+                        timeentry_addedit_selProjindex = -1;
+
+                        timeentry_addedit_availProjects.Clear();
+                        foreach (Project project in allProjects.Where(x => x.CustomerId == timeentry_addedit_selCust.Id))
+                        {
+                            timeentry_addedit_availProjects.Add(project);
+                        }
+                    }
+                    else { timeentry_addedit_selCust = null; }
+                } }
+        }
+
+        public Customer timeentry_addedit_selCust
+        {
+            get { return _timeentry_addedit_selCust; }
+            set { if (value != _timeentry_addedit_selCust) { _timeentry_addedit_selCust = value; RaisePropertyChangedEvent("timeentry_addedit_selCust"); } }
+        }
+
+        public ObservableCollection<Project> timeentry_addedit_availProjects
+        {
+            get { return _timeentry_addedit_availProjects; }
+            set { if (value != _timeentry_addedit_availProjects) { _timeentry_addedit_availProjects = value; RaisePropertyChangedEvent("timeentry_addedit_availProjects"); } }
+        }
+
+        public int timeentry_addedit_selProjindex
+        {
+            get { return _timeentry_addedit_selProjindex; }
+            set { if (value != _timeentry_addedit_selProjindex) { _timeentry_addedit_selProjindex = value; 
+                    RaisePropertyChangedEvent("timeentry_addedit_selProjindex");
+                    if (timeentry_addedit_selProjindex > -1)
+                    {
+                        // Assign selected Project
+                        timeentry_addedit_selProj = timeentry_addedit_availProjects[timeentry_addedit_selProjindex];
+
+                        // Re-populate available Task Entries based on newly selected Project object
+                        timeentry_addedit_selTaskEntryindex = -1;
+
+                        timeentry_addedit_availTaskEntries.Clear();
+                        foreach (TaskEntry taskEntry in allTaskEntries.Where(x => x.ProjectId == timeentry_addedit_selProj.Id))
+                        {
+                            timeentry_addedit_availTaskEntries.Add(taskEntry);
+                        }
+                    }
+                    else { timeentry_addedit_selProj = null; }
+                } }
+        }
+
+        public Project timeentry_addedit_selProj
+        {
+            get { return _timeentry_addedit_selProj; }
+            set { if (value != _timeentry_addedit_selProj) { _timeentry_addedit_selProj = value; RaisePropertyChangedEvent("timeentry_addedit_selProj"); } }
+        }
+
+        public ObservableCollection<TaskEntry> timeentry_addedit_availTaskEntries
+        {
+            get { return _timeentry_addedit_availTaskEntries; }
+            set { if (value != _timeentry_addedit_availTaskEntries) { _timeentry_addedit_availTaskEntries = value; RaisePropertyChangedEvent("timeentry_addedit_availTaskEntries"); } }
+        }
+
+        public int timeentry_addedit_selTaskEntryindex
+        {
+            get { return _timeentry_addedit_selTaskEntryindex; }
+            set { if (value != _timeentry_addedit_selTaskEntryindex) { _timeentry_addedit_selTaskEntryindex = value; 
+                    RaisePropertyChangedEvent("timeentry_addedit_selTaskEntryindex");
+                    if (timeentry_addedit_selTaskEntryindex > -1)
+                    {
+                        // Assign selected Project
+                        timeentry_addedit_selTaskEntry = timeentry_addedit_availTaskEntries[timeentry_addedit_selTaskEntryindex];
+                    }
+                    else { timeentry_addedit_selProj = null; }
+                } }
+        }
+
+        public TaskEntry timeentry_addedit_selTaskEntry
+        {
+            get { return _timeentry_addedit_selTaskEntry; }
+            set { if (value != _timeentry_addedit_selTaskEntry) { _timeentry_addedit_selTaskEntry = value; RaisePropertyChangedEvent("timeentry_addedit_selTaskEntry"); } }
+        }
+
+        public DateTime timeentry_addedit_DateStart
+        {
+            get { return _timeentry_addedit_DateStart; }
+            set { if (value != _timeentry_addedit_DateStart) { _timeentry_addedit_DateStart = value; 
+                    RaisePropertyChangedEvent("timeentry_addedit_DateStart");
+                    timeentry_addedit_Duration = CalculateDuration(timeentry_addedit_DateStart, timeentry_addedit_DateStop);
+                } }
+        }
+
+        public DateTime timeentry_addedit_DateStop
+        {
+            get { return _timeentry_addedit_DateStop; }
+            set { if (value != _timeentry_addedit_DateStop) { _timeentry_addedit_DateStop = value; 
+                    RaisePropertyChangedEvent("timeentry_addedit_DateStop");
+                    timeentry_addedit_Duration = CalculateDuration(timeentry_addedit_DateStart, timeentry_addedit_DateStop);
+                } }
+        }
+
+        public TimeSpan timeentry_addedit_Duration
+        {
+            get { return _timeentry_addedit_Duration; }
+            set { if (value != _timeentry_addedit_Duration) { _timeentry_addedit_Duration = value; RaisePropertyChangedEvent("timeentry_addedit_Duration"); } }
+        }
+
+        // Time Entry: edit
+        public Visibility timeentry_edit_Visibility
+        {
+            get { return _timeentry_edit_Visibility; }
+            set { if (value != _timeentry_edit_Visibility) { _timeentry_edit_Visibility = value; RaisePropertyChangedEvent("timeentry_edit_Visibility"); } }
+        }
+
+        public int timeentry_edit_selCustindex
+        {
+            get { return _timeentry_edit_selCustindex; }
+            set
+            {
+                if (value != _timeentry_edit_selCustindex)
+                {
+                    _timeentry_edit_selCustindex = value;
+                    RaisePropertyChangedEvent("timeentry_edit_selCustindex");
+                    if (timeentry_edit_selCustindex > -1)
+                    {
+                        // Assign selected Customer
+                        timeentry_edit_selCust = allCustomers[timeentry_edit_selCustindex];
+
+                        // Re-populate available Projects based on newly selected Customer object
+                        timeentry_edit_selProjindex = -1;
+
+                        timeentry_edit_availProjects.Clear();
+                        foreach (Project project in allProjects.Where(x => x.CustomerId == timeentry_edit_selCust.Id))
+                        {
+                            timeentry_edit_availProjects.Add(project);
+                        }
+                    }
+                    else { timeentry_edit_selCust = null; }
+                }
+            }
+        }
+
+        public Customer timeentry_edit_selCust
+        {
+            get { return _timeentry_edit_selCust; }
+            set { if (value != _timeentry_edit_selCust) { _timeentry_edit_selCust = value; RaisePropertyChangedEvent("timeentry_edit_selCust"); } }
+        }
+
+        public ObservableCollection<Project> timeentry_edit_availProjects
+        {
+            get { return _timeentry_edit_availProjects; }
+            set { if (value != _timeentry_edit_availProjects) { _timeentry_edit_availProjects = value; RaisePropertyChangedEvent("timeentry_edit_availProjects"); } }
+        }
+
+        public int timeentry_edit_selProjindex
+        {
+            get { return _timeentry_edit_selProjindex; }
+            set
+            {
+                if (value != _timeentry_edit_selProjindex)
+                {
+                    _timeentry_edit_selProjindex = value;
+                    RaisePropertyChangedEvent("timeentry_edit_selProjindex");
+                    if (timeentry_edit_selProjindex > -1)
+                    {
+                        // Assign selected Project
+                        timeentry_edit_selProj = timeentry_edit_availProjects[timeentry_edit_selProjindex];
+
+                        // Re-populate available Task Entries based on newly selected Project object
+                        timeentry_edit_selTaskEntryindex = -1;
+
+                        timeentry_edit_availTaskEntries.Clear();
+                        foreach (TaskEntry taskEntry in allTaskEntries.Where(x => x.ProjectId == timeentry_edit_selProj.Id))
+                        {
+                            timeentry_edit_availTaskEntries.Add(taskEntry);
+                        }
+                    }
+                    else { timeentry_edit_selProj = null; }
+                }
+            }
+        }
+
+        public Project timeentry_edit_selProj
+        {
+            get { return _timeentry_edit_selProj; }
+            set { if (value != _timeentry_edit_selProj) { _timeentry_edit_selProj = value; RaisePropertyChangedEvent("timeentry_edit_selProj"); } }
+        }
+
+        public ObservableCollection<TaskEntry> timeentry_edit_availTaskEntries
+        {
+            get { return _timeentry_edit_availTaskEntries; }
+            set { if (value != _timeentry_edit_availTaskEntries) { _timeentry_edit_availTaskEntries = value; RaisePropertyChangedEvent("timeentry_edit_availTaskEntries"); } }
+        }
+
+        public int timeentry_edit_selTaskEntryindex
+        {
+            get { return _timeentry_edit_selTaskEntryindex; }
+            set
+            {
+                if (value != _timeentry_edit_selTaskEntryindex)
+                {
+                    _timeentry_edit_selTaskEntryindex = value;
+                    RaisePropertyChangedEvent("timeentry_edit_selTaskEntryindex");
+                    if (timeentry_edit_selTaskEntryindex > -1)
+                    {
+                        // Assign selected Project
+                        timeentry_edit_selTaskEntry = timeentry_edit_availTaskEntries[timeentry_edit_selTaskEntryindex];
+                    }
+                    else { timeentry_edit_selProj = null; }
+                }
+            }
+        }
+
+        public TaskEntry timeentry_edit_selTaskEntry
+        {
+            get { return _timeentry_edit_selTaskEntry; }
+            set { if (value != _timeentry_edit_selTaskEntry) { _timeentry_edit_selTaskEntry = value; RaisePropertyChangedEvent("timeentry_edit_selTaskEntry"); } }
+        }
+
+        public DateTime timeentry_edit_DateStart
+        {
+            get { return _timeentry_edit_DateStart; }
+            set
+            {
+                if (value != _timeentry_edit_DateStart)
+                {
+                    _timeentry_edit_DateStart = value;
+                    RaisePropertyChangedEvent("timeentry_edit_DateStart");
+                    timeentry_edit_Duration = CalculateDuration(timeentry_edit_DateStart, timeentry_edit_DateStop);
+                }
+            }
+        }
+
+        public DateTime timeentry_edit_DateStop
+        {
+            get { return _timeentry_edit_DateStop; }
+            set
+            {
+                if (value != _timeentry_edit_DateStop)
+                {
+                    _timeentry_edit_DateStop = value;
+                    RaisePropertyChangedEvent("timeentry_edit_DateStop");
+                    timeentry_edit_Duration = CalculateDuration(timeentry_edit_DateStart, timeentry_edit_DateStop);
+                }
+            }
+        }
+
+        public TimeSpan timeentry_edit_Duration
+        {
+            get { return _timeentry_edit_Duration; }
+            set { if (value != _timeentry_edit_Duration) { _timeentry_edit_Duration = value; RaisePropertyChangedEvent("timeentry_edit_Duration"); } }
+        }
+
+        // Time Entry: delete
         #endregion
 
 
@@ -1192,8 +1497,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         {
                             project_edit_selCustindex = -1;
                         }
-
                         break;
+
                     case dataCategory.TaskEntry:
                         taskentry_edit_Name = config_taskentry_selTaskEntry.Name;
                         taskentry_edit_Description = config_taskentry_selTaskEntry.Description;
@@ -1208,7 +1513,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
                             taskentry_edit_Status_IsInactive = true;
                         }
                         break;
+
                     case dataCategory.TimeEntry:
+                        //timeentry_edit_selCustindex = 
+                        //    allCustomers.IndexOf(
+                        //        allCustomers.Single(y => y.Id == (
+                        //        allProjects.Single(x => x.Id == confi)).CustomerId));;
+                        //timeentry_edit_selProjindex = taskentry_edit_availProjects.IndexOf(config_timeentry_selTimeEntry.Project);
                         break;
                     default:
                         break;
@@ -1282,6 +1593,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
 
             return popTimeEntries;
+        }
+
+        private TimeSpan CalculateDuration(DateTime start, DateTime stop)
+        {
+            TimeSpan duration = new TimeSpan(0, 0, 0);
+
+            if (stop > start)
+            {
+                duration = stop - start;
+            }
+
+            return duration;
         }
 
         //  ----------------------
