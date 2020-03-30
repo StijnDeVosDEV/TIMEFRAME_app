@@ -132,6 +132,40 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Task Entry: delete
         //private bool _taskentry_delete_IsEnabled;
 
+        // TIME ENTRY CONFIG
+        // -----------------
+        // Time Entry: selection
+        private int _config_timeentry_selindex;
+        private TaskEntry _config_timeentry_selTimeEntry;
+        // Time Entry: add/edit
+        private Visibility _timeentry_addedit_Visibility;
+        private int _timeentry_addedit_selCustindex;
+        private Customer _timeentry_addedit_selCust;
+        private ObservableCollection<Project> _timeentry_addedit_availProjects;
+        private int _timeentry_addedit_selProjindex;
+        private Project _timeentry_addedit_selProj;
+        private ObservableCollection<TaskEntry> _timeentry_addedit_availTaskEntries;
+        private int _timeentry_addedit_selTaskEntryindex;
+        private Project _timeentry_addedit_selTaskEntry;
+        private DateTime _timeentry_addedit_DateStart;
+        private DateTime _timeentry_addedit_DateStop;
+        private TimeSpan _timeentry_addedit_Duration;
+        // Time Entry: edit
+        private Visibility _timeentry_edit_Visibility;
+        private int _timeentry_edit_selCustindex;
+        private Customer _timeentry_edit_selCust;
+        private ObservableCollection<Project> _timeentry_edit_availProjects;
+        private int _timeentry_edit_selProjindex;
+        private Project _timeentry_edit_selProj;
+        private ObservableCollection<TaskEntry> _timeentry_edit_availTaskEntries;
+        private int _timeentry_edit_selTaskEntryindex;
+        private Project _timeentry_edit_selTaskEntry;
+        private DateTime _timeentry_edit_DateStart;
+        private DateTime _timeentry_edit_DateStop;
+        private TimeSpan _timeentry_edit_Duration;
+        // Time Entry: delete
+
+
 
         // Commands
         private VIEWMODELS.Base.GEN_RelayCommand _AddCustomer;
