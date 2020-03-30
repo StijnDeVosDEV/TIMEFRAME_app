@@ -399,24 +399,7 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Update_CustomerConfig_EditButton();
         }
-
-
-        private void Combo_Project_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Update_ProjectConfig_EditButton();
-        }
-
-        private void TB_Project_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Update_ProjectConfig_EditButton();
-        }
-
-        private void TB_Project_Edit_Description_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Update_ProjectConfig_EditButton();
-        }
         #endregion
-
 
         // ----------------------
         // CONFIGURATION PROJECTS
@@ -472,6 +455,21 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Update_ProjectConfig_AddButton();
         }
+
+        private void Combo_Project_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_ProjectConfig_EditButton();
+        }
+
+        private void TB_Project_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_ProjectConfig_EditButton();
+        }
+
+        private void TB_Project_Edit_Description_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_ProjectConfig_EditButton();
+        }
         #endregion
 
         // ------------
@@ -508,7 +506,7 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Update_TaskEntryConfig_AddButton();
+           Update_TaskEntryConfig_AddButton();
         }
 
         private void TB_TaskEntry_AddEdit_Name_TextChanged(object sender, TextChangedEventArgs e)
@@ -523,16 +521,8 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void DataGrid_Tasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (DataGrid_Tasks.SelectedIndex > -1)
-            {
-                Img_Tasks_Edit.IsEnabled = true;
-                Img_Tasks_Delete.IsEnabled = true;
-            }
-            else
-            {
-                Img_Tasks_Edit.IsEnabled = false;
-                Img_Tasks_Delete.IsEnabled = false;
-            }
+            Img_Tasks_Edit.IsEnabled = (DataGrid_Tasks.SelectedIndex > -1) ? true : false;
+            Img_Tasks_Delete.IsEnabled = (DataGrid_Tasks.SelectedIndex > -1) ? true : false;
         }
 
         private void Combo_TaksEntry_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -687,6 +677,85 @@ namespace TIMEFRAME_windows.VIEWS
         {
             TB_TimeEntry_Edit_StopTime_SS.Text = TimePicker_ValidateSECOND(TB_TimeEntry_Edit_StopTime_SS.Text);
         }
+        private void Img_TimeEntries_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTimeEntries_AddEdit.Visibility = (Grid_ConfigTimeEntries_AddEdit.Visibility == Visibility.Visible)
+                ? Visibility.Hidden
+                : Visibility.Visible;
+        }
+
+        private void Img_TimeEntries_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTimeEntries_Edit.Visibility = (Grid_ConfigTimeEntries_Edit.Visibility == Visibility.Visible)
+                ? Visibility.Hidden
+                : Visibility.Visible;
+        }
+
+        private void DataGrid_TimeEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Img_TimeEntries_Edit.IsEnabled = (DataGrid_TimeEntries.SelectedIndex > -1) ? true : false;
+            Img_TimeEntries_Delete.IsEnabled = (DataGrid_TimeEntries.SelectedIndex > -1) ? true : false;
+        }
+
+        private void Combo_TimeEntry_AddEdit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_AddButton();
+        }
+
+        private void Combo_TimeEntry_AddEdit_AvailProjects_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_AddButton();
+        }
+
+        private void Combo_TimeEntry_AddEdit_AvailTaskEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_AddButton();
+        }
+
+        private void TB_TimeEntry_AddEdit_Duration_HH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_AddButton();
+        }
+
+        private void TB_TimeEntry_AddEdit_Duration_MM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_AddButton();
+        }
+
+        private void TB_TimeEntry_AddEdit_Duration_SS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_AddButton();
+        }
+
+        private void Combo_TimeEntry_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_EditButton();
+        }
+
+        private void Combo_TimeEntry_Edit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_EditButton();
+        }
+
+        private void Combo_TimeEntry_Edit_AvailTaskEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_EditButton();
+        }
+
+        private void TB_TimeEntry_Edit_Duration_HH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_EditButton();
+        }
+
+        private void TB_TimeEntry_Edit_Duration_MM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_EditButton();
+        }
+
+        private void TB_TimeEntry_Edit_Duration_SS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TimeEntryConfig_EditButton();
+        }
         #endregion
 
         // -------------------------
@@ -765,6 +834,62 @@ namespace TIMEFRAME_windows.VIEWS
             {
                 Img_ConfigTaskEntries_Edit_Edit.IsEnabled = false;
             }
+        }
+
+        private void Update_TimeEntryConfig_AddButton()
+        {
+            //try
+            //{
+            //    TimeSpan duration = new TimeSpan(
+            //    Convert.ToInt32(TB_TimeEntry_AddEdit_Duration_HH.Text),
+            //    Convert.ToInt32(TB_TimeEntry_AddEdit_Duration_MM.Text),
+            //    Convert.ToInt32(TB_TimeEntry_AddEdit_Duration_SS.Text)
+            //    );
+
+            //    if (Combo_TimeEntry_AddEdit_AvailCustomers.SelectedIndex > -1 &&
+            //        Combo_TimeEntry_AddEdit_AvailProjects.SelectedIndex > -1 &&
+            //        Combo_TimeEntry_AddEdit_AvailTaskEntries.SelectedIndex > -1 &&
+            //        duration.TotalSeconds > 0)
+            //    {
+            //        Img_ConfigTimeEntries_AddEdit_AddorEdit.IsEnabled = true;
+            //    }
+            //    else
+            //    {
+            //        Img_ConfigTimeEntries_AddEdit_AddorEdit.IsEnabled = false;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    Img_ConfigTimeEntries_AddEdit_AddorEdit.IsEnabled = false;
+            //}
+        }
+
+        private void Update_TimeEntryConfig_EditButton()
+        {
+            //try
+            //{
+            //    TimeSpan duration = new TimeSpan(
+            //    Convert.ToInt32(TB_TimeEntry_Edit_Duration_HH.Text),
+            //    Convert.ToInt32(TB_TimeEntry_Edit_Duration_MM.Text),
+            //    Convert.ToInt32(TB_TimeEntry_Edit_Duration_SS.Text)
+            //    );
+
+            //    if (Combo_TimeEntry_Edit_AvailCustomers.SelectedIndex > -1 &&
+            //        Combo_TimeEntry_Edit_AvailProjects.SelectedIndex > -1 &&
+            //        Combo_TimeEntry_Edit_AvailTaskEntries.SelectedIndex > -1 &&
+            //        duration.TotalSeconds > 0)
+            //    {
+            //        Img_ConfigTimeEntries_Edit_Edit.IsEnabled = true;
+            //    }
+            //    else
+            //    {
+            //        Img_ConfigTimeEntries_Edit_Edit.IsEnabled = false;
+            //    }
+            //}
+            //catch (Exception)
+            //{
+            //    Img_ConfigTimeEntries_Edit_Edit.IsEnabled = false;
+            //}
         }
 
 
