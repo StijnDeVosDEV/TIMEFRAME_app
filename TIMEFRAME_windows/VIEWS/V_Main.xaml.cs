@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -473,6 +474,220 @@ namespace TIMEFRAME_windows.VIEWS
         }
         #endregion
 
+        // ------------
+        // TASK ENTRIES
+        // ------------
+        #region CONFIGURATION TASK ENTRIES
+        private void Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_ConfigTaskEntries_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_Tasks_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_AddEdit.Visibility = (Grid_ConfigTaskEntries_AddEdit.Visibility == Visibility.Visible)
+                ? Visibility.Hidden
+                : Visibility.Visible;
+
+            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_Tasks_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTaskEntries_Edit.Visibility = (Grid_ConfigTaskEntries_Edit.Visibility == Visibility.Visible)
+                ? Visibility.Hidden
+                : Visibility.Visible;
+
+            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
+        }
+
+        private void Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_AddButton();
+        }
+
+        private void TB_TaskEntry_AddEdit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_AddButton();
+        }
+
+        private void TB_TaskEntry_AddEdit_Description_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_AddButton();
+        }
+
+        private void DataGrid_Tasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (DataGrid_Tasks.SelectedIndex > -1)
+            {
+                Img_Tasks_Edit.IsEnabled = true;
+                Img_Tasks_Delete.IsEnabled = true;
+            }
+            else
+            {
+                Img_Tasks_Edit.IsEnabled = false;
+                Img_Tasks_Delete.IsEnabled = false;
+            }
+        }
+
+        private void Combo_TaksEntry_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
+        }
+
+        private void Combo_TaskEntry_Edit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
+        }
+
+        private void TB_TaskEntry_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
+        }
+
+        private void TB_TaskEntry_Edit_Description_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_TaskEntryConfig_EditButton();
+        }
+
+        private void Img_ConfigTimeEntries_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTimeEntries_AddEdit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_ConfigTimeEntries_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigTimeEntries_Edit.Visibility = Visibility.Hidden;
+        }
+        #endregion
+
+        // ------------
+        // TIME ENTRIES
+        // ------------
+        #region CONFIGURATION TIME ENTRIES
+        private void TB_TimeEntry_AddEdit_StartTime_HH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_AddEdit_StartTime_HH.Text = TimePicker_ValidateHOUR(TB_TimeEntry_AddEdit_StartTime_HH.Text);
+        }
+        private void TB_TimeEntry_AddEdit_StartTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StartTime_MM_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StartTime_SS_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StartTime_MM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_AddEdit_StartTime_MM.Text = TimePicker_ValidateMINUTE(TB_TimeEntry_AddEdit_StartTime_MM.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StartTime_SS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_AddEdit_StartTime_SS.Text = TimePicker_ValidateSECOND(TB_TimeEntry_AddEdit_StartTime_SS.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StopTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StopTime_HH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_AddEdit_StopTime_HH.Text = TimePicker_ValidateHOUR(TB_TimeEntry_AddEdit_StopTime_HH.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StopTime_MM_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StopTime_MM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_AddEdit_StopTime_MM.Text = TimePicker_ValidateMINUTE(TB_TimeEntry_AddEdit_StopTime_MM.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StopTime_SS_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_AddEdit_StopTime_SS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_AddEdit_StopTime_SS.Text = TimePicker_ValidateSECOND(TB_TimeEntry_AddEdit_StopTime_SS.Text);
+        }
+        private void TB_TimeEntry_Edit_StartTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StartTime_MM_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StartTime_SS_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StopTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StopTime_MM_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StopTime_SS_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = IsNumericValue(e.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StartTime_HH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_Edit_StartTime_HH.Text = TimePicker_ValidateHOUR(TB_TimeEntry_Edit_StartTime_HH.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StartTime_MM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_Edit_StartTime_MM.Text = TimePicker_ValidateMINUTE(TB_TimeEntry_Edit_StartTime_MM.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StartTime_SS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_Edit_StartTime_SS.Text = TimePicker_ValidateSECOND(TB_TimeEntry_Edit_StartTime_SS.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StopTime_HH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_Edit_StopTime_HH.Text = TimePicker_ValidateHOUR(TB_TimeEntry_Edit_StopTime_HH.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StopTime_MM_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_Edit_StopTime_MM.Text = TimePicker_ValidateMINUTE(TB_TimeEntry_Edit_StopTime_MM.Text);
+        }
+
+        private void TB_TimeEntry_Edit_StopTime_SS_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TB_TimeEntry_Edit_StopTime_SS.Text = TimePicker_ValidateSECOND(TB_TimeEntry_Edit_StopTime_SS.Text);
+        }
+        #endregion
 
         // -------------------------
         // CUSTOM METHODS
@@ -552,81 +767,71 @@ namespace TIMEFRAME_windows.VIEWS
             }
         }
 
-        private void Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+
+        private string TimePicker_ValidateHOUR(string hour)
         {
-            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
-        }
-
-        private void Img_ConfigTaskEntries_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
-        }
-
-        private void Img_Tasks_Add_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Grid_ConfigTaskEntries_AddEdit.Visibility = (Grid_ConfigTaskEntries_AddEdit.Visibility == Visibility.Visible)
-                ? Visibility.Hidden
-                : Visibility.Visible;
-
-            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
-        }
-
-        private void Img_Tasks_Edit_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Grid_ConfigTaskEntries_Edit.Visibility = (Grid_ConfigTaskEntries_Edit.Visibility == Visibility.Visible)
-                ? Visibility.Hidden
-                : Visibility.Visible;
-
-            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
-        }
-
-        private void Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Update_TaskEntryConfig_AddButton();
-        }
-
-        private void TB_TaskEntry_AddEdit_Name_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Update_TaskEntryConfig_AddButton();
-        }
-
-        private void TB_TaskEntry_AddEdit_Description_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Update_TaskEntryConfig_AddButton();
-        }
-
-        private void DataGrid_Tasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (DataGrid_Tasks.SelectedIndex > -1)
+            try
             {
-                Img_Tasks_Edit.IsEnabled = true;
-                Img_Tasks_Delete.IsEnabled = true;
+                int hour_value = Convert.ToInt32(hour);
+                if (hour_value < 0 || hour_value > 23)
+                {
+                    return "00";
+                }
+                else
+                {
+                    return hour;
+                }
             }
-            else
+            catch (Exception e)
             {
-                Img_Tasks_Edit.IsEnabled = false;
-                Img_Tasks_Delete.IsEnabled = false;
+                return "00";
             }
         }
 
-        private void Combo_TaksEntry_Edit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private string TimePicker_ValidateMINUTE(string minute)
         {
-            Update_TaskEntryConfig_EditButton();
+            try
+            {
+                int minute_value = Convert.ToInt32(minute);
+                if (minute_value < 0 || minute_value > 59)
+                {
+                    return "00";
+                }
+                else
+                {
+                    return minute;
+                }
+            }
+            catch (Exception e)
+            {
+                return "00";
+            }
         }
 
-        private void Combo_TaskEntry_Edit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private string TimePicker_ValidateSECOND(string second)
         {
-            Update_TaskEntryConfig_EditButton();
+            try
+            {
+                int second_value = Convert.ToInt32(second);
+                if (second_value < 0 || second_value > 59)
+                {
+                    return "00";
+                }
+                else
+                {
+                    return second;
+                }
+            }
+            catch (Exception e)
+            {
+                return "00";
+            }
         }
 
-        private void TB_TaskEntry_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        private bool IsNumericValue(string inputText)
         {
-            Update_TaskEntryConfig_EditButton();
-        }
-
-        private void TB_TaskEntry_Edit_Description_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            Update_TaskEntryConfig_EditButton();
+            Regex regex = new Regex("[^0-9]+");
+            return regex.IsMatch(inputText);
         }
     }
 }
