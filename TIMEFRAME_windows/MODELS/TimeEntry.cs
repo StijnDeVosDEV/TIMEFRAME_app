@@ -10,6 +10,7 @@ namespace TIMEFRAME_windows.MODELS
         public int Id { get; set; }
         public DateTime Start { get; set; }
         public DateTime Stop { get; set; }
+        public TimeSpan Duration { get; set; }
         public DateTime Date { get; set; }
         public DateTime CreationDate { get; set; }
 
