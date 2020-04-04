@@ -1813,34 +1813,42 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private void CalculateDateTime(string requestor)
         {
-            switch (requestor)
+            try
             {
-                case "TIMEENTRY_ADDEDIT_START":
-                    timeentry_addedit_DateStart = new DateTime(
-                        timeentry_addedit_DateStartUI.Year, timeentry_addedit_DateStartUI.Month, timeentry_addedit_DateStartUI.Day,
-                        timeentry_addedit_DateStart_hour, timeentry_addedit_DateStart_minute, timeentry_addedit_DateStart_second);
-                    break;
+                switch (requestor)
+                {
+                    case "TIMEENTRY_ADDEDIT_START":
+                        timeentry_addedit_DateStart = new DateTime(
+                            timeentry_addedit_DateStartUI.Year, timeentry_addedit_DateStartUI.Month, timeentry_addedit_DateStartUI.Day,
+                            timeentry_addedit_DateStart_hour, timeentry_addedit_DateStart_minute, timeentry_addedit_DateStart_second);
+                        break;
 
-                case "TIMEENTRY_ADDEDIT_STOP":
-                    timeentry_addedit_DateStop = new DateTime(
-                        timeentry_addedit_DateStopUI.Year, timeentry_addedit_DateStopUI.Month, timeentry_addedit_DateStopUI.Day,
-                        timeentry_addedit_DateStop_hour, timeentry_addedit_DateStop_minute, timeentry_addedit_DateStop_second);
-                    break;
+                    case "TIMEENTRY_ADDEDIT_STOP":
+                        timeentry_addedit_DateStop = new DateTime(
+                            timeentry_addedit_DateStopUI.Year, timeentry_addedit_DateStopUI.Month, timeentry_addedit_DateStopUI.Day,
+                            timeentry_addedit_DateStop_hour, timeentry_addedit_DateStop_minute, timeentry_addedit_DateStop_second);
+                        break;
 
-                case "TIMEENTRY_EDIT_START":
-                    timeentry_edit_DateStart = new DateTime(
-                        timeentry_edit_DateStartUI.Year, timeentry_edit_DateStartUI.Month, timeentry_edit_DateStartUI.Day,
-                        timeentry_edit_DateStart_hour, timeentry_edit_DateStart_minute, timeentry_edit_DateStart_second);
-                    break;
+                    case "TIMEENTRY_EDIT_START":
+                        timeentry_edit_DateStart = new DateTime(
+                            timeentry_edit_DateStartUI.Year, timeentry_edit_DateStartUI.Month, timeentry_edit_DateStartUI.Day,
+                            timeentry_edit_DateStart_hour, timeentry_edit_DateStart_minute, timeentry_edit_DateStart_second);
+                        break;
 
-                case "TIMEENTRY_EDIT_STOP":
-                    timeentry_edit_DateStop = new DateTime(
-                        timeentry_edit_DateStopUI.Year, timeentry_edit_DateStopUI.Month, timeentry_edit_DateStopUI.Day,
-                        timeentry_edit_DateStop_hour, timeentry_edit_DateStop_minute, timeentry_edit_DateStop_second);
-                    break;
+                    case "TIMEENTRY_EDIT_STOP":
+                        timeentry_edit_DateStop = new DateTime(
+                            timeentry_edit_DateStopUI.Year, timeentry_edit_DateStopUI.Month, timeentry_edit_DateStopUI.Day,
+                            timeentry_edit_DateStop_hour, timeentry_edit_DateStop_minute, timeentry_edit_DateStop_second);
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred in CalculateDateTime method : " + Environment.NewLine +
+                    e.ToString());
             }
         }
 
