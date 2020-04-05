@@ -1131,13 +1131,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _timeentry_addedit_DateStart_hour; }
             set { if (value != _timeentry_addedit_DateStart_hour) { _timeentry_addedit_DateStart_hour = value; 
                     RaisePropertyChangedEvent("timeentry_addedit_DateStart_hour");
-                    timeentry_addedit_DateStart = new DateTime(
-                        timeentry_addedit_DateStart.Year,
-                        timeentry_addedit_DateStart.Month,
-                        timeentry_addedit_DateStart.Day,
-                        timeentry_addedit_DateStart_hour,
-                        timeentry_addedit_DateStart.Minute,
-                        timeentry_addedit_DateStart.Second);
+                    //timeentry_addedit_DateStart = new DateTime(
+                    //    timeentry_addedit_DateStart.Year,
+                    //    timeentry_addedit_DateStart.Month,
+                    //    timeentry_addedit_DateStart.Day,
+                    //    timeentry_addedit_DateStart_hour,
+                    //    timeentry_addedit_DateStart.Minute,
+                    //    timeentry_addedit_DateStart.Second);
+                    CalculateDateTime("TIMEENTRY_ADDEDIT_START");
                 } }
         }
 
