@@ -9,6 +9,7 @@ using System.Windows.Input;
 using TIMEFRAME_windows.MODELS;
 using TIMEFRAME_windows.SERVICES;
 using TIMEFRAME_windows.SERVICES.Interfaces;
+using MaterialDesignThemes.Wpf;
 
 namespace TIMEFRAME_windows.VIEWMODELS
 {
@@ -195,6 +196,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private VIEWMODELS.Base.GEN_RelayCommand _DeleteTaskEntry;
 
         private VIEWMODELS.Base.GEN_RelayCommand _CloseLoadingScreen;
+
+        private VIEWMODELS.Base.GEN_RelayCommand _ApplyBaseTheme;
 
         // Services
         private IBackendService myBackendService;
@@ -1427,7 +1430,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand AddTaskEntry { get { return _AddTaskEntry; } }
         public ICommand EditTaskEntry { get { return _EditTaskEntry; } }
         public ICommand DeleteTaskEntry { get { return _DeleteTaskEntry; } }
+
+
         public ICommand CloseLoadingScreen { get { return _CloseLoadingScreen; } }
+
+
+        public ICommand ApplyBaseTheme { get { return _ApplyBaseTheme; } }
         #endregion
 
 
@@ -1879,9 +1887,24 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _DeleteTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTaskEntry());
 
             _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perfrom_CloseLoadingScreen());
+
+            _ApplyBaseTheme = new Base.GEN_RelayCommand(param => this.Perform_ApplyBaseTheme((bool)param));
         }
 
-        
+        private void Perform_ApplyBaseTheme(bool isDark)
+        {
+            ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
+        }
+
+        private static void ModifyTheme(Action<ITheme> modificationAction)
+        {
+            PaletteHelper paletteHelper = new PaletteHelper();
+            ITheme theme = paletteHelper.GetTheme();
+
+            modificationAction?.Invoke(theme);
+
+            paletteHelper.SetTheme(theme);
+        }
 
         private async void Perform_AddCustomer()
         {

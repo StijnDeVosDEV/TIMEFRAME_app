@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -67,6 +68,10 @@ namespace TIMEFRAME_windows.VIEWS
 
             // Initialize Configuration area
             Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
+
+            // Initialize Settings area
+            ScrollViewer_LogFile.Visibility = Visibility.Hidden;
+            StackPanel_Style.Visibility = Visibility.Hidden;
         }
 
         private void StackPanel_Config_Customer_MouseEnter(object sender, MouseEventArgs e)
@@ -248,6 +253,8 @@ namespace TIMEFRAME_windows.VIEWS
         {
             SERVICES.Logger.Write("Getting log content...");
             TextBlock_LogFile.Text = SERVICES.Logger.GetLogContent();
+
+            toggleVisibility_Settings(SettingsPanels.Log);
         }
 
         private void StackPanel_OpenAirButton_MouseEnter(object sender, MouseEventArgs e)
@@ -958,5 +965,49 @@ namespace TIMEFRAME_windows.VIEWS
             Regex regex = new Regex("[^0-9]+");
             return regex.IsMatch(inputText);
         }
+
+
+        // --------------
+        // SETTINGS PANEL
+        // --------------
+        private enum SettingsPanels
+        {
+            Log,
+            Style
+        }
+
+        private void toggleVisibility_Settings(SettingsPanels target)
+        {
+            // Hide everything in Settings panel
+            ScrollViewer_LogFile.Visibility = Visibility.Hidden;
+            StackPanel_Style.Visibility = Visibility.Hidden;
+
+            // Show only what is requested
+            switch (target)
+            {
+                case SettingsPanels.Log:
+                    ScrollViewer_LogFile.Visibility = Visibility.Visible;
+                    break;
+                case SettingsPanels.Style:
+                    StackPanel_Style.Visibility = Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #region SETTINGS PANEL
+        private void StackPanel_StyleButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //Label_StyleButton.Foreground = MaterialDesignColors.SecondaryColor.
+            //MaterialDesignThemes.Wpf.ColorZoneAssist.SetMode(Label_StyleButton, ColorZoneMode.Accent);
+            //MaterialDesignThemes.Wpf.
+        }
+
+        private void StackPanel_StyleButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            toggleVisibility_Settings(SettingsPanels.Style);
+        }
+        #endregion
     }
 }

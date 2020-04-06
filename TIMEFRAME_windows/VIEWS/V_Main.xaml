@@ -88,7 +88,7 @@
                 <ColumnDefinition Width="40"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border x:Name="Border_Top" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top"/>
+            <Border x:Name="Border_Top" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Panel.ZIndex="-5"/>
             <StackPanel x:Name="StackPanel_ContentButtons" Background="#FF556A80">
                 <Image x:Name="Img_Configuration" Source="/IMAGES/Database_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Configuration_MouseDown" MouseEnter="Img_Configuration_MouseEnter" MouseLeave="Img_Configuration_MouseLeave"/>
                 <Image x:Name="Img_Reports" Source="/IMAGES/Statistics_Black.png" Cursor="Hand" MouseDown="Img_Reports_MouseDown" MouseEnter="Img_Reports_MouseEnter" MouseLeave="Img_Reports_MouseLeave"/>
@@ -481,12 +481,32 @@
                         <Image x:Name="Img_LogFileButton" Height="20" Source="/IMAGES/Report_black_transp.png"/>
                         <Label Content="Log file" VerticalContentAlignment="Center"/>
                     </StackPanel>
-                    <ListBox Height="100"/>
+                    <StackPanel x:Name="StackPanel_StyleButton" Orientation="Horizontal" Cursor="Hand" Margin="0,10,0,0" MouseEnter="StackPanel_StyleButton_MouseEnter" ForceCursor="True" MouseDown="StackPanel_StyleButton_MouseDown">
+                        <materialDesign:PackIcon x:Name="Icon_Style" Kind="StyleOutline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                        <Label x:Name="Label_StyleButton" Content="Style" VerticalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"/>
+                    </StackPanel>
                 </StackPanel>
                 <Border x:Name="Border_SettingsMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1">
-                    <TextBlock x:Name="TextBlock_LogFile" Grid.Column="1" HorizontalAlignment="Stretch" Text="&lt;Log content...&gt;" TextWrapping="Wrap" VerticalAlignment="Stretch" Padding="10,10,10,0" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+                <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1" Visibility="Visible" d:IsHidden="True">
+                    <TextBlock x:Name="TextBlock_LogFile" Text="TextBlock" TextWrapping="Wrap"/>
                 </ScrollViewer>
+                <StackPanel x:Name="StackPanel_Style" Grid.Column="1" Margin="0,1,0,0">
+                    <materialDesign:Card
+                        Background="{DynamicResource MaterialDesignBackground}" Margin="5,5,5,5">
+                        <StackPanel>
+                            <Expander HorizontalAlignment="Stretch" Header="Main Theme" Cursor="Hand">
+                                <StackPanel
+                                Orientation="Horizontal"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="24,8,24,16">
+                                    <Label Content="Light"/>
+                                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Default ToggleButton Style" Margin="10,0,10,0" Command="{Binding ApplyBaseTheme, Mode=OneWay}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+                                    <Label Content="Dark"/>
+                                </StackPanel>
+                            </Expander>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </StackPanel>
             </Grid>
             <Grid x:Name="Grid_Reports" Grid.Column="1" d:IsHidden="True">
                 <Grid.ColumnDefinitions>
