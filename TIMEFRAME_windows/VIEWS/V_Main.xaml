@@ -95,7 +95,7 @@
                 <Image x:Name="Img_Settings" Source="/IMAGES/Settings_black.PNG" Cursor="Hand" MouseDown="Img_Settings_MouseDown" MouseEnter="Img_Settings_MouseEnter" MouseLeave="Img_Settings_MouseLeave"/>
             </StackPanel>
             <Border x:Name="Border_PrimaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-            <Grid x:Name="Grid_Configuration" Grid.Column="1">
+            <Grid x:Name="Grid_Configuration" Grid.Column="1" d:IsHidden="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
@@ -471,7 +471,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid x:Name="Grid_Settings" Grid.Column="1" d:IsHidden="True">
+            <Grid x:Name="Grid_Settings" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
@@ -481,6 +481,7 @@
                         <Image x:Name="Img_LogFileButton" Height="20" Source="/IMAGES/Report_black_transp.png"/>
                         <Label Content="Log file" VerticalContentAlignment="Center"/>
                     </StackPanel>
+                    <ListBox Height="100"/>
                 </StackPanel>
                 <Border x:Name="Border_SettingsMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
                 <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1">
