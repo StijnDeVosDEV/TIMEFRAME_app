@@ -1574,6 +1574,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                             }
                         }
 
+                        selProjectindex = -1;
+
                         availTaskEntries.Clear();
                         selTaskEntryindex = -1;
                         break;
@@ -1581,11 +1583,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     case dataCategory.Project:
                         availTaskEntries.Clear();
 
-                        foreach (TaskEntry taskentry in allTaskEntries)
+                        if (selProject != null)
                         {
-                            if (taskentry.ProjectId == selProject.Id)
+                            foreach (TaskEntry taskentry in allTaskEntries)
                             {
-                                availTaskEntries.Add(taskentry);
+                                if (taskentry.ProjectId == selProject.Id)
+                                {
+                                    availTaskEntries.Add(taskentry);
+                                }
                             }
                         }
 
