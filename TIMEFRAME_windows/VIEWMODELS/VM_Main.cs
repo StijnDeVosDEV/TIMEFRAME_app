@@ -1882,7 +1882,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             _AddTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_AddTaskEntry());
             _EditTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_EditTaskEntry());
-            _DeleteTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTimeEntry());
+            _DeleteTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTaskEntry());
 
             _AddTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_AddTimeEntry());
             _EditTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_EditTimeEntry());
@@ -2157,7 +2157,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        private async void Perform_DeleteTimeEntry()
+        private async void Perform_DeleteTaskEntry()
         {
             try
             {
@@ -2218,9 +2218,56 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        private void Perform_EditTimeEntry()
+        private async void Perform_EditTimeEntry()
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Get modified Time Entry
+                TimeEntry modTimeEntry = config_timeentry_selTimeEntry;
+
+                modTimeEntry.TaskEntryId = timeentry_edit_selTaskEntry.Id;
+                modTimeEntry.Start = timeentry_edit_DateTimeStart;
+                modTimeEntry.Stop = timeentry_edit_DateTimeStop;
+                modTimeEntry.Duration = timeentry_edit_Duration;
+
+                // Update in database
+                await myBackendService.EditTimeEntry(modTimeEntry);
+
+                // Update in current app session
+                allTimeEntries[allTimeEntries.IndexOf(allTimeEntries.Single(x => x.Id == modTimeEntry.Id))] = modTimeEntry;
+
+                // Update UI
+                timeentry_edit_Visibility = Visibility.Hidden;
+                UpdateConfigurationComponent();
+
+                Logger.Write("Perform_EditTaskEntry -  Time Entry edited");
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start editing existing time entry: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        private async void Perform_DeleteTimeEntry()
+        {
+            try
+            {
+                // Delete in database
+                await myBackendService.DeleteTimeEntry(config_timeentry_selTimeEntry.Id);
+
+                // Delete in current session
+                allTimeEntries.Remove(config_timeentry_selTimeEntry);
+
+                // Update UI
+                config_timeentry_selindex = -1;
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start delete existing time entry: " + Environment.NewLine +
+                    e.ToString());
+            }
         }
 
         private void Perform_ApplyBaseTheme(bool isDark)
