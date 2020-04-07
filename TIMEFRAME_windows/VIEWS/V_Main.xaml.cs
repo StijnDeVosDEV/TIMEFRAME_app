@@ -980,7 +980,9 @@ namespace TIMEFRAME_windows.VIEWS
         {
             // Hide everything in Settings panel
             ScrollViewer_LogFile.Visibility = Visibility.Hidden;
+
             StackPanel_Style.Visibility = Visibility.Hidden;
+            Border_StyleButton.BorderThickness = new Thickness(0);
 
             // Show only what is requested
             switch (target)
@@ -990,6 +992,7 @@ namespace TIMEFRAME_windows.VIEWS
                     break;
                 case SettingsPanels.Style:
                     StackPanel_Style.Visibility = Visibility.Visible;
+                    Border_StyleButton.BorderThickness = new Thickness(1);
                     break;
                 default:
                     break;
