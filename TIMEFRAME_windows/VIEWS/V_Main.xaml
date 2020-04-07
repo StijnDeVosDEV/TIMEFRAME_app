@@ -354,13 +354,23 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_TimeEntries" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="DataGrid_TimeEntries_SelectionChanged"/>
+                        <DataGrid x:Name="DataGrid_TimeEntries" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="DataGrid_TimeEntries_SelectionChanged" ItemsSource="{Binding db_shownTimeEntries}" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Customer.Name}" Header="Customer"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Name}" Header="Project"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Name}" Header="Task"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Start.TimeOfDay, Mode=OneWay}" Header="Start"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Stop.TimeOfDay, Mode=OneWay}" Header="Stop"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Duration}" Header="Duration (hours : minutes : seconds)"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <StackPanel x:Name="StackPanel_TimeEntries_buttons" Grid.Column="1">
                             <Image x:Name="Img_TimeEntries_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_TimeEntries_Add_MouseDown"/>
                             <Image x:Name="Img_TimeEntries_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_TimeEntries_Edit_MouseDown" IsEnabled="False"/>
                             <Image x:Name="Img_TimeEntries_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="False"/>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000" Visibility="{Binding timeentry_addedit_Visibility}" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
                                 <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -393,7 +403,7 @@
                                 <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigTimeEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand">
                                         <Image.InputBindings>
-                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddTaskEntry, Mode=Default}"/>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddTimeEntry, Mode=Default}"/>
                                         </Image.InputBindings>
                                     </Image>
                                     <Image x:Name="Img_ConfigTimeEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTimeEntries_AddEdit_Cancel_MouseDown"/>
@@ -401,7 +411,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BF000000">
+                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BF000000" d:IsHidden="True" Visibility="{Binding timeentry_edit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Properties">
                                 <Label Content="Edit Time Entry" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -434,7 +444,7 @@
                                 <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center" Height="Auto">
                                     <Image x:Name="Img_ConfigTimeEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
                                         <Image.InputBindings>
-                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditTaskEntry, Mode=Default}"/>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditTimeEntry, Mode=Default}"/>
                                         </Image.InputBindings>
                                     </Image>
                                     <Image x:Name="Img_ConfigTimeEntries_Edit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTimeEntries_Edit_Cancel_MouseDown"/>

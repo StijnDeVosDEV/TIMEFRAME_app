@@ -329,6 +329,32 @@ namespace TIMEFRAME_windows.SERVICES
                 return allTimeEntries;
             }
         }
+
+        public async Task EditTimeEntry(TimeEntry timeEntry)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync("api/timeentries/" + timeEntry.Id.ToString(), timeEntry);
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while modifying time entry : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        public async Task DeleteTimeEntry(int timeEntryID)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync("api/timeentries/" + timeEntryID.ToString());
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while deleting time entry : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
         #endregion
     }
 }

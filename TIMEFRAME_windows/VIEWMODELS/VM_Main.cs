@@ -182,6 +182,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private VIEWMODELS.Base.GEN_RelayCommand _AddTaskEntry;
         private VIEWMODELS.Base.GEN_RelayCommand _EditTaskEntry;
         private VIEWMODELS.Base.GEN_RelayCommand _DeleteTaskEntry;
+        private VIEWMODELS.Base.GEN_RelayCommand _AddTimeEntry;
+        private VIEWMODELS.Base.GEN_RelayCommand _EditTimeEntry;
+        private VIEWMODELS.Base.GEN_RelayCommand _DeleteTimeEntry;
 
         private VIEWMODELS.Base.GEN_RelayCommand _CloseLoadingScreen;
 
@@ -260,6 +263,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             timeentry_addedit_availTaskEntries = new ObservableCollection<TaskEntry>();
             timeentry_addedit_DateTimeStart = DateTime.Now;
             timeentry_addedit_DateTimeStop = DateTime.Now;
+            timeentry_addedit_TimeStart = DateTime.Now;
+            timeentry_addedit_TimeStop = DateTime.Now;
 
             timeentry_edit_selCustindex = -1;
             timeentry_edit_selProjindex = -1;
@@ -268,6 +273,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             timeentry_edit_availTaskEntries = new ObservableCollection<TaskEntry>();
             timeentry_edit_DateTimeStart = DateTime.Now;
             timeentry_edit_DateTimeStop = DateTime.Now;
+            timeentry_edit_TimeStart = DateTime.Now;
+            timeentry_edit_TimeStop = DateTime.Now;
 
 
             // Initializations
@@ -1237,7 +1244,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         }
         #endregion
 
-
         // Time Entry: edit
         #region Time Entry: EDIT
         public Visibility timeentry_edit_Visibility
@@ -1460,6 +1466,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand AddTaskEntry { get { return _AddTaskEntry; } }
         public ICommand EditTaskEntry { get { return _EditTaskEntry; } }
         public ICommand DeleteTaskEntry { get { return _DeleteTaskEntry; } }
+        public ICommand AddTimeEntry { get { return _AddTimeEntry; } }
+        public ICommand EditTimeEntry { get { return _EditTimeEntry; } }
+        public ICommand DeleteTimeEntry { get { return _DeleteTimeEntry; } }
 
 
         public ICommand CloseLoadingScreen { get { return _CloseLoadingScreen; } }
@@ -1855,47 +1864,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        //private void CalculateDateTime(string requestor)
-        //{
-        //    try
-        //    {
-        //        switch (requestor)
-        //        {
-        //            case "TIMEENTRY_ADDEDIT_START":
-        //                //timeentry_addedit_DateStart = new DateTime(
-        //                //    timeentry_addedit_DateStartUI.Year, timeentry_addedit_DateStartUI.Month, timeentry_addedit_DateStartUI.Day,
-        //                //    timeentry_addedit_DateStart_hour, timeentry_addedit_DateStart_minute, timeentry_addedit_DateStart_second);
-        //                break;
-
-        //            case "TIMEENTRY_ADDEDIT_STOP":
-        //                //timeentry_addedit_DateStop = new DateTime(
-        //                //    timeentry_addedit_DateStopUI.Year, timeentry_addedit_DateStopUI.Month, timeentry_addedit_DateStopUI.Day,
-        //                //    timeentry_addedit_DateStop_hour, timeentry_addedit_DateStop_minute, timeentry_addedit_DateStop_second);
-        //                break;
-
-        //            case "TIMEENTRY_EDIT_START":
-        //                //timeentry_edit_DateStart = new DateTime(
-        //                //    timeentry_edit_DateStartUI.Year, timeentry_edit_DateStartUI.Month, timeentry_edit_DateStartUI.Day,
-        //                //    timeentry_edit_DateStart_hour, timeentry_edit_DateStart_minute, timeentry_edit_DateStart_second);
-        //                break;
-
-        //            case "TIMEENTRY_EDIT_STOP":
-        //                //timeentry_edit_DateStop = new DateTime(
-        //                //    timeentry_edit_DateStopUI.Year, timeentry_edit_DateStopUI.Month, timeentry_edit_DateStopUI.Day,
-        //                //    timeentry_edit_DateStop_hour, timeentry_edit_DateStop_minute, timeentry_edit_DateStop_second);
-        //                break;
-
-        //            default:
-        //                break;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Logger.Write("!ERROR occurred in CalculateDateTime method : " + Environment.NewLine +
-        //            e.ToString());
-        //    }
-        //}
-
         //  ----------------------
         // COMMAND RELATED METHODS
         //  ----------------------
@@ -1914,16 +1882,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             _AddTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_AddTaskEntry());
             _EditTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_EditTaskEntry());
-            _DeleteTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTaskEntry());
+            _DeleteTaskEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTimeEntry());
 
-            _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perfrom_CloseLoadingScreen());
+            _AddTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_AddTimeEntry());
+            _EditTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_EditTimeEntry());
+            _DeleteTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTimeEntry());
+
+            _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perform_CloseLoadingScreen());
 
             _ApplyBaseTheme = new Base.GEN_RelayCommand(param => this.Perform_ApplyBaseTheme((bool)param));
-        }
-
-        private void Perform_ApplyBaseTheme(bool isDark)
-        {
-            ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
         }
 
         private static void ModifyTheme(Action<ITheme> modificationAction)
@@ -2190,7 +2157,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        private async void Perform_DeleteTaskEntry()
+        private async void Perform_DeleteTimeEntry()
         {
             try
             {
@@ -2211,8 +2178,58 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
+        private async void Perform_AddTimeEntry()
+        {
+            try
+            {
+                // Create new Time Entry
+                TimeEntry newTimeEntry = new TimeEntry()
+                {
+                    CreationDate = DateTime.Now,
+                    Duration = timeentry_addedit_Duration,
+                    Start = timeentry_addedit_DateTimeStart,
+                    Stop = timeentry_addedit_DateTimeStop,
+                    TaskEntryId = timeentry_addedit_selTaskEntry.Id,
+                    Date = timeentry_addedit_DateTimeStart
+                };
 
-        private void Perfrom_CloseLoadingScreen()
+                // Update in database
+                await myBackendService.AddTimeEntry(newTimeEntry);
+
+                // Update in current app session
+                newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
+                allTimeEntries.Add(newTimeEntry);
+
+                // Update UI
+                timeentry_addedit_selCustindex = -1;
+                timeentry_addedit_selProjindex = -1;
+                timeentry_addedit_selTaskEntryindex = -1;
+                timeentry_addedit_DateTimeStart = DateTime.Now;
+                timeentry_addedit_DateTimeStop = DateTime.Now;
+                timeentry_addedit_TimeStart = DateTime.Now;
+                timeentry_addedit_TimeStop = DateTime.Now;
+                timeentry_addedit_Visibility = Visibility.Hidden;
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start adding new Time Entry: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        private void Perform_EditTimeEntry()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Perform_ApplyBaseTheme(bool isDark)
+        {
+            ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
+        }
+
+
+        private void Perform_CloseLoadingScreen()
         {
             ToggleLoadingScreen_Visibility();
         }
