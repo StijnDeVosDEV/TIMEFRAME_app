@@ -17,7 +17,7 @@ namespace TIMEFRAME_windows_TESTS.VIEWMODELS
             TimeSpan duration = new TimeSpan(1, 0, 29, 15);
 
             // Act
-            vm_main.timeentry_addedit_DateStart = new DateTime(2020, 3, 5, 13, 30, 45);
+            vm_main.timeentry_addedit_DateTimeStart = new DateTime(2020, 3, 5, 13, 30, 45);
             vm_main.timeentry_addedit_DateStop = new DateTime(2020, 3, 6, 14, 0, 0);
 
             // Assert

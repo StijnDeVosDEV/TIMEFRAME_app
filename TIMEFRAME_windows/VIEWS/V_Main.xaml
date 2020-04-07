@@ -95,7 +95,7 @@
                 <Image x:Name="Img_Settings" Source="/IMAGES/Settings_black.PNG" Cursor="Hand" MouseDown="Img_Settings_MouseDown" MouseEnter="Img_Settings_MouseEnter" MouseLeave="Img_Settings_MouseLeave"/>
             </StackPanel>
             <Border x:Name="Border_PrimaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-            <Grid x:Name="Grid_Configuration" Grid.Column="1" d:IsHidden="True">
+            <Grid x:Name="Grid_Configuration" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
@@ -360,7 +360,7 @@
                             <Image x:Name="Img_TimeEntries_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_TimeEntries_Edit_MouseDown" IsEnabled="False"/>
                             <Image x:Name="Img_TimeEntries_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="False"/>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
                                 <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -370,8 +370,8 @@
                                 <Label Content="Task" Foreground="White"/>
                                 <ComboBox x:Name="Combo_TimeEntry_AddEdit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailTaskEntries_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding timeentry_addedit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Foreground="White" Content="Start Time"/>
-                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime" SelectedDateFormat="Long" Text="Select the starting date &amp; time" Cursor="Hand" FirstDayOfWeek="Monday" BorderBrush="{x:Null}" DisplayDate="{Binding timeentry_addedit_DateStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime_old" Orientation="Horizontal" Margin="10,0,10,0">
+                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime_old" SelectedDateFormat="Long" Text="Select the starting date &amp; time" Cursor="Hand" FirstDayOfWeek="Monday" BorderBrush="{x:Null}" DisplayDate="{Binding timeentry_addedit_DateStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
                                         <TextBox x:Name="TB_TimeEntry_AddEdit_StartTime_HH" Text="{Binding timeentry_addedit_DateStart_hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_StartTime_HH_TextChanged" PreviewTextInput="TB_TimeEntry_AddEdit_StartTime_HH_PreviewTextInput"/>
                                         <Label Content=":" Foreground="White" Padding="0,5,0,5"/>
@@ -381,9 +381,17 @@
                                         <Label Content="(hh:mm:ss)" Foreground="White" Padding="5,5,5,5" Width="100" Margin="-2,0,0,0"/>
                                     </StackPanel>
                                 </StackPanel>
+                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
+                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_addedit_DateTimeStart}" DisplayDate="{Binding timeentry_addedit_DateTimeStart}" />
+                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStart}" />
+                                </StackPanel>
                                 <Label Foreground="White" Content="Stop Time"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StopTime" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime" SelectedDateFormat="Long" Text="Select the starting date &amp; time" Cursor="Hand" FirstDayOfWeek="Monday" BorderBrush="{x:Null}" DisplayDate="{Binding timeentry_addedit_DateStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_addedit_DateStopUI}" />
+                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" />
+                                </StackPanel>
+                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StopTime_old" Orientation="Horizontal" Margin="10,0,10,0">
+                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime_old" SelectedDateFormat="Long" Text="Select the starting date &amp; time" Cursor="Hand" FirstDayOfWeek="Monday" BorderBrush="{x:Null}" DisplayDate="{Binding timeentry_addedit_DateStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
                                         <TextBox x:Name="TB_TimeEntry_AddEdit_StopTime_HH" Text="{Binding timeentry_addedit_DateStop_hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_StopTime_HH_TextChanged" PreviewTextInput="TB_TimeEntry_AddEdit_StopTime_HH_PreviewTextInput"/>
                                         <Label Content=":" Foreground="White" Padding="0,5,0,5"/>
@@ -414,7 +422,8 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BF000000">
+
+                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BF000000" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Properties">
                                 <Label Content="Edit Time Entry" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -471,7 +480,7 @@
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid x:Name="Grid_Settings" Grid.Column="1">
+            <Grid x:Name="Grid_Settings" Grid.Column="1" d:IsHidden="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>

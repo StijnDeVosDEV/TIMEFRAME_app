@@ -148,8 +148,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<TaskEntry> _timeentry_addedit_availTaskEntries;
         private int _timeentry_addedit_selTaskEntryindex;
         private TaskEntry _timeentry_addedit_selTaskEntry;
-        private DateTime _timeentry_addedit_DateStart;
-        private DateTime _timeentry_addedit_DateStartUI;
+        private DateTime _timeentry_addedit_DateTimeStart;
+        //private DateTime _timeentry_addedit_DateStartUI;
+        private DateTime _timeentry_addedit_TimeStart;
         private int _timeentry_addedit_DateStart_hour;
         private int _timeentry_addedit_DateStart_minute;
         private int _timeentry_addedit_DateStart_second;
@@ -270,7 +271,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             timeentry_addedit_selTaskEntryindex = -1;
             timeentry_addedit_availProjects = new ObservableCollection<Project>();
             timeentry_addedit_availTaskEntries = new ObservableCollection<TaskEntry>();
-            timeentry_addedit_DateStart = DateTime.Now;
+            timeentry_addedit_DateTimeStart = DateTime.Now;
+            //timeentry_addedit_DateStartUI = DateTime.Now;
             timeentry_addedit_DateStop = DateTime.Now;
             timeentry_addedit_DateStart_hour = 0;
             timeentry_addedit_DateStart_minute = 0;
@@ -447,10 +449,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         #region CONFIGURATION Component
         // Shown lists
+        #region Shown lists
         public ObservableCollection<Customer> db_shownCustomers
         {
-            get { return _db_shownCustomers ; }
-            set { if(value != _db_shownCustomers) { _db_shownCustomers = value; RaisePropertyChangedEvent("db_shownCustomers"); } }
+            get { return _db_shownCustomers; }
+            set { if (value != _db_shownCustomers) { _db_shownCustomers = value; RaisePropertyChangedEvent("db_shownCustomers"); } }
         }
 
         public ObservableCollection<Project> db_shownProjects
@@ -470,25 +473,31 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _db_shownTimeEntries; }
             set { if (value != _db_shownTimeEntries) { _db_shownTimeEntries = value; RaisePropertyChangedEvent("db_shownTimeEntries"); } }
         }
-
+        #endregion
 
 
         // Configuration:  CUSTOMER
         // ------------------------
         // Configuration:  Customer SELECTION
+        #region Customer: SELECTION
         public int config_customer_selindex
         {
             get { return _config_customer_selindex; }
-            set { if (value != _config_customer_selindex) { _config_customer_selindex = value; RaisePropertyChangedEvent("config_customer_selindex");
-                    if (config_customer_selindex > -1) 
-                    { 
+            set
+            {
+                if (value != _config_customer_selindex)
+                {
+                    _config_customer_selindex = value; RaisePropertyChangedEvent("config_customer_selindex");
+                    if (config_customer_selindex > -1)
+                    {
                         config_customer_selCustomer = db_shownCustomers[config_customer_selindex];
                         customer_edit_IsEnabled = true;
                         Update_EditSelectionData(dataCategory.Customer);
                         customer_delete_IsEnabled = true;
                     }
                     else { config_customer_selCustomer = null; customer_edit_IsEnabled = false; customer_delete_IsEnabled = false; }
-                } }
+                }
+            }
         }
 
         public Customer config_customer_selCustomer
@@ -496,22 +505,29 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _config_customer_selCustomer; }
             set { if (value != _config_customer_selCustomer) { _config_customer_selCustomer = value; RaisePropertyChangedEvent("config_customer_selCustomer"); } }
         }
+        #endregion
 
         // Configuration:  Customer ADD
+        #region Customer: ADD
         public Visibility customer_addedit_Visibility
         {
             get { return _customer_addedit_Visibility; }
-            set { if (value != _customer_addedit_Visibility) { _customer_addedit_Visibility = value; RaisePropertyChangedEvent("customer_addedit_Visibility");
+            set
+            {
+                if (value != _customer_addedit_Visibility)
+                {
+                    _customer_addedit_Visibility = value; RaisePropertyChangedEvent("customer_addedit_Visibility");
                     if (customer_addedit_Visibility == Visibility.Visible) { Update_SecondaryViewVisibilities(dataCategory.Customer, true); }
-                } }
+                }
+            }
         }
-        
+
         public string customer_addedit_Title
         {
             get { return _customer_addedit_Title; }
             set { if (value != _customer_addedit_Title) { _customer_addedit_Title = value; RaisePropertyChangedEvent("customer_addedit_Title"); } }
         }
-        
+
         public string customer_addedit_Name
         {
             get { return _customer_addedit_Name; }
@@ -529,9 +545,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _customer_addedit_Email; }
             set { if (value != _customer_addedit_Email) { _customer_addedit_Email = value; RaisePropertyChangedEvent("customer_addedit_Email"); } }
         }
-
+        #endregion
 
         // Configuration:  Customer EDIT
+        #region Customer: EDIT
         public bool customer_edit_IsEnabled
         {
             get { return _customer_edit_IsEnabled; }
@@ -541,9 +558,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public Visibility customer_edit_Visibility
         {
             get { return _customer_edit_Visibility; }
-            set { if (value != _customer_edit_Visibility) { _customer_edit_Visibility = value; RaisePropertyChangedEvent("customer_edit_Visibility");
+            set
+            {
+                if (value != _customer_edit_Visibility)
+                {
+                    _customer_edit_Visibility = value; RaisePropertyChangedEvent("customer_edit_Visibility");
                     if (customer_edit_Visibility == Visibility.Visible) { Update_SecondaryViewVisibilities(dataCategory.Customer, false); }
-                } }
+                }
+            }
         }
 
         public string customer_edit_Title
@@ -569,19 +591,22 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _customer_edit_Email; }
             set { if (value != _customer_edit_Email) { _customer_edit_Email = value; RaisePropertyChangedEvent("customer_edit_Email"); } }
         }
+        #endregion
 
         // Configuration:  Customer DELETE
+        #region Customer: DELETE
         public bool customer_delete_IsEnabled
         {
             get { return _customer_delete_IsEnabled; }
             set { if (value != _customer_delete_IsEnabled) { _customer_delete_IsEnabled = value; RaisePropertyChangedEvent("customer_delete_IsEnabled"); } }
         }
-
+        #endregion
 
 
         // Configuration:  PROJECT
         // -----------------------
         // Configuration:  Project SELECTION
+        #region Project: SELECTION
         public int config_project_selindex
         {
             get { return _config_project_selindex; }
@@ -607,8 +632,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _config_project_selProject; }
             set { if (value != _config_project_selProject) { _config_project_selProject = value; RaisePropertyChangedEvent("config_project_selProject"); } }
         }
+        #endregion
 
         // Configuration:  Project ADD
+        #region Project: ADD
         public Visibility project_addedit_Visibility
         {
             get { return _project_addedit_Visibility; }
@@ -625,13 +652,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int project_addedit_selCustindex
         {
             get { return _project_addedit_selCustindex; }
-            set { if (value != _project_addedit_selCustindex) { _project_addedit_selCustindex = value; RaisePropertyChangedEvent("project_addedit_selCustindex");
+            set
+            {
+                if (value != _project_addedit_selCustindex)
+                {
+                    _project_addedit_selCustindex = value; RaisePropertyChangedEvent("project_addedit_selCustindex");
                     if (project_addedit_selCustindex > -1)
                     {
                         project_addedit_selCust = allCustomers[project_addedit_selCustindex];
                     }
                     else { project_addedit_selCust = null; }
-                } }
+                }
+            }
         }
 
         public Customer project_addedit_selCust
@@ -651,11 +683,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _project_addedit_Description; }
             set { if (value != _project_addedit_Description) { _project_addedit_Description = value; RaisePropertyChangedEvent("project_addedit_Description"); } }
         }
-
-
-
+        #endregion
 
         // Configuration:  Project EDIT
+        #region Project: EDIT
         public bool project_edit_IsEnabled
         {
             get { return _project_edit_IsEnabled; }
@@ -708,31 +739,39 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _project_edit_Description; }
             set { if (value != _project_edit_Description) { _project_edit_Description = value; RaisePropertyChangedEvent("project_edit_Description"); } }
         }
+        #endregion
 
         // Configuration:  Project DELETE
+        #region Project: DELETE
         public bool project_delete_IsEnabled
         {
             get { return _project_delete_IsEnabled; }
             set { if (value != _project_delete_IsEnabled) { _project_delete_IsEnabled = value; RaisePropertyChangedEvent("project_delete_IsEnabled"); } }
         }
-
+        #endregion
 
 
         // Configuration:  TASK ENTRY
         // --------------------------
         // Configuration:  Task Entry SELECTION
+        #region Task Entry: SELECTION
         public int config_taskentry_selindex
         {
             get { return _config_taskentry_selindex; }
-            set { if (value != _config_taskentry_selindex) { _config_taskentry_selindex = value; 
+            set
+            {
+                if (value != _config_taskentry_selindex)
+                {
+                    _config_taskentry_selindex = value;
                     RaisePropertyChangedEvent("config_taskentry_selindex");
                     if (config_taskentry_selindex > -1)
                     {
                         config_taskentry_selTaskEntry = db_shownTaskEntries[config_taskentry_selindex];
                         Update_EditSelectionData(dataCategory.TaskEntry);
                     }
-                    else { config_taskentry_selTaskEntry = null;}
-                } }
+                    else { config_taskentry_selTaskEntry = null; }
+                }
+            }
         }
 
         public TaskEntry config_taskentry_selTaskEntry
@@ -740,9 +779,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _config_taskentry_selTaskEntry; }
             set { if (value != _config_taskentry_selTaskEntry) { _config_taskentry_selTaskEntry = value; RaisePropertyChangedEvent("config_taskentry_selTaskEntry"); } }
         }
-
+        #endregion
 
         // Configuration:  Task Entry ADD
+        #region Task Entry: ADD
         public Visibility taskentry_addedit_Visibility
         {
             get { return _taskentry_addedit_Visibility; }
@@ -753,7 +793,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int taskentry_addedit_selCustindex
         {
             get { return _taskentry_addedit_selCustindex; }
-            set { if (value != _taskentry_addedit_selCustindex) { _taskentry_addedit_selCustindex = value; 
+            set
+            {
+                if (value != _taskentry_addedit_selCustindex)
+                {
+                    _taskentry_addedit_selCustindex = value;
                     RaisePropertyChangedEvent("taskentry_addedit_selCustindex");
                     if (taskentry_addedit_selCustindex > -1)
                     {
@@ -769,7 +813,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                             taskentry_addedit_availProjects.Add(project);
                         }
                     }
-                } }
+                }
+            }
         }
 
         public Customer taskentry_addedit_selCust
@@ -787,14 +832,19 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int taskentry_addedit_selProjindex
         {
             get { return _taskentry_addedit_selProjindex; }
-            set { if (value != _taskentry_addedit_selProjindex) { _taskentry_addedit_selProjindex = value; 
+            set
+            {
+                if (value != _taskentry_addedit_selProjindex)
+                {
+                    _taskentry_addedit_selProjindex = value;
                     RaisePropertyChangedEvent("taskentry_addedit_selProjindex");
                     if (taskentry_addedit_selProjindex > -1)
                     {
                         taskentry_addedit_selProj = taskentry_addedit_availProjects[taskentry_addedit_selProjindex];
                     }
                     else { taskentry_addedit_selProj = null; }
-                } }
+                }
+            }
         }
 
         public Project taskentry_addedit_selProj
@@ -824,30 +874,42 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public bool taskentry_addedit_Status_IsActive
         {
             get { return _taskentry_addedit_Status_IsActive; }
-            set { if (value != _taskentry_addedit_Status_IsActive) { _taskentry_addedit_Status_IsActive = value; 
+            set
+            {
+                if (value != _taskentry_addedit_Status_IsActive)
+                {
+                    _taskentry_addedit_Status_IsActive = value;
                     RaisePropertyChangedEvent("taskentry_addedit_Status_IsActive");
                     if (taskentry_addedit_Status_IsActive == true)
                     {
                         taskentry_addedit_Status_IsInactive = false;
                         taskentry_addedit_Status = "Active";
                     }
-                } }
+                }
+            }
         }
 
         public bool taskentry_addedit_Status_IsInactive
         {
             get { return _taskentry_addedit_Status_IsInactive; }
-            set { if (value != _taskentry_addedit_Status_IsInactive) { _taskentry_addedit_Status_IsInactive = value; 
+            set
+            {
+                if (value != _taskentry_addedit_Status_IsInactive)
+                {
+                    _taskentry_addedit_Status_IsInactive = value;
                     RaisePropertyChangedEvent("taskentry_addedit_Status_IsInactive");
                     if (taskentry_addedit_Status_IsInactive == true)
                     {
                         taskentry_addedit_Status_IsActive = false;
                         taskentry_addedit_Status = "Inactive";
                     }
-                } }
+                }
+            }
         }
+        #endregion
 
         // Configuration:  Task Entry EDIT
+        #region Task Entry: EDIT
         public Visibility taskentry_edit_Visibility
         {
             get { return _taskentry_edit_Visibility; }
@@ -970,15 +1032,21 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 }
             }
         }
+        #endregion
 
 
         // Configuration:  TIME ENTRY
         // --------------------------
         // Time Entry: selection
+        #region Time Entry: SELECTION
         public int config_timeentry_selindex
         {
             get { return _config_timeentry_selindex; }
-            set { if (value != _config_timeentry_selindex) { _config_timeentry_selindex = value; 
+            set
+            {
+                if (value != _config_timeentry_selindex)
+                {
+                    _config_timeentry_selindex = value;
                     RaisePropertyChangedEvent("config_timeentry_selindex");
                     if (config_timeentry_selindex > -1)
                     {
@@ -986,7 +1054,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         Update_EditSelectionData(dataCategory.TimeEntry);
                     }
                     else { config_timeentry_selTimeEntry = null; }
-                } }
+                }
+            }
         }
 
         public TimeEntry config_timeentry_selTimeEntry
@@ -994,8 +1063,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _config_timeentry_selTimeEntry; }
             set { if (value != _config_timeentry_selTimeEntry) { _config_timeentry_selTimeEntry = value; RaisePropertyChangedEvent("config_timeentry_selTimeEntry"); } }
         }
+        #endregion
 
         // Time Entry: add/edit
+        #region Time Entry: ADD
         public Visibility timeentry_addedit_Visibility
         {
             get { return _timeentry_addedit_Visibility; }
@@ -1005,7 +1076,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int timeentry_addedit_selCustindex
         {
             get { return _timeentry_addedit_selCustindex; }
-            set { if (value != _timeentry_addedit_selCustindex) { _timeentry_addedit_selCustindex = value; 
+            set
+            {
+                if (value != _timeentry_addedit_selCustindex)
+                {
+                    _timeentry_addedit_selCustindex = value;
                     RaisePropertyChangedEvent("timeentry_addedit_selCustindex");
                     if (timeentry_addedit_selCustindex > -1)
                     {
@@ -1022,7 +1097,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         }
                     }
                     else { timeentry_addedit_selCust = null; }
-                } }
+                }
+            }
         }
 
         public Customer timeentry_addedit_selCust
@@ -1040,7 +1116,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int timeentry_addedit_selProjindex
         {
             get { return _timeentry_addedit_selProjindex; }
-            set { if (value != _timeentry_addedit_selProjindex) { _timeentry_addedit_selProjindex = value; 
+            set
+            {
+                if (value != _timeentry_addedit_selProjindex)
+                {
+                    _timeentry_addedit_selProjindex = value;
                     RaisePropertyChangedEvent("timeentry_addedit_selProjindex");
                     if (timeentry_addedit_selProjindex > -1)
                     {
@@ -1057,7 +1137,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         }
                     }
                     else { timeentry_addedit_selProj = null; }
-                } }
+                }
+            }
         }
 
         public Project timeentry_addedit_selProj
@@ -1075,7 +1156,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int timeentry_addedit_selTaskEntryindex
         {
             get { return _timeentry_addedit_selTaskEntryindex; }
-            set { if (value != _timeentry_addedit_selTaskEntryindex) { _timeentry_addedit_selTaskEntryindex = value; 
+            set
+            {
+                if (value != _timeentry_addedit_selTaskEntryindex)
+                {
+                    _timeentry_addedit_selTaskEntryindex = value;
                     RaisePropertyChangedEvent("timeentry_addedit_selTaskEntryindex");
                     if (timeentry_addedit_selTaskEntryindex > -1)
                     {
@@ -1083,7 +1168,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         timeentry_addedit_selTaskEntry = timeentry_addedit_availTaskEntries[timeentry_addedit_selTaskEntryindex];
                     }
                     else { timeentry_addedit_selProj = null; }
-                } }
+                }
+            }
         }
 
         public TaskEntry timeentry_addedit_selTaskEntry
@@ -1092,47 +1178,115 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if (value != _timeentry_addedit_selTaskEntry) { _timeentry_addedit_selTaskEntry = value; RaisePropertyChangedEvent("timeentry_addedit_selTaskEntry"); } }
         }
 
-        public DateTime timeentry_addedit_DateStart
+        public DateTime timeentry_addedit_DateTimeStart
         {
-            get { return _timeentry_addedit_DateStart; }
-            set { if (value != _timeentry_addedit_DateStart) { _timeentry_addedit_DateStart = value; 
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStart");
+            get { return _timeentry_addedit_DateTimeStart; }
+            set
+            {
+                if (value != _timeentry_addedit_DateTimeStart)
+                {
+                    _timeentry_addedit_DateTimeStart = value;
+                    RaisePropertyChangedEvent("timeentry_addedit_DateTimeStart");
+
+                    Logger.Write("timeentry_addedit_DateTimeStart changed: " + Environment.NewLine +
+                                    "Date = " + timeentry_addedit_DateTimeStart.Date.ToLongDateString() + Environment.NewLine +
+                                    "Time = " + timeentry_addedit_DateTimeStart.TimeOfDay.ToString());
+
                     CalculateDuration("TIMEENTRY_ADDEDIT");
-                } }
+                }
+            }
         }
 
-
-        public DateTime timeentry_addedit_DateStartUI
+        public DateTime timeentry_addedit_TimeStart
         {
-            get { return _timeentry_addedit_DateStartUI; }
-            set { if (value != _timeentry_addedit_DateStartUI) { _timeentry_addedit_DateStartUI = value; 
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStartUI");
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_START");
-                } }
+            get { return _timeentry_addedit_TimeStart; }
+            set
+            {
+                if (value != _timeentry_addedit_TimeStart)
+                {
+                    _timeentry_addedit_TimeStart = value;
+                    RaisePropertyChangedEvent("timeentry_addedit_TimeStart");
+                    timeentry_addedit_DateTimeStart = new DateTime(
+                        timeentry_addedit_DateTimeStart.Year,
+                        timeentry_addedit_DateTimeStart.Month,
+                        timeentry_addedit_DateTimeStart.Day,
+                        timeentry_addedit_TimeStart.Hour,
+                        timeentry_addedit_TimeStart.Minute,
+                        timeentry_addedit_TimeStart.Second);
+                }
+            }
         }
+
+
+        //public DateTime timeentry_addedit_DateStartUI
+        //{
+        //    get { return _timeentry_addedit_DateStartUI; }
+        //    set { if (value != _timeentry_addedit_DateStartUI) { _timeentry_addedit_DateStartUI = value; 
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStartUI");
+        //            //CalculateDateTime("TIMEENTRY_ADDEDIT_START");
+
+        //            Logger.Write("TIMEENTRY_ADDEDIT_DATESTARTUI changed: " + Environment.NewLine +
+        //                "Date = " + timeentry_addedit_DateStartUI.Date.ToLongDateString() + Environment.NewLine +
+        //                "Time = " + timeentry_addedit_DateStartUI.TimeOfDay.ToString());
+        //        } }
+        //}
+
+        //public DateTime timeentry_addedit_TimeStartUI
+        //{
+        //    get { return _timeentry_addedit_TimeStartUI; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_TimeStartUI)
+        //        {
+        //            _timeentry_addedit_TimeStartUI = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_TimeStartUI");
+        //            timeentry_addedit_DateStartUI= new DateTime(
+        //                timeentry_addedit_DateStartUI.Year,
+        //                timeentry_addedit_DateStartUI.Month,
+        //                timeentry_addedit_DateStartUI.Day,
+        //                timeentry_addedit_TimeStartUI.Hour,
+        //                timeentry_addedit_TimeStartUI.Minute,
+        //                timeentry_addedit_TimeStartUI.Second);
+        //        }
+        //    }
+        //}
 
         public DateTime timeentry_addedit_DateStop
         {
             get { return _timeentry_addedit_DateStop; }
-            set { if (value != _timeentry_addedit_DateStop) { _timeentry_addedit_DateStop = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStop)
+                {
+                    _timeentry_addedit_DateStop = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStop");
                     CalculateDuration("TIMEENTRY_ADDEDIT");
-                } }
+                }
+            }
         }
 
         public DateTime timeentry_addedit_DateStopUI
         {
             get { return _timeentry_addedit_DateStopUI; }
-            set { if (value != _timeentry_addedit_DateStopUI) { _timeentry_addedit_DateStopUI = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStopUI)
+                {
+                    _timeentry_addedit_DateStopUI = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStopUI");
                     CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                } }
+                }
+            }
         }
 
         public int timeentry_addedit_DateStart_hour
         {
             get { return _timeentry_addedit_DateStart_hour; }
-            set { if (value != _timeentry_addedit_DateStart_hour) { _timeentry_addedit_DateStart_hour = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStart_hour)
+                {
+                    _timeentry_addedit_DateStart_hour = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStart_hour");
                     //timeentry_addedit_DateStart = new DateTime(
                     //    timeentry_addedit_DateStart.Year,
@@ -1142,52 +1296,78 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     //    timeentry_addedit_DateStart.Minute,
                     //    timeentry_addedit_DateStart.Second);
                     CalculateDateTime("TIMEENTRY_ADDEDIT_START");
-                } }
+                }
+            }
         }
 
         public int timeentry_addedit_DateStart_minute
         {
             get { return _timeentry_addedit_DateStart_minute; }
-            set { if (value != _timeentry_addedit_DateStart_minute) { _timeentry_addedit_DateStart_minute = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStart_minute)
+                {
+                    _timeentry_addedit_DateStart_minute = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStart_minute");
                     CalculateDateTime("TIMEENTRY_ADDEDIT_START");
-                } }
+                }
+            }
         }
 
         public int timeentry_addedit_DateStart_second
         {
             get { return _timeentry_addedit_DateStart_second; }
-            set { if (value != _timeentry_addedit_DateStart_second) { _timeentry_addedit_DateStart_second = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStart_second)
+                {
+                    _timeentry_addedit_DateStart_second = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStart_second");
                     CalculateDateTime("TIMEENTRY_ADDEDIT_START");
-                } }
+                }
+            }
         }
 
         public int timeentry_addedit_DateStop_hour
         {
             get { return _timeentry_addedit_DateStop_hour; }
-            set { if (value != _timeentry_addedit_DateStop_hour) { _timeentry_addedit_DateStop_hour = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStop_hour)
+                {
+                    _timeentry_addedit_DateStop_hour = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStop_hour");
                     CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                } }
+                }
+            }
         }
 
         public int timeentry_addedit_DateStop_minute
         {
             get { return _timeentry_addedit_DateStop_minute; }
-            set { if (value != _timeentry_addedit_DateStop_minute) { _timeentry_addedit_DateStop_minute = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStop_minute)
+                {
+                    _timeentry_addedit_DateStop_minute = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStop_minute");
                     CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                } }
+                }
+            }
         }
 
         public int timeentry_addedit_DateStop_second
         {
             get { return _timeentry_addedit_DateStop_second; }
-            set { if (value != _timeentry_addedit_DateStop_second) { _timeentry_addedit_DateStop_second = value; 
+            set
+            {
+                if (value != _timeentry_addedit_DateStop_second)
+                {
+                    _timeentry_addedit_DateStop_second = value;
                     RaisePropertyChangedEvent("timeentry_addedit_DateStop_second");
                     CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                } }
+                }
+            }
         }
 
         public TimeSpan timeentry_addedit_Duration
@@ -1195,8 +1375,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _timeentry_addedit_Duration; }
             set { if (value != _timeentry_addedit_Duration) { _timeentry_addedit_Duration = value; RaisePropertyChangedEvent("timeentry_addedit_Duration"); } }
         }
+        #endregion
+
 
         // Time Entry: edit
+        #region Time Entry: EDIT
         public Visibility timeentry_edit_Visibility
         {
             get { return _timeentry_edit_Visibility; }
@@ -1326,9 +1509,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public DateTime timeentry_edit_DateStartUI
         {
             get { return _timeentry_edit_DateStartUI; }
-            set { if (value != _timeentry_edit_DateStartUI) { _timeentry_edit_DateStartUI = value; RaisePropertyChangedEvent("timeentry_edit_DateStartUI");
+            set
+            {
+                if (value != _timeentry_edit_DateStartUI)
+                {
+                    _timeentry_edit_DateStartUI = value; RaisePropertyChangedEvent("timeentry_edit_DateStartUI");
                     CalculateDateTime("TIMEENTRY_EDIT_START");
-                } }
+                }
+            }
         }
 
         public DateTime timeentry_edit_DateStop
@@ -1348,63 +1536,98 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public DateTime timeentry_edit_DateStopUI
         {
             get { return _timeentry_edit_DateStopUI; }
-            set { if (value != _timeentry_edit_DateStopUI) { _timeentry_edit_DateStopUI = value; RaisePropertyChangedEvent("timeentry_edit_DateStopUI");
+            set
+            {
+                if (value != _timeentry_edit_DateStopUI)
+                {
+                    _timeentry_edit_DateStopUI = value; RaisePropertyChangedEvent("timeentry_edit_DateStopUI");
                     CalculateDateTime("TIMEENTRY_EDIT_STOP");
-                } }
+                }
+            }
         }
 
         public int timeentry_edit_DateStart_hour
         {
             get { return _timeentry_edit_DateStart_hour; }
-            set { if (value != _timeentry_edit_DateStart_hour) { _timeentry_edit_DateStart_hour = value; 
+            set
+            {
+                if (value != _timeentry_edit_DateStart_hour)
+                {
+                    _timeentry_edit_DateStart_hour = value;
                     RaisePropertyChangedEvent("timeentry_edit_DateStart_hour");
                     CalculateDateTime("TIMEENTRY_EDIT_START");
-                } }
+                }
+            }
         }
 
         public int timeentry_edit_DateStart_minute
         {
             get { return _timeentry_edit_DateStart_minute; }
-            set { if (value != _timeentry_edit_DateStart_minute) { _timeentry_edit_DateStart_minute = value; 
+            set
+            {
+                if (value != _timeentry_edit_DateStart_minute)
+                {
+                    _timeentry_edit_DateStart_minute = value;
                     RaisePropertyChangedEvent("timeentry_edit_DateStart_minute");
                     CalculateDateTime("TIMEENTRY_EDIT_START");
-                } }
+                }
+            }
         }
 
         public int timeentry_edit_DateStart_second
         {
             get { return _timeentry_edit_DateStart_second; }
-            set { if (value != _timeentry_edit_DateStart_second) { _timeentry_edit_DateStart_second = value; 
+            set
+            {
+                if (value != _timeentry_edit_DateStart_second)
+                {
+                    _timeentry_edit_DateStart_second = value;
                     RaisePropertyChangedEvent("timeentry_edit_DateStart_second");
                     CalculateDateTime("TIMEENTRY_EDIT_START");
-                } }
+                }
+            }
         }
 
         public int timeentry_edit_DateStop_hour
         {
             get { return _timeentry_edit_DateStop_hour; }
-            set { if (value != _timeentry_edit_DateStop_hour) { _timeentry_edit_DateStop_hour = value; 
+            set
+            {
+                if (value != _timeentry_edit_DateStop_hour)
+                {
+                    _timeentry_edit_DateStop_hour = value;
                     RaisePropertyChangedEvent("timeentry_edit_DateStop_hour");
                     CalculateDateTime("TIMEENTRY_EDIT_STOP");
-                } }
+                }
+            }
         }
 
         public int timeentry_edit_DateStop_minute
         {
             get { return _timeentry_edit_DateStop_minute; }
-            set { if (value != _timeentry_edit_DateStop_minute) { _timeentry_edit_DateStop_minute = value;
+            set
+            {
+                if (value != _timeentry_edit_DateStop_minute)
+                {
+                    _timeentry_edit_DateStop_minute = value;
                     RaisePropertyChangedEvent("timeentry_edit_DateStop_minute");
                     CalculateDateTime("TIMEENTRY_EDIT_STOP");
-                } }
+                }
+            }
         }
 
         public int timeentry_edit_DateStop_second
         {
             get { return _timeentry_edit_DateStop_second; }
-            set { if (value != _timeentry_edit_DateStop_second) { _timeentry_edit_DateStop_second = value;
+            set
+            {
+                if (value != _timeentry_edit_DateStop_second)
+                {
+                    _timeentry_edit_DateStop_second = value;
                     RaisePropertyChangedEvent("timeentry_edit_DateStop_second");
                     CalculateDateTime("TIMEENTRY_EDIT_STOP");
-                } }
+                }
+            }
         }
 
         public TimeSpan timeentry_edit_Duration
@@ -1412,6 +1635,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _timeentry_edit_Duration; }
             set { if (value != _timeentry_edit_Duration) { _timeentry_edit_Duration = value; RaisePropertyChangedEvent("timeentry_edit_Duration"); } }
         }
+        #endregion
 
         // Time Entry: delete
         #endregion
@@ -1805,11 +2029,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 case "TIMEENTRY_ADDEDIT":
 
-                    if (timeentry_addedit_DateStop.Ticks > timeentry_addedit_DateStart.Ticks)
-                    {
-                        duration = timeentry_addedit_DateStop.Subtract(timeentry_addedit_DateStart);
-                    }
-                    timeentry_addedit_Duration = new TimeSpan(duration.Hours, duration.Minutes, duration.Seconds);
+                    //if (timeentry_addedit_DateStop.Ticks > timeentry_addedit_DateStart.Ticks)
+                    //{
+                    //    duration = timeentry_addedit_DateStop.Subtract(timeentry_addedit_DateStart);
+                    //}
+                    //timeentry_addedit_Duration = new TimeSpan(duration.Hours, duration.Minutes, duration.Seconds);
                     break;
 
                 case "TIMEENTRY_EDIT":
@@ -1832,9 +2056,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 switch (requestor)
                 {
                     case "TIMEENTRY_ADDEDIT_START":
-                        timeentry_addedit_DateStart = new DateTime(
-                            timeentry_addedit_DateStartUI.Year, timeentry_addedit_DateStartUI.Month, timeentry_addedit_DateStartUI.Day,
-                            timeentry_addedit_DateStart_hour, timeentry_addedit_DateStart_minute, timeentry_addedit_DateStart_second);
+                        //timeentry_addedit_DateStart = new DateTime(
+                        //    timeentry_addedit_DateStartUI.Year, timeentry_addedit_DateStartUI.Month, timeentry_addedit_DateStartUI.Day,
+                        //    timeentry_addedit_DateStart_hour, timeentry_addedit_DateStart_minute, timeentry_addedit_DateStart_second);
                         break;
 
                     case "TIMEENTRY_ADDEDIT_STOP":
