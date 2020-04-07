@@ -567,10 +567,6 @@ namespace TIMEFRAME_windows.VIEWS
         // TIME ENTRIES
         // ------------
         #region CONFIGURATION TIME ENTRIES
-        private void TB_TimeEntry_AddEdit_StartTime_HH_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TB_TimeEntry_AddEdit_StartTime_HH.Text = TimePicker_ValidateHOUR(TB_TimeEntry_AddEdit_StartTime_HH.Text);
-        }
         private void TB_TimeEntry_AddEdit_StartTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = IsNumericValue(e.Text);
@@ -586,24 +582,9 @@ namespace TIMEFRAME_windows.VIEWS
             e.Handled = IsNumericValue(e.Text);
         }
 
-        private void TB_TimeEntry_AddEdit_StartTime_MM_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TB_TimeEntry_AddEdit_StartTime_MM.Text = TimePicker_ValidateMINUTE(TB_TimeEntry_AddEdit_StartTime_MM.Text);
-        }
-
-        private void TB_TimeEntry_AddEdit_StartTime_SS_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TB_TimeEntry_AddEdit_StartTime_SS.Text = TimePicker_ValidateSECOND(TB_TimeEntry_AddEdit_StartTime_SS.Text);
-        }
-
         private void TB_TimeEntry_AddEdit_StopTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = IsNumericValue(e.Text);
-        }
-
-        private void TB_TimeEntry_AddEdit_StopTime_HH_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TB_TimeEntry_AddEdit_StopTime_HH.Text = TimePicker_ValidateHOUR(TB_TimeEntry_AddEdit_StopTime_HH.Text);
         }
 
         private void TB_TimeEntry_AddEdit_StopTime_MM_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -611,20 +592,11 @@ namespace TIMEFRAME_windows.VIEWS
             e.Handled = IsNumericValue(e.Text);
         }
 
-        private void TB_TimeEntry_AddEdit_StopTime_MM_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TB_TimeEntry_AddEdit_StopTime_MM.Text = TimePicker_ValidateMINUTE(TB_TimeEntry_AddEdit_StopTime_MM.Text);
-        }
-
         private void TB_TimeEntry_AddEdit_StopTime_SS_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = IsNumericValue(e.Text);
         }
 
-        private void TB_TimeEntry_AddEdit_StopTime_SS_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TB_TimeEntry_AddEdit_StopTime_SS.Text = TimePicker_ValidateSECOND(TB_TimeEntry_AddEdit_StopTime_SS.Text);
-        }
         private void TB_TimeEntry_Edit_StartTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = IsNumericValue(e.Text);

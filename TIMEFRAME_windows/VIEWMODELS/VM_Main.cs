@@ -151,14 +151,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private DateTime _timeentry_addedit_DateTimeStart;
         //private DateTime _timeentry_addedit_DateStartUI;
         private DateTime _timeentry_addedit_TimeStart;
-        private int _timeentry_addedit_DateStart_hour;
-        private int _timeentry_addedit_DateStart_minute;
-        private int _timeentry_addedit_DateStart_second;
-        private DateTime _timeentry_addedit_DateStop;
-        private DateTime _timeentry_addedit_DateStopUI;
-        private int _timeentry_addedit_DateStop_hour;
-        private int _timeentry_addedit_DateStop_minute;
-        private int _timeentry_addedit_DateStop_second;
+        //private int _timeentry_addedit_DateStart_hour;
+        //private int _timeentry_addedit_DateStart_minute;
+        //private int _timeentry_addedit_DateStart_second;
+        private DateTime _timeentry_addedit_DateTimeStop;
+        //private DateTime _timeentry_addedit_DateStopUI;
+        private DateTime _timeentry_addedit_TimeStop;
+        //private int _timeentry_addedit_DateStop_hour;
+        //private int _timeentry_addedit_DateStop_minute;
+        //private int _timeentry_addedit_DateStop_second;
         private TimeSpan _timeentry_addedit_Duration;
         // Time Entry: edit
         private Visibility _timeentry_edit_Visibility;
@@ -273,13 +274,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
             timeentry_addedit_availTaskEntries = new ObservableCollection<TaskEntry>();
             timeentry_addedit_DateTimeStart = DateTime.Now;
             //timeentry_addedit_DateStartUI = DateTime.Now;
-            timeentry_addedit_DateStop = DateTime.Now;
-            timeentry_addedit_DateStart_hour = 0;
-            timeentry_addedit_DateStart_minute = 0;
-            timeentry_addedit_DateStart_second = 0;
-            timeentry_addedit_DateStop_hour = 0;
-            timeentry_addedit_DateStop_minute = 0;
-            timeentry_addedit_DateStop_second = 0;
+            timeentry_addedit_DateTimeStop = DateTime.Now;
+            //timeentry_addedit_DateStart_hour = 0;
+            //timeentry_addedit_DateStart_minute = 0;
+            //timeentry_addedit_DateStart_second = 0;
+            //timeentry_addedit_DateStop_hour = 0;
+            //timeentry_addedit_DateStop_minute = 0;
+            //timeentry_addedit_DateStop_second = 0;
 
             timeentry_edit_selCustindex = -1;
             timeentry_edit_selProjindex = -1;
@@ -1251,124 +1252,145 @@ namespace TIMEFRAME_windows.VIEWMODELS
         //    }
         //}
 
-        public DateTime timeentry_addedit_DateStop
+        public DateTime timeentry_addedit_DateTimeStop
         {
-            get { return _timeentry_addedit_DateStop; }
+            get { return _timeentry_addedit_DateTimeStop; }
             set
             {
-                if (value != _timeentry_addedit_DateStop)
+                if (value != _timeentry_addedit_DateTimeStop)
                 {
-                    _timeentry_addedit_DateStop = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStop");
+                    _timeentry_addedit_DateTimeStop = value;
+                    RaisePropertyChangedEvent("timeentry_addedit_DateTimeStop");
+
+                    Logger.Write("timeentry_addedit_DateTimeStop changed: " + Environment.NewLine +
+                                    "Date = " + timeentry_addedit_DateTimeStop.Date.ToLongDateString() + Environment.NewLine +
+                                    "Time = " + timeentry_addedit_DateTimeStop.TimeOfDay.ToString());
+
                     CalculateDuration("TIMEENTRY_ADDEDIT");
                 }
             }
         }
 
-        public DateTime timeentry_addedit_DateStopUI
+
+        public DateTime timeentry_addedit_TimeStop
         {
-            get { return _timeentry_addedit_DateStopUI; }
-            set
-            {
-                if (value != _timeentry_addedit_DateStopUI)
-                {
-                    _timeentry_addedit_DateStopUI = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStopUI");
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                }
-            }
+            get { return _timeentry_addedit_TimeStop; }
+            set { if (value != _timeentry_addedit_TimeStop) { _timeentry_addedit_TimeStop = value;
+                    RaisePropertyChangedEvent("timeentry_addedit_TimeStop");
+                    timeentry_addedit_DateTimeStop = new DateTime(
+                            timeentry_addedit_DateTimeStop.Year,
+                            timeentry_addedit_DateTimeStop.Month,
+                            timeentry_addedit_DateTimeStop.Day,
+                            timeentry_addedit_TimeStop.Hour,
+                            timeentry_addedit_TimeStop.Minute,
+                            timeentry_addedit_TimeStop.Second);
+                } }
         }
 
-        public int timeentry_addedit_DateStart_hour
-        {
-            get { return _timeentry_addedit_DateStart_hour; }
-            set
-            {
-                if (value != _timeentry_addedit_DateStart_hour)
-                {
-                    _timeentry_addedit_DateStart_hour = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStart_hour");
-                    //timeentry_addedit_DateStart = new DateTime(
-                    //    timeentry_addedit_DateStart.Year,
-                    //    timeentry_addedit_DateStart.Month,
-                    //    timeentry_addedit_DateStart.Day,
-                    //    timeentry_addedit_DateStart_hour,
-                    //    timeentry_addedit_DateStart.Minute,
-                    //    timeentry_addedit_DateStart.Second);
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_START");
-                }
-            }
-        }
+        //public DateTime timeentry_addedit_DateStopUI
+        //{
+        //    get { return _timeentry_addedit_DateStopUI; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_DateStopUI)
+        //        {
+        //            _timeentry_addedit_DateStopUI = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStopUI");
+        //            CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
+        //        }
+        //    }
+        //}
 
-        public int timeentry_addedit_DateStart_minute
-        {
-            get { return _timeentry_addedit_DateStart_minute; }
-            set
-            {
-                if (value != _timeentry_addedit_DateStart_minute)
-                {
-                    _timeentry_addedit_DateStart_minute = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStart_minute");
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_START");
-                }
-            }
-        }
+        //public int timeentry_addedit_DateStart_hour
+        //{
+        //    get { return _timeentry_addedit_DateStart_hour; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_DateStart_hour)
+        //        {
+        //            _timeentry_addedit_DateStart_hour = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStart_hour");
+        //            //timeentry_addedit_DateStart = new DateTime(
+        //            //    timeentry_addedit_DateStart.Year,
+        //            //    timeentry_addedit_DateStart.Month,
+        //            //    timeentry_addedit_DateStart.Day,
+        //            //    timeentry_addedit_DateStart_hour,
+        //            //    timeentry_addedit_DateStart.Minute,
+        //            //    timeentry_addedit_DateStart.Second);
+        //            CalculateDateTime("TIMEENTRY_ADDEDIT_START");
+        //        }
+        //    }
+        //}
 
-        public int timeentry_addedit_DateStart_second
-        {
-            get { return _timeentry_addedit_DateStart_second; }
-            set
-            {
-                if (value != _timeentry_addedit_DateStart_second)
-                {
-                    _timeentry_addedit_DateStart_second = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStart_second");
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_START");
-                }
-            }
-        }
+        //public int timeentry_addedit_DateStart_minute
+        //{
+        //    get { return _timeentry_addedit_DateStart_minute; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_DateStart_minute)
+        //        {
+        //            _timeentry_addedit_DateStart_minute = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStart_minute");
+        //            CalculateDateTime("TIMEENTRY_ADDEDIT_START");
+        //        }
+        //    }
+        //}
 
-        public int timeentry_addedit_DateStop_hour
-        {
-            get { return _timeentry_addedit_DateStop_hour; }
-            set
-            {
-                if (value != _timeentry_addedit_DateStop_hour)
-                {
-                    _timeentry_addedit_DateStop_hour = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStop_hour");
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                }
-            }
-        }
+        //public int timeentry_addedit_DateStart_second
+        //{
+        //    get { return _timeentry_addedit_DateStart_second; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_DateStart_second)
+        //        {
+        //            _timeentry_addedit_DateStart_second = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStart_second");
+        //            CalculateDateTime("TIMEENTRY_ADDEDIT_START");
+        //        }
+        //    }
+        //}
 
-        public int timeentry_addedit_DateStop_minute
-        {
-            get { return _timeentry_addedit_DateStop_minute; }
-            set
-            {
-                if (value != _timeentry_addedit_DateStop_minute)
-                {
-                    _timeentry_addedit_DateStop_minute = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStop_minute");
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                }
-            }
-        }
+        //public int timeentry_addedit_DateStop_hour
+        //{
+        //    get { return _timeentry_addedit_DateStop_hour; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_DateStop_hour)
+        //        {
+        //            _timeentry_addedit_DateStop_hour = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStop_hour");
+        //            CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
+        //        }
+        //    }
+        //}
 
-        public int timeentry_addedit_DateStop_second
-        {
-            get { return _timeentry_addedit_DateStop_second; }
-            set
-            {
-                if (value != _timeentry_addedit_DateStop_second)
-                {
-                    _timeentry_addedit_DateStop_second = value;
-                    RaisePropertyChangedEvent("timeentry_addedit_DateStop_second");
-                    CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
-                }
-            }
-        }
+        //public int timeentry_addedit_DateStop_minute
+        //{
+        //    get { return _timeentry_addedit_DateStop_minute; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_DateStop_minute)
+        //        {
+        //            _timeentry_addedit_DateStop_minute = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStop_minute");
+        //            CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
+        //        }
+        //    }
+        //}
+
+        //public int timeentry_addedit_DateStop_second
+        //{
+        //    get { return _timeentry_addedit_DateStop_second; }
+        //    set
+        //    {
+        //        if (value != _timeentry_addedit_DateStop_second)
+        //        {
+        //            _timeentry_addedit_DateStop_second = value;
+        //            RaisePropertyChangedEvent("timeentry_addedit_DateStop_second");
+        //            CalculateDateTime("TIMEENTRY_ADDEDIT_STOP");
+        //        }
+        //    }
+        //}
 
         public TimeSpan timeentry_addedit_Duration
         {
@@ -2029,11 +2051,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 case "TIMEENTRY_ADDEDIT":
 
-                    //if (timeentry_addedit_DateStop.Ticks > timeentry_addedit_DateStart.Ticks)
-                    //{
-                    //    duration = timeentry_addedit_DateStop.Subtract(timeentry_addedit_DateStart);
-                    //}
-                    //timeentry_addedit_Duration = new TimeSpan(duration.Hours, duration.Minutes, duration.Seconds);
+                    if (timeentry_addedit_DateTimeStop.Ticks > timeentry_addedit_DateTimeStart.Ticks)
+                    {
+                        duration = timeentry_addedit_DateTimeStop.Subtract(timeentry_addedit_DateTimeStart);
+                    }
+                    timeentry_addedit_Duration = new TimeSpan(duration.Days, duration.Hours, duration.Minutes, duration.Seconds);
                     break;
 
                 case "TIMEENTRY_EDIT":
@@ -2062,9 +2084,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         break;
 
                     case "TIMEENTRY_ADDEDIT_STOP":
-                        timeentry_addedit_DateStop = new DateTime(
-                            timeentry_addedit_DateStopUI.Year, timeentry_addedit_DateStopUI.Month, timeentry_addedit_DateStopUI.Day,
-                            timeentry_addedit_DateStop_hour, timeentry_addedit_DateStop_minute, timeentry_addedit_DateStop_second);
+                        //timeentry_addedit_DateStop = new DateTime(
+                        //    timeentry_addedit_DateStopUI.Year, timeentry_addedit_DateStopUI.Month, timeentry_addedit_DateStopUI.Day,
+                        //    timeentry_addedit_DateStop_hour, timeentry_addedit_DateStop_minute, timeentry_addedit_DateStop_second);
                         break;
 
                     case "TIMEENTRY_EDIT_START":

@@ -370,36 +370,14 @@
                                 <Label Content="Task" Foreground="White"/>
                                 <ComboBox x:Name="Combo_TimeEntry_AddEdit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailTaskEntries_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding timeentry_addedit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Foreground="White" Content="Start Time"/>
-                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime_old" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime_old" SelectedDateFormat="Long" Text="Select the starting date &amp; time" Cursor="Hand" FirstDayOfWeek="Monday" BorderBrush="{x:Null}" DisplayDate="{Binding timeentry_addedit_DateStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
-                                        <TextBox x:Name="TB_TimeEntry_AddEdit_StartTime_HH" Text="{Binding timeentry_addedit_DateStart_hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_StartTime_HH_TextChanged" PreviewTextInput="TB_TimeEntry_AddEdit_StartTime_HH_PreviewTextInput"/>
-                                        <Label Content=":" Foreground="White" Padding="0,5,0,5"/>
-                                        <TextBox x:Name="TB_TimeEntry_AddEdit_StartTime_MM" Text="{Binding timeentry_addedit_DateStart_minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" PreviewTextInput="TB_TimeEntry_AddEdit_StartTime_MM_PreviewTextInput" TextChanged="TB_TimeEntry_AddEdit_StartTime_MM_TextChanged"/>
-                                        <Label Content=":" Foreground="White" Padding="0,5,0,5"/>
-                                        <TextBox x:Name="TB_TimeEntry_AddEdit_StartTime_SS" Text="{Binding timeentry_addedit_DateStart_second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" PreviewTextInput="TB_TimeEntry_AddEdit_StartTime_SS_PreviewTextInput" TextChanged="TB_TimeEntry_AddEdit_StartTime_SS_TextChanged"/>
-                                        <Label Content="(hh:mm:ss)" Foreground="White" Padding="5,5,5,5" Width="100" Margin="-2,0,0,0"/>
-                                    </StackPanel>
-                                </StackPanel>
                                 <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
                                     <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_addedit_DateTimeStart}" DisplayDate="{Binding timeentry_addedit_DateTimeStart}" />
                                     <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStart}" />
                                 </StackPanel>
                                 <Label Foreground="White" Content="Stop Time"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StopTime" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_addedit_DateStopUI}" />
-                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" />
-                                </StackPanel>
-                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StopTime_old" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime_old" SelectedDateFormat="Long" Text="Select the starting date &amp; time" Cursor="Hand" FirstDayOfWeek="Monday" BorderBrush="{x:Null}" DisplayDate="{Binding timeentry_addedit_DateStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <StackPanel Orientation="Horizontal" Margin="30,0,0,0">
-                                        <TextBox x:Name="TB_TimeEntry_AddEdit_StopTime_HH" Text="{Binding timeentry_addedit_DateStop_hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_StopTime_HH_TextChanged" PreviewTextInput="TB_TimeEntry_AddEdit_StopTime_HH_PreviewTextInput"/>
-                                        <Label Content=":" Foreground="White" Padding="0,5,0,5"/>
-                                        <TextBox x:Name="TB_TimeEntry_AddEdit_StopTime_MM" Text="{Binding timeentry_addedit_DateStop_minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" PreviewTextInput="TB_TimeEntry_AddEdit_StopTime_MM_PreviewTextInput" TextChanged="TB_TimeEntry_AddEdit_StopTime_MM_TextChanged"/>
-                                        <Label Content=":" Foreground="White" Padding="0,5,0,5"/>
-                                        <TextBox x:Name="TB_TimeEntry_AddEdit_StopTime_SS" Text="{Binding timeentry_addedit_DateStop_second, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" PreviewTextInput="TB_TimeEntry_AddEdit_StopTime_SS_PreviewTextInput" TextChanged="TB_TimeEntry_AddEdit_StopTime_SS_TextChanged"/>
-                                        <Label Content="(hh:mm:ss)" Foreground="White" Padding="5,5,5,5" Width="100" Margin="-2,0,0,0"/>
-                                    </StackPanel>
+                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_addedit_DateTimeStop}" SelectedDate="{Binding timeentry_addedit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                                 <Label Foreground="White" Content="Duration"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_Duration" Orientation="Horizontal" Margin="10,0,9,0">
