@@ -437,7 +437,19 @@
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Properties">
                                 <Label Content="Edit Time Entry" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Customer" Foreground="White"/>
-                                <ComboBox x:Name="Combo_TimeEntry_Edit_AvailCustomers" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailCustomers_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ComboBox 
+                                    materialDesign:HintAssist.Hint="Customer"
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="False"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText="Select Customer"
+                                    
+                                    x:Name="Combo_TimeEntry_Edit_AvailCustomers" 
+                                    HorizontalContentAlignment="Left" 
+                                    DisplayMemberPath="Name" 
+                                    SelectionChanged="Combo_TimeEntry_Edit_AvailCustomers_SelectionChanged" 
+                                    Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="Project" Foreground="White"/>
                                 <ComboBox x:Name="Combo_TimeEntry_Edit_AvailProjects" Margin="10,0,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailProjects_SelectionChanged" ItemsSource="{Binding timeentry_edit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Content="Task" Foreground="White"/>
