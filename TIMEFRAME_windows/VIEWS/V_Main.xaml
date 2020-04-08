@@ -125,7 +125,11 @@
                         <RowDefinition Height="0"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Content="Customers" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Customers" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
+                        <Label Content="{Binding db_shownCustomers.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
+                    </StackPanel>
                     <Grid x:Name="Grid_ConfigCustomers_content" Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -191,7 +195,11 @@
                         <RowDefinition Height="0"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Content="Projects" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Projects" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
+                        <Label Content="{Binding db_shownProjects.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
+                    </StackPanel>
                     <Grid x:Name="Grid_ConfigProjects_content" Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -262,7 +270,11 @@
                         <RowDefinition Height="30"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Content="Tasks" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Tasks" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
+                        <Label Content="{Binding db_shownTaskEntries.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
+                    </StackPanel>
                     <Grid x:Name="Grid_ConfigTasks_content" Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
