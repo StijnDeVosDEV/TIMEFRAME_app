@@ -790,16 +790,10 @@ namespace TIMEFRAME_windows.VIEWS
         {
             //try
             //{
-            //    TimeSpan duration = new TimeSpan(
-            //    Convert.ToInt32(TB_TimeEntry_AddEdit_Duration_HH.Text),
-            //    Convert.ToInt32(TB_TimeEntry_AddEdit_Duration_MM.Text),
-            //    Convert.ToInt32(TB_TimeEntry_AddEdit_Duration_SS.Text)
-            //    );
-
-            //    if (Combo_TimeEntry_AddEdit_AvailCustomers.SelectedIndex > -1 &&
+            //    if (
+            //        Combo_TimeEntry_AddEdit_AvailCustomers.SelectedIndex > -1 &&
             //        Combo_TimeEntry_AddEdit_AvailProjects.SelectedIndex > -1 &&
-            //        Combo_TimeEntry_AddEdit_AvailTaskEntries.SelectedIndex > -1 &&
-            //        duration.TotalSeconds > 0)
+            //        Combo_TimeEntry_AddEdit_AvailTaskEntries.SelectedIndex > -1)
             //    {
             //        Img_ConfigTimeEntries_AddEdit_AddorEdit.IsEnabled = true;
             //    }
@@ -818,16 +812,10 @@ namespace TIMEFRAME_windows.VIEWS
         {
             //try
             //{
-            //    TimeSpan duration = new TimeSpan(
-            //    Convert.ToInt32(TB_TimeEntry_Edit_Duration_HH.Text),
-            //    Convert.ToInt32(TB_TimeEntry_Edit_Duration_MM.Text),
-            //    Convert.ToInt32(TB_TimeEntry_Edit_Duration_SS.Text)
-            //    );
-
-            //    if (Combo_TimeEntry_Edit_AvailCustomers.SelectedIndex > -1 &&
+            //    if ((Convert.ToInt32(TB_TimeEntry_Edit_Duration_DD.Text) + Convert.ToInt32(TB_TimeEntry_Edit_Duration_HH.Text) + Convert.ToInt32(TB_TimeEntry_Edit_Duration_MM.Text) + Convert.ToInt32(TB_TimeEntry_Edit_Duration_SS.Text)) != 0 &&
+            //        Combo_TimeEntry_Edit_AvailCustomers.SelectedIndex > -1 &&
             //        Combo_TimeEntry_Edit_AvailProjects.SelectedIndex > -1 &&
-            //        Combo_TimeEntry_Edit_AvailTaskEntries.SelectedIndex > -1 &&
-            //        duration.TotalSeconds > 0)
+            //        Combo_TimeEntry_Edit_AvailTaskEntries.SelectedIndex > -1)
             //    {
             //        Img_ConfigTimeEntries_Edit_Edit.IsEnabled = true;
             //    }

@@ -271,10 +271,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             timeentry_edit_selTaskEntryindex = -1;
             timeentry_edit_availProjects = new ObservableCollection<Project>();
             timeentry_edit_availTaskEntries = new ObservableCollection<TaskEntry>();
-            timeentry_edit_DateTimeStart = DateTime.Now;
-            timeentry_edit_DateTimeStop = DateTime.Now;
-            timeentry_edit_TimeStart = DateTime.Now;
-            timeentry_edit_TimeStop = DateTime.Now;
+            //timeentry_edit_DateTimeStart = DateTime.Now;
+            //timeentry_edit_DateTimeStop = DateTime.Now;
+            //timeentry_edit_TimeStart = DateTime.Now;
+            //timeentry_edit_TimeStop = DateTime.Now;
 
 
             // Initializations
@@ -1029,10 +1029,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 {
                     _config_timeentry_selindex = value;
                     RaisePropertyChangedEvent("config_timeentry_selindex");
+                    //Logger.Write("config_timeentry_selindex changed: " + config_timeentry_selindex.ToString());
+
                     if (config_timeentry_selindex > -1)
                     {
                         config_timeentry_selTimeEntry = db_shownTimeEntries[config_timeentry_selindex];
                         Update_EditSelectionData(dataCategory.TimeEntry);
+
+                        Logger.Write("config_timeentry_selTimeEntry assigned");
                     }
                     else { config_timeentry_selTimeEntry = null; }
                 }
@@ -1167,6 +1171,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 if (value != _timeentry_addedit_DateTimeStart)
                 {
                     _timeentry_addedit_DateTimeStart = value;
+
+                    timeentry_addedit_DateTimeStart = new DateTime(
+                        timeentry_addedit_DateTimeStart.Year,
+                        timeentry_addedit_DateTimeStart.Month,
+                        timeentry_addedit_DateTimeStart.Day,
+                        timeentry_addedit_TimeStart.Hour,
+                        timeentry_addedit_TimeStart.Minute,
+                        timeentry_addedit_TimeStart.Second);
+
                     RaisePropertyChangedEvent("timeentry_addedit_DateTimeStart");
 
                     //Logger.Write("timeentry_addedit_DateTimeStart changed: " + Environment.NewLine +
@@ -1208,6 +1221,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 if (value != _timeentry_addedit_DateTimeStop)
                 {
                     _timeentry_addedit_DateTimeStop = value;
+
+                    timeentry_addedit_DateTimeStop = new DateTime(
+                            timeentry_addedit_DateTimeStop.Year,
+                            timeentry_addedit_DateTimeStop.Month,
+                            timeentry_addedit_DateTimeStop.Day,
+                            timeentry_addedit_TimeStop.Hour,
+                            timeentry_addedit_TimeStop.Minute,
+                            timeentry_addedit_TimeStop.Second);
+
                     RaisePropertyChangedEvent("timeentry_addedit_DateTimeStop");
 
                     //Logger.Write("timeentry_addedit_DateTimeStop changed: " + Environment.NewLine +
@@ -1365,11 +1387,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 if (value != _timeentry_edit_DateTimeStart)
                 {
                     _timeentry_edit_DateTimeStart = value;
+
+                    timeentry_edit_DateTimeStart = new DateTime(
+                        timeentry_edit_DateTimeStart.Year,
+                        timeentry_edit_DateTimeStart.Month,
+                        timeentry_edit_DateTimeStart.Day,
+                        timeentry_edit_TimeStart.Hour,
+                        timeentry_edit_TimeStart.Minute,
+                        timeentry_edit_TimeStart.Second);
+
                     RaisePropertyChangedEvent("timeentry_edit_DateTimeStart");
 
-                    Logger.Write("timeentry_edit_DateTimeStart changed: " + Environment.NewLine +
-                                    "Date = " + timeentry_edit_DateTimeStart.Date.ToLongDateString() + Environment.NewLine +
-                                    "Time = " + timeentry_edit_DateTimeStart.TimeOfDay.ToString());
+                    //Logger.Write("timeentry_edit_DateTimeStart changed: " + Environment.NewLine +
+                    //                "Date = " + timeentry_edit_DateTimeStart.Date.ToLongDateString() + Environment.NewLine +
+                    //                "Time = " + timeentry_edit_DateTimeStart.TimeOfDay.ToString());
 
                     CalculateDuration("TIMEENTRY_EDIT");
                 }
@@ -1394,7 +1425,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         timeentry_edit_TimeStart.Second);
 
                     RaisePropertyChangedEvent("timeentry_edit_TimeStart");
-                    
+
+                    Logger.Write("TIMEENTRY_EDIT_TIMESTART changed: " + Environment.NewLine +
+                        timeentry_edit_TimeStart.ToLongTimeString());
                 }
             }
         }
@@ -1407,11 +1440,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 if (value != _timeentry_edit_DateTimeStop)
                 {
                     _timeentry_edit_DateTimeStop = value;
+
+                    timeentry_addedit_DateTimeStop = new DateTime(
+                            timeentry_addedit_DateTimeStop.Year,
+                            timeentry_addedit_DateTimeStop.Month,
+                            timeentry_addedit_DateTimeStop.Day,
+                            timeentry_addedit_TimeStop.Hour,
+                            timeentry_addedit_TimeStop.Minute,
+                            timeentry_addedit_TimeStop.Second);
+
                     RaisePropertyChangedEvent("timeentry_edit_DateTimeStop");
 
-                    Logger.Write("timeentry_edit_DateTimeStop changed: " + Environment.NewLine +
-                                    "Date = " + timeentry_edit_DateTimeStop.Date.ToLongDateString() + Environment.NewLine +
-                                    "Time = " + timeentry_edit_DateTimeStop.TimeOfDay.ToString());
+                    //Logger.Write("timeentry_edit_DateTimeStop changed: " + Environment.NewLine +
+                    //                "Date = " + timeentry_edit_DateTimeStop.Date.ToLongDateString() + Environment.NewLine +
+                    //                "Time = " + timeentry_edit_DateTimeStop.TimeOfDay.ToString());
 
                     CalculateDuration("TIMEENTRY_EDIT");
                 }
@@ -1437,6 +1479,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                     RaisePropertyChangedEvent("timeentry_edit_TimeStop");
 
+                    Logger.Write("TIMEENTRY_EDIT_TIMESTOP changed: " + Environment.NewLine +
+                        timeentry_edit_TimeStop.ToLongTimeString());
                 }
             }
         }
@@ -1499,6 +1543,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             ToggleLoadingScreen_Visibility();
         }
 
+        // Parse Database Data
+        #region Parse DB data
         private void ParseCustomerData()
         {
             Logger.Write("PARSING CUSTOMER DATA:");
@@ -1530,7 +1576,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             allProjects.Clear();
 
-            if(allProjects_fromDB != null && allProjects_fromDB.Count > 0)
+            if (allProjects_fromDB != null && allProjects_fromDB.Count > 0)
             {
                 foreach (Project project in allProjects_fromDB)
                 {
@@ -1595,6 +1641,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             //ToggleLoadingScreen_Visibility();
         }
+        #endregion
 
         private enum dataCategory
         {
@@ -1754,12 +1801,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         TaskEntry Task_linkedtoselTimeEntry = allTaskEntries.Single(x => x.Id == config_timeentry_selTimeEntry.TaskEntryId);
                         Project Project_linkedtoselTimeEntry = allProjects.Single(x => x.Id == Task_linkedtoselTimeEntry.ProjectId);
                         Customer Customer_linkedtoselTimeEntry = allCustomers.Single(x => x.Id == Project_linkedtoselTimeEntry.CustomerId);
-                        timeentry_edit_selTaskEntryindex = timeentry_edit_availTaskEntries.IndexOf(Task_linkedtoselTimeEntry);
-                        timeentry_edit_selProjindex = timeentry_edit_availProjects.IndexOf(Project_linkedtoselTimeEntry);
                         timeentry_edit_selCustindex = allCustomers.IndexOf(Customer_linkedtoselTimeEntry);
+                        timeentry_edit_selProjindex = timeentry_edit_availProjects.IndexOf(Project_linkedtoselTimeEntry);
+                        timeentry_edit_selTaskEntryindex = timeentry_edit_availTaskEntries.IndexOf(Task_linkedtoselTimeEntry);
 
                         timeentry_edit_DateTimeStart = config_timeentry_selTimeEntry.Start;
+                        timeentry_edit_TimeStart = config_timeentry_selTimeEntry.Start;
                         timeentry_edit_DateTimeStop = config_timeentry_selTimeEntry.Stop;
+                        timeentry_edit_TimeStop = config_timeentry_selTimeEntry.Stop;
                         timeentry_edit_Duration = config_timeentry_selTimeEntry.Duration;
                         break;
                     default:
@@ -1893,6 +1942,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _ApplyBaseTheme = new Base.GEN_RelayCommand(param => this.Perform_ApplyBaseTheme((bool)param));
         }
 
+        private void Perform_ApplyBaseTheme(bool isDark)
+        {
+            ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
+        }
+
         private static void ModifyTheme(Action<ITheme> modificationAction)
         {
             PaletteHelper paletteHelper = new PaletteHelper();
@@ -1902,7 +1956,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             paletteHelper.SetTheme(theme);
         }
-
+        
+        #region CUSTOMER CRUD
         private async void Perform_AddCustomer()
         {
             try
@@ -1992,7 +2047,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     e.ToString());
             }
         }
+        #endregion
 
+        #region PROJECT CRUD
         private async void Perform_AddProject()
         {
             try
@@ -2011,9 +2068,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine +
                     "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine +
                     //"Customer      = " + newProject.Customer.Name + Environment.NewLine +
-                    "Name          = " + newProject.Name + Environment.NewLine + 
-                    "Description   = " + newProject.Description + Environment.NewLine + 
-                    "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine + 
+                    "Name          = " + newProject.Name + Environment.NewLine +
+                    "Description   = " + newProject.Description + Environment.NewLine +
+                    "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine +
                     "Status        = " + newProject.Status);
 
                 // Update in database
@@ -2088,7 +2145,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     e.ToString());
             }
         }
+        #endregion
 
+        #region TASK ENTRY CRUD
         private async void Perform_AddTaskEntry()
         {
             try
@@ -2177,7 +2236,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     e.ToString());
             }
         }
+        #endregion
 
+        #region TIME ENTRY CRUD
         private async void Perform_AddTimeEntry()
         {
             try
@@ -2269,12 +2330,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     e.ToString());
             }
         }
-
-        private void Perform_ApplyBaseTheme(bool isDark)
-        {
-            ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
-        }
-
+        #endregion
 
         private void Perform_CloseLoadingScreen()
         {

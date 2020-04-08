@@ -348,7 +348,12 @@
                         <RowDefinition Height="0"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Label Content="Time Entries" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Label Content="Time Entries" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
+                        <Label Content="{Binding db_shownTimeEntries.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
+
+                    </StackPanel>
                     <Grid x:Name="Grid_ConfigTimeEntries_content" Grid.Row="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -360,6 +365,7 @@
                                 <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Customer.Name}" Header="Customer"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Name}" Header="Project"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Name}" Header="Task"/>
+                                <materialDesign:DataGridTextColumn Binding="{Binding Date}" Header="Date"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding Start.TimeOfDay, Mode=OneWay}" Header="Start"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding Stop.TimeOfDay, Mode=OneWay}" Header="Stop"/>
                                 <materialDesign:DataGridTextColumn Binding="{Binding Duration}" Header="Duration (hours : minutes : seconds)"/>
@@ -374,7 +380,7 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000" Visibility="{Binding timeentry_addedit_Visibility}" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000" Visibility="{Binding timeentry_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
                                 <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -395,13 +401,13 @@
                                 </StackPanel>
                                 <Label Foreground="White" Content="Duration"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_Duration" Orientation="Horizontal" Margin="10,0,9,0">
-                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_DD" Text="{Binding timeentry_addedit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_DD" Text="{Binding timeentry_addedit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
                                     <Label Content="days" Foreground="White" Padding="0,5,5,5"/>
-                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_HH" Text="{Binding timeentry_addedit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_HH" Text="{Binding timeentry_addedit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
                                     <Label Content="hours" Foreground="White" Padding="0,5,5,5"/>
-                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_MM" Text="{Binding timeentry_addedit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_MM_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_MM" Text="{Binding timeentry_addedit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_MM_TextChanged"/>
                                     <Label Content="minutes" Foreground="White" Padding="0,5,5,5"/>
-                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_SS" Text="{Binding timeentry_addedit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_SS_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_SS" Text="{Binding timeentry_addedit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_SS_TextChanged"/>
                                     <Label Content="seconds" Foreground="White" Padding="0,5,5,5"/>
                                 </StackPanel>
                                 <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -415,7 +421,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BF000000" Visibility="{Binding timeentry_edit_Visibility}" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BF000000" Visibility="{Binding timeentry_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Properties">
                                 <Label Content="Edit Time Entry" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Customer" Foreground="White"/>
@@ -426,27 +432,27 @@
                                 <ComboBox x:Name="Combo_TimeEntry_Edit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailTaskEntries_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding timeentry_edit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Label Foreground="White" Content="Start Time"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_Edit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime1" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_edit_DateTimeStart}" DisplayDate="{Binding timeentry_edit_DateTimeStart}" />
-                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStart}" />
+                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime1" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_edit_DateTimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayDate="{Binding timeentry_edit_DateTimeStart}" />
+                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                                 <Label Foreground="White" Content="Stop Time"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_Edit_StopTime" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime1" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_edit_DateTimeStop}" SelectedDate="{Binding timeentry_edit_DateTimeStop}" />
-                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_DateTimeStop}" />
+                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime1" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_edit_DateTimeStop}" SelectedDate="{Binding timeentry_edit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                                 <Label Foreground="White" Content="Duration"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_Edit_Duration" Orientation="Horizontal" Margin="10,0,10,0">
-                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_DD" Text="{Binding timeentry_edit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_DD" Text="{Binding timeentry_edit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged"/>
                                     <Label Content="days" Foreground="White" Padding="0,5,5,5"/>
-                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_HH" Text="{Binding timeentry_edit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_HH" Text="{Binding timeentry_edit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged"/>
                                     <Label Content="hours" Foreground="White" Padding="0,5,5,5"/>
-                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_MM" Text="{Binding timeentry_edit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_MM_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_MM" Text="{Binding timeentry_edit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_MM_TextChanged"/>
                                     <Label Content="minutes" Foreground="White" Padding="0,5,5,5"/>
-                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_SS" Text="{Binding timeentry_edit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_SS_TextChanged" IsEnabled="False"/>
+                                    <TextBox x:Name="TB_TimeEntry_Edit_Duration_SS" Text="{Binding timeentry_edit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_SS_TextChanged"/>
                                     <Label Content="seconds" Foreground="White" Padding="0,5,5,5"/>
                                 </StackPanel>
                                 <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center" Height="Auto">
-                                    <Image x:Name="Img_ConfigTimeEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
+                                    <Image x:Name="Img_ConfigTimeEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand">
                                         <Image.InputBindings>
                                             <MouseBinding Gesture="LeftClick" Command="{Binding EditTimeEntry, Mode=Default}"/>
                                         </Image.InputBindings>
