@@ -438,7 +438,7 @@
                                 <Label Foreground="White" Content="Stop Time"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_Edit_StopTime" Orientation="Horizontal" Margin="10,0,10,0">
                                     <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime1" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_edit_DateTimeStop}" SelectedDate="{Binding timeentry_edit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
                                 <Label Foreground="White" Content="Duration"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_Edit_Duration" Orientation="Horizontal" Margin="10,0,10,0">

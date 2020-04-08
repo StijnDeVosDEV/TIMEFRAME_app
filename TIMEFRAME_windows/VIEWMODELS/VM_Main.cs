@@ -1152,7 +1152,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         // Assign selected Project
                         timeentry_addedit_selTaskEntry = timeentry_addedit_availTaskEntries[timeentry_addedit_selTaskEntryindex];
                     }
-                    else { timeentry_addedit_selProj = null; }
+                    else { timeentry_addedit_selTaskEntry = null; }
                 }
             }
         }
@@ -1368,7 +1368,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         // Assign selected Project
                         timeentry_edit_selTaskEntry = timeentry_edit_availTaskEntries[timeentry_edit_selTaskEntryindex];
                     }
-                    else { timeentry_edit_selProj = null; }
+                    else { timeentry_edit_selTaskEntry = null; }
                 }
             }
         }
@@ -1441,13 +1441,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 {
                     _timeentry_edit_DateTimeStop = value;
 
-                    timeentry_addedit_DateTimeStop = new DateTime(
-                            timeentry_addedit_DateTimeStop.Year,
-                            timeentry_addedit_DateTimeStop.Month,
-                            timeentry_addedit_DateTimeStop.Day,
-                            timeentry_addedit_TimeStop.Hour,
-                            timeentry_addedit_TimeStop.Minute,
-                            timeentry_addedit_TimeStop.Second);
+                    timeentry_edit_DateTimeStop = new DateTime(
+                            timeentry_edit_DateTimeStop.Year,
+                            timeentry_edit_DateTimeStop.Month,
+                            timeentry_edit_DateTimeStop.Day,
+                            timeentry_edit_TimeStop.Hour,
+                            timeentry_edit_TimeStop.Minute,
+                            timeentry_edit_TimeStop.Second);
 
                     RaisePropertyChangedEvent("timeentry_edit_DateTimeStop");
 
@@ -1469,13 +1469,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 {
                     _timeentry_edit_TimeStop = value;
 
-                    timeentry_addedit_DateTimeStop = new DateTime(
-                            timeentry_addedit_DateTimeStop.Year,
-                            timeentry_addedit_DateTimeStop.Month,
-                            timeentry_addedit_DateTimeStop.Day,
-                            timeentry_addedit_TimeStop.Hour,
-                            timeentry_addedit_TimeStop.Minute,
-                            timeentry_addedit_TimeStop.Second);
+                    timeentry_edit_DateTimeStop = new DateTime(
+                            timeentry_edit_DateTimeStop.Year,
+                            timeentry_edit_DateTimeStop.Month,
+                            timeentry_edit_DateTimeStop.Day,
+                            timeentry_edit_TimeStop.Hour,
+                            timeentry_edit_TimeStop.Minute,
+                            timeentry_edit_TimeStop.Second);
 
                     RaisePropertyChangedEvent("timeentry_edit_TimeStop");
 
@@ -2289,6 +2289,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 modTimeEntry.TaskEntryId = timeentry_edit_selTaskEntry.Id;
                 modTimeEntry.Start = timeentry_edit_DateTimeStart;
                 modTimeEntry.Stop = timeentry_edit_DateTimeStop;
+                modTimeEntry.Date = timeentry_edit_DateTimeStart;
                 modTimeEntry.Duration = timeentry_edit_Duration;
 
                 // Update in database
