@@ -391,6 +391,54 @@
                                     <MouseBinding Gesture="LeftClick" Command="{Binding DeleteTimeEntry, Mode=Default}"/>
                                 </Image.InputBindings>
                             </Image>
+                            <!--<Button
+                                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Width="25" Padding="0,0,0,0"
+                                >
+                                <Button.CommandParameter>
+                                    <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000" Visibility="{Binding timeentry_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                                        <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
+                                            <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
+                                            <Label Content="Customer" Foreground="White"/>
+                                            <ComboBox x:Name="Combo_TimeEntry_AddEdit_AvailCustomers" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailCustomers_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <Label Content="Project" Foreground="White"/>
+                                            <ComboBox x:Name="Combo_TimeEntry_AddEdit_AvailProjects" HorizontalContentAlignment="Left" Margin="10,0,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailProjects_SelectionChanged_1" ItemsSource="{Binding timeentry_addedit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <Label Content="Task" Foreground="White"/>
+                                            <ComboBox x:Name="Combo_TimeEntry_AddEdit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailTaskEntries_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding timeentry_addedit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <Label Foreground="White" Content="Start Time"/>
+                                            <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
+                                                <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_addedit_DateTimeStart}" DisplayDate="{Binding timeentry_addedit_DateTimeStart}" />
+                                                <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStart}" />
+                                            </StackPanel>
+                                            <Label Foreground="White" Content="Stop Time"/>
+                                            <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StopTime" Orientation="Horizontal" Margin="10,0,10,0">
+                                                <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime" Width="100" materialDesign:HintAssist.Hint="Pick Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_addedit_DateTimeStop}" SelectedDate="{Binding timeentry_addedit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </StackPanel>
+                                            <Label Foreground="White" Content="Duration"/>
+                                            <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_Duration" Orientation="Horizontal" Margin="10,0,9,0">
+                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_DD" Text="{Binding timeentry_addedit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
+                                                <Label Content="days" Foreground="White" Padding="0,5,5,5"/>
+                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_HH" Text="{Binding timeentry_addedit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
+                                                <Label Content="hours" Foreground="White" Padding="0,5,5,5"/>
+                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_MM" Text="{Binding timeentry_addedit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_MM_TextChanged"/>
+                                                <Label Content="minutes" Foreground="White" Padding="0,5,5,5"/>
+                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_SS" Text="{Binding timeentry_addedit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_SS_TextChanged"/>
+                                                <Label Content="seconds" Foreground="White" Padding="0,5,5,5"/>
+                                            </StackPanel>
+                                            <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image x:Name="Img_ConfigTimeEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand">
+                                                    <Image.InputBindings>
+                                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddTimeEntry, Mode=Default}"/>
+                                                    </Image.InputBindings>
+                                                </Image>
+                                                <Image x:Name="Img_ConfigTimeEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTimeEntries_AddEdit_Cancel_MouseDown"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </Button.CommandParameter>
+
+                                <materialDesign:PackIcon Kind="AddThick" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                            </Button>-->
                         </StackPanel>
                         <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BF000000" Visibility="{Binding timeentry_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
