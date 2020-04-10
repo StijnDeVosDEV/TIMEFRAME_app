@@ -553,7 +553,7 @@
                                 <materialDesign:PackIcon Kind="AddThick" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                             </Button>-->
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BFE6E6E6" Visibility="{Binding timeentry_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" Background="#BFE6E6E6" Visibility="{Binding timeentry_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
                                 <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
                                 <ComboBox 
@@ -635,12 +635,10 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BFE6E6E6" Visibility="{Binding timeentry_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigTimeEntries_Edit" Background="#BFE6E6E6" Visibility="{Binding timeentry_edit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Properties">
                                 <Label Content="Edit Time Entry" FontWeight="Bold" Foreground="Black"/>
-                                <Label Content="Customer" Foreground="White" Visibility="Collapsed"/>
                                 <ComboBox 
-                                    materialDesign:HintAssist.Hint="Customer"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -651,31 +649,52 @@
                                     HorizontalContentAlignment="Left" 
                                     DisplayMemberPath="Name" 
                                     SelectionChanged="Combo_TimeEntry_Edit_AvailCustomers_SelectionChanged" 
-                                    Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="Project" Foreground="White" Visibility="Collapsed"/>
+                                    Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="User" />
+                                            <TextBlock>Customer</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <ComboBox 
-                                    materialDesign:HintAssist.Hint="Project"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TimeEntry_Edit_AvailProjects" Margin="10,10,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailProjects_SelectionChanged" ItemsSource="{Binding timeentry_edit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="Task" Foreground="White" Visibility="Collapsed"/>
+                                    x:Name="Combo_TimeEntry_Edit_AvailProjects" Margin="10,10,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailProjects_SelectionChanged" ItemsSource="{Binding timeentry_edit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                            <TextBlock>Project</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <ComboBox
-                                    materialDesign:HintAssist.Hint="Task"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TimeEntry_Edit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailTaskEntries_SelectionChanged" Margin="10,10,10,0" ItemsSource="{Binding timeentry_edit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Foreground="White" Content="Start Time" Visibility="Collapsed"/>
+                                    x:Name="Combo_TimeEntry_Edit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailTaskEntries_SelectionChanged" Margin="10,10,10,0" ItemsSource="{Binding timeentry_edit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="FileCheckOutline" />
+                                            <TextBlock>Task</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <StackPanel x:Name="StackPanel_TimeEntry_Edit_StartTime" Orientation="Horizontal" Margin="10,30,10,0">
                                     <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime1" Width="100" materialDesign:HintAssist.Hint="Pick Start Moment" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_edit_DateTimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayDate="{Binding timeentry_edit_DateTimeStart}" />
                                     <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </StackPanel>
-                                <Label Foreground="White" Content="Stop Time" Visibility="Collapsed"/>
                                 <StackPanel x:Name="StackPanel_TimeEntry_Edit_StopTime" Orientation="Horizontal" Margin="10,20,10,0">
                                     <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime1" Width="100" materialDesign:HintAssist.Hint="Pick Stop Moment" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_edit_DateTimeStop}" SelectedDate="{Binding timeentry_edit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
