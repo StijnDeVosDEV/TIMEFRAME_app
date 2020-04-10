@@ -189,7 +189,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -225,15 +225,33 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BF000000" Visibility="{Binding project_addedit_Visibility}">
+                        <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BFE6E6E6">
                             <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
-                                <Label Content="Add new Project" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
-                                <Label Content="Customer" Foreground="White"/>
-                                <ComboBox x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustindex}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged"/>
-                                <Label Content="Name" Foreground="White"/>
-                                <TextBox x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
-                                <Label Content="Description" Foreground="White"/>
-                                <TextBox x:Name="TB_Project_AddEdit_Description" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_AddEdit_Description_TextChanged" Text="{Binding project_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Content="Add new Project" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
+                                <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustindex}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="User" />
+                                            <TextBlock>Customer</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Description"
+                                    x:Name="TB_Project_AddEdit_Description" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Description_TextChanged" Text="{Binding project_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigProjects_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
                                         <Image.InputBindings>
@@ -265,7 +283,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition/>
@@ -359,7 +377,7 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <Grid x:Name="Grid_ConfigTaskEntries_Edit" Background="#BFE6E6E6" Margin="0,0,30,0" Grid.ColumnSpan="2">
+                        <Grid x:Name="Grid_ConfigTaskEntries_Edit" Background="#BFE6E6E6" Margin="0,0,30,0" Grid.ColumnSpan="2" Visibility="{Binding taskentry_edit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Properties">
                                 <Label Content="Edit Task" FontWeight="Bold" Foreground="Black"/>
                                 <ComboBox 
