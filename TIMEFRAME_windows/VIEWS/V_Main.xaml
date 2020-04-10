@@ -225,7 +225,7 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BFE6E6E6">
+                        <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BFE6E6E6" Visibility="{Binding project_addedit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
                                 <Label Content="Add new Project" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
                                 <ComboBox
@@ -262,15 +262,33 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BF000000" Visibility="{Binding project_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BFE6E6E6" Visibility="{Binding project_edit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
-                                <Label Content="Edit Project" FontWeight="Bold" Foreground="White"/>
-                                <Label Content="Customer" Foreground="White"/>
-                                <ComboBox x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding project_edit_selCustindex}" SelectionChanged="Combo_Project_Edit_AvailCustomers_SelectionChanged"/>
-                                <Label Content="Name" Foreground="White"/>
-                                <TextBox x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_Edit_Name_TextChanged"/>
-                                <Label Content="Description" Foreground="White"/>
-                                <TextBox x:Name="TB_Project_Edit_Description" Text="{Binding project_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_Edit_Description_TextChanged"/>
+                                <Label Content="Edit Project" FontWeight="Bold" Foreground="Black"/>
+                                <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding project_edit_selCustindex}" SelectionChanged="Combo_Project_Edit_AvailCustomers_SelectionChanged">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="User" />
+                                            <TextBlock>Customer</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Name_TextChanged"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Description"
+                                    x:Name="TB_Project_Edit_Description" Text="{Binding project_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Description_TextChanged"/>
                                 <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigProjects_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
                                         <Image.InputBindings>
