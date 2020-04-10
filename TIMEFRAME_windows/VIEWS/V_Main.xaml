@@ -119,7 +119,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -149,15 +149,21 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000" Visibility="{Binding customer_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BFE6E6E6" Visibility="{Binding customer_addedit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
-                                <Label Content="Add new Customer" FontWeight="Bold" Foreground="White"/>
-                                <Label Content="Name" Foreground="White"/>
-                                <TextBox x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
-                                <Label Content="Surname" Foreground="White"/>
-                                <TextBox x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
-                                <Label Content="Email" Foreground="White"/>
-                                <TextBox x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
+                                <Label Content="Add new Customer" FontWeight="Bold" Foreground="Black"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Last Name"
+                                    x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Email"
+                                    x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
                                 <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigCustomers_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add customer" Cursor="Hand" IsEnabled="False">
                                         <Image.InputBindings>
@@ -168,15 +174,21 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <Grid x:Name="Grid_ConfigCustomers_Edit" Background="#BF000000" Visibility="{Binding customer_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigCustomers_Edit" Background="#BFE6E6E6" Visibility="{Binding customer_edit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Properties">
-                                <Label Content="Edit Customer" FontWeight="Bold" Foreground="White"/>
-                                <Label Content="Name" Foreground="White"/>
-                                <TextBox x:Name="TB_Customer_Edit_Name" Text="{Binding customer_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
-                                <Label Content="Surname" Foreground="White"/>
-                                <TextBox x:Name="TB_Customer_Edit_Surname" Text="{Binding customer_edit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
-                                <Label Content="Email" Foreground="White"/>
-                                <TextBox x:Name="TB_Customer_Edit_Email" Text="{Binding customer_edit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Email_TextChanged"/>
+                                <Label Content="Edit Customer" FontWeight="Bold" Foreground="Black"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Customer_Edit_Name" Text="{Binding customer_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Last Name"
+                                    x:Name="TB_Customer_Edit_Surname" Text="{Binding customer_edit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Email"
+                                    x:Name="TB_Customer_Edit_Email" Text="{Binding customer_edit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Email_TextChanged"/>
                                 <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigCustomers_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit customer" Cursor="Hand" IsEnabled="False">
                                         <Image.InputBindings>
@@ -189,7 +201,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
