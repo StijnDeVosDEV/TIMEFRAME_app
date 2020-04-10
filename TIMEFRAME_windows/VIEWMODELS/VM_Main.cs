@@ -922,6 +922,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
                             taskentry_edit_availProjects.Add(project);
                         }
                     }
+                    else
+                    {
+                        taskentry_edit_selCust = null;
+                        if(taskentry_edit_availProjects != null){ taskentry_edit_availProjects.Clear(); }
+                    }
                 }
             }
         }
@@ -1299,7 +1304,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                             timeentry_edit_availProjects.Add(project);
                         }
                     }
-                    else { timeentry_edit_selCust = null; }
+                    else { timeentry_edit_selCust = null; if (timeentry_edit_availProjects != null) { timeentry_edit_availProjects.Clear(); } }
                 }
             }
         }
@@ -1339,7 +1344,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                             timeentry_edit_availTaskEntries.Add(taskEntry);
                         }
                     }
-                    else { timeentry_edit_selProj = null; }
+                    else { timeentry_edit_selProj = null; if (timeentry_edit_availTaskEntries != null) { timeentry_edit_availTaskEntries.Clear(); } }
                 }
             }
         }
