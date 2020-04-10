@@ -300,39 +300,54 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" Background="#BF000000" Margin="0,0,30,0" Grid.ColumnSpan="2">
+                        <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" Background="#BFE6E6E6" Margin="0,0,30,0" Grid.ColumnSpan="2" Visibility="{Binding taskentry_addedit_Visibility}">
                             <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Properties">
                                 <Label Content="Add new Task" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
                                 <ComboBox
-                                    materialDesign:HintAssist.Hint="Customer"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TaskEntry_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged" Margin="10,10,10,0"/>
+                                    x:Name="Combo_TaskEntry_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged" Margin="10,10,10,0">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="User" />
+                                            <TextBlock>Customer</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <ComboBox
-                                    materialDesign:HintAssist.Hint="Project"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TaskEntry_AddEdit_AvailProjects" ItemsSource="{Binding taskentry_addedit_availProjects}" HorizontalContentAlignment="Left" Margin="10,20,10,0" SelectedIndex="{Binding taskentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged"/>
-                                <Label Content="Name" Foreground="White" Margin="0,20,0,0"/>
+                                    x:Name="Combo_TaskEntry_AddEdit_AvailProjects" ItemsSource="{Binding taskentry_addedit_availProjects}" HorizontalContentAlignment="Left" Margin="10,20,10,0" SelectedIndex="{Binding taskentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                            <TextBlock>Project</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <TextBox 
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_TaskEntry_AddEdit_Name" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_TaskEntry_AddEdit_Name_TextChanged" Text="{Binding taskentry_addedit_Name}"/>
-                                <Label Content="Description" Foreground="White"/>
+                                    x:Name="TB_TaskEntry_AddEdit_Name" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_TaskEntry_AddEdit_Name_TextChanged" Text="{Binding taskentry_addedit_Name}">
+                                </TextBox>
                                 <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Description"
-                                    x:Name="TB_TaskEntry_AddEdit_Description" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_TaskEntry_AddEdit_Description_TextChanged" Text="{Binding taskentry_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Label Content="Status" Foreground="White"/>
+                                    x:Name="TB_TaskEntry_AddEdit_Description" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_TaskEntry_AddEdit_Description_TextChanged" Text="{Binding taskentry_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Label Content="Status" Foreground="Black" Margin="0,20,0,0"/>
                                 <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="White" IsChecked="{Binding taskentry_addedit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="White" Margin="10,0,0,0" IsChecked="{Binding taskentry_addedit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="Black" IsChecked="{Binding taskentry_addedit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="Black" Margin="10,0,0,0" IsChecked="{Binding taskentry_addedit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigTaskEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
@@ -344,21 +359,53 @@
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
-                        <Grid x:Name="Grid_ConfigTaskEntries_Edit" Background="#BF000000" Margin="0,0,30,0" Grid.ColumnSpan="2" Visibility="{Binding taskentry_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                        <Grid x:Name="Grid_ConfigTaskEntries_Edit" Background="#BFE6E6E6" Margin="0,0,30,0" Grid.ColumnSpan="2">
                             <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Properties">
-                                <Label Content="Edit Task" FontWeight="Bold" Foreground="White"/>
-                                <Label Content="Customer" Foreground="White"/>
-                                <ComboBox x:Name="Combo_TaskEntry_Edit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_Edit_AvailCustomers_SelectionChanged" Margin="10,0,10,0"/>
-                                <Label Content="Project" Foreground="White"/>
-                                <ComboBox x:Name="Combo_TaskEntry_Edit_AvailProjects" Margin="10,0,10,0" ItemsSource="{Binding taskentry_edit_availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding taskentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Combo_TaskEntry_Edit_AvailProjects_SelectionChanged"/>
-                                <Label Content="Name" Foreground="White"/>
-                                <TextBox x:Name="TB_TaskEntry_Edit_Name" Text="{Binding taskentry_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_TaskEntry_Edit_Name_TextChanged"/>
-                                <Label Content="Description" Foreground="White"/>
-                                <TextBox x:Name="TB_TaskEntry_Edit_Description" Text="{Binding taskentry_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_TaskEntry_Edit_Description_TextChanged"/>
-                                <Label Content="Status" Foreground="White"/>
+                                <Label Content="Edit Task" FontWeight="Bold" Foreground="Black"/>
+                                <ComboBox 
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_TaskEntry_Edit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_Edit_AvailCustomers_SelectionChanged" Margin="10,20,10,0">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                                Orientation="Horizontal"
+                                                Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="User" />
+                                            <TextBlock>Customer</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_TaskEntry_Edit_AvailProjects" Margin="10,20,10,0" ItemsSource="{Binding taskentry_edit_availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding taskentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Combo_TaskEntry_Edit_AvailProjects_SelectionChanged">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                                Orientation="Horizontal"
+                                                Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                            <TextBlock>Project</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <TextBox 
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_TaskEntry_Edit_Name" Text="{Binding taskentry_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_TaskEntry_Edit_Name_TextChanged"/>
+                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Description"
+                                    x:Name="TB_TaskEntry_Edit_Description" Text="{Binding taskentry_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_TaskEntry_Edit_Description_TextChanged"/>
+                                <Label Content="Status" Foreground="Black" Margin="0,20,0,0"/>
                                 <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                                    <RadioButton x:Name="RB_TaskEntry_Edit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="White" IsChecked="{Binding taskentry_edit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <RadioButton x:Name="RB_TaskEntry_Edit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="White" Margin="10,0,0,0" IsChecked="{Binding taskentry_edit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <RadioButton x:Name="RB_TaskEntry_Edit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="Black" IsChecked="{Binding taskentry_edit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <RadioButton x:Name="RB_TaskEntry_Edit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="Black" Margin="10,0,0,0" IsChecked="{Binding taskentry_edit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                                 <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <Image x:Name="Img_ConfigTaskEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
