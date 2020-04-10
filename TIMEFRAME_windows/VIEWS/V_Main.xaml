@@ -119,7 +119,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -467,7 +467,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -557,29 +557,53 @@
                             <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
                                 <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
                                 <ComboBox 
-                                    materialDesign:HintAssist.Hint="Customer"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TimeEntry_AddEdit_AvailCustomers" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailCustomers_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    x:Name="Combo_TimeEntry_AddEdit_AvailCustomers" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailCustomers_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="User" />
+                                            <TextBlock>Customer</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <ComboBox
-                                    materialDesign:HintAssist.Hint="Project"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TimeEntry_AddEdit_AvailProjects" HorizontalContentAlignment="Left" Margin="10,20,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailProjects_SelectionChanged_1" ItemsSource="{Binding timeentry_addedit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    x:Name="Combo_TimeEntry_AddEdit_AvailProjects" HorizontalContentAlignment="Left" Margin="10,20,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailProjects_SelectionChanged_1" ItemsSource="{Binding timeentry_addedit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                            <TextBlock>Project</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <ComboBox
-                                    materialDesign:HintAssist.Hint="Task"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TimeEntry_AddEdit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailTaskEntries_SelectionChanged" Margin="10,20,10,0" ItemsSource="{Binding timeentry_addedit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    x:Name="Combo_TimeEntry_AddEdit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailTaskEntries_SelectionChanged" Margin="10,20,10,0" ItemsSource="{Binding timeentry_addedit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                            <materialDesign:PackIcon Kind="FileCheckOutline" />
+                                            <TextBlock>Task</TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
                                 <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
                                     <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime" Width="100" materialDesign:HintAssist.Hint="Pick Start Time
                                                 " Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_addedit_DateTimeStart}" DisplayDate="{Binding timeentry_addedit_DateTimeStart}" Margin="0,30,0,0" />

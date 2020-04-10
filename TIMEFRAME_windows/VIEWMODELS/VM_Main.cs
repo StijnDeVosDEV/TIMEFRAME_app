@@ -265,6 +265,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             timeentry_addedit_DateTimeStop = DateTime.Now;
             timeentry_addedit_TimeStart = DateTime.Now;
             timeentry_addedit_TimeStop = DateTime.Now;
+            timeentry_addedit_Visibility = Visibility.Hidden;
 
             timeentry_edit_selCustindex = -1;
             timeentry_edit_selProjindex = -1;
@@ -275,6 +276,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             //timeentry_edit_DateTimeStop = DateTime.Now;
             //timeentry_edit_TimeStart = DateTime.Now;
             //timeentry_edit_TimeStop = DateTime.Now;
+            timeentry_edit_Visibility = Visibility.Hidden;
 
 
             // Initializations
