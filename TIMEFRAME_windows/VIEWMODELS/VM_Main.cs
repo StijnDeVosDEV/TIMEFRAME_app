@@ -50,6 +50,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private int _selTaskEntryindex;
         private TaskEntry _selTaskEntry;
 
+        private DateTime _record_StartTime;
+        private DateTime _record_StopTime;
+        private TimeSpan _record_Duration;
+
+
         // CONFIG block
         // --------------
         // --------------
@@ -227,6 +232,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             selCustomerindex = -1;
             selProjectindex = -1;
             selTaskEntryindex = -1;
+            Reset("RECORD_TIMEENTRY");
 
             db_shownCustomers = new ObservableCollection<Customer>();
             db_shownProjects = new ObservableCollection<Project>();
@@ -387,6 +393,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     else { selCustomer = null;}
                 } }
         }
+
         public Customer selCustomer
         {
             get { return _selCustomer; }
@@ -406,6 +413,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         selProject = null;
                     } } }
         }
+
         public Project selProject
         {
             get { return _selProject; }
@@ -423,10 +431,33 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     else { selTaskEntry = null; }
                      } }
         }
+
         public TaskEntry selTaskEntry
         {
             get { return _selTaskEntry; }
             set { if (value != _selTaskEntry) { _selTaskEntry = value; RaisePropertyChangedEvent("selTaskEntry"); } }
+        }
+
+        public DateTime record_StartTime
+        {
+            get { return _record_StartTime; }
+            set { if (value != _record_StartTime) { _record_StartTime = value; RaisePropertyChangedEvent("record_StartTime");
+                    CalculateDuration("RECORD");
+                } }
+        }
+
+        public DateTime record_StopTime
+        {
+            get { return _record_StopTime; }
+            set { if (value != _record_StopTime) { _record_StopTime = value; RaisePropertyChangedEvent("record_StopTime");
+                    CalculateDuration("RECORD");
+                } }
+        }
+
+        public TimeSpan record_Duration
+        {
+            get { return _record_Duration; }
+            set { if (value != _record_Duration) { _record_Duration = value; RaisePropertyChangedEvent("record_Duration"); } }
         }
         #endregion
 
@@ -1894,7 +1925,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private void CalculateDuration(string requestor)
         {
-            TimeSpan duration = new TimeSpan(0, 0, 0);
+            TimeSpan duration = new TimeSpan(0, 0, 0, 0);
 
             switch (requestor.ToUpper())
             {
@@ -1913,6 +1944,28 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         duration = timeentry_edit_DateTimeStop.Subtract(timeentry_edit_DateTimeStart);
                     }
                     timeentry_edit_Duration = new TimeSpan(duration.Days, duration.Hours, duration.Minutes, duration.Seconds);
+                    break;
+
+                case "RECORD":
+                    if (record_StopTime.Ticks > record_StartTime.Ticks)
+                    {
+                        duration = record_StopTime.Subtract(record_StartTime);
+                    }
+                    record_Duration = new TimeSpan(duration.Days, duration.Hours, duration.Minutes, duration.Seconds);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void Reset(string requestor)
+        {
+            switch (requestor)
+            {
+                case "RECORD_TIMEENTRY":
+                    record_StartTime = DateTime.MinValue;
+                    record_StopTime = DateTime.MinValue;
                     break;
 
                 default:

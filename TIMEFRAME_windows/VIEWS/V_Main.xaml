@@ -97,17 +97,25 @@
                 </StackPanel>
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand"/>
-                        <Label x:Name="Label_PlayTime" Content="&lt;hh:mm&gt;" HorizontalContentAlignment="Center" Cursor="Hand"/>
+                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown"/>
+                        <materialDesign:TimePicker
+                            Is24Hours="True"
+                            x:Name="TimePicker_StartTime"
+                            Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                            materialDesign:HintAssist.Hint="Start time" SelectedTime="{Binding record_StartTime}"/>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand"/>
-                        <Label x:Name="Label_StopTime" Content="&lt;hh:mm&gt;" HorizontalContentAlignment="Center" Cursor="Hand"/>
+                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown"/>
+                        <materialDesign:TimePicker
+                            Is24Hours="True"
+                            x:Name="TimePicker_StopTime"
+                            Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
+                            materialDesign:HintAssist.Hint="Stop time" SelectedTime="{Binding record_StopTime}"/>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_TimeEntry" Margin="20,0,0,0" VerticalAlignment="Center">
                         <StackPanel x:Name="StackPanel_Duration" Orientation="Horizontal">
-                            <Image x:Name="Img_TimeEntryLogo" Height="30" Source="/IMAGES/TimeFrame__TimeEntry.png" Cursor="Hand"/>
-                            <Label x:Name="Label_Duration" Content=".. h  .. m  .. s" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
+                            <materialDesign:PackIcon Kind="Clockwise" VerticalAlignment="Stretch" Width="32" Height="32" />
+                            <Label x:Name="Label_Duration" Content="{Binding record_Duration}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
                         </StackPanel>
                         <StackPanel x:Name="StackPanel_Save_Delete" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand"/>

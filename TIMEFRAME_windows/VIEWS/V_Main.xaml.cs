@@ -943,5 +943,17 @@ namespace TIMEFRAME_windows.VIEWS
             toggleVisibility_Settings(SettingsPanels.Style);
         }
         #endregion
+
+
+        // RECORD COMPONENT
+        private void Img_Play_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TimePicker_StartTime.SelectedTime = DateTime.Now;
+        }
+
+        private void Img_Stopo_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TimePicker_StopTime.SelectedTime = DateTime.Now;
+        }
     }
 }
