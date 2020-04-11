@@ -52,7 +52,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         materialDesign:TextFieldAssist.SuffixText=""
                         materialDesign:HintAssist.HelperText=""
-                        x:Name="Combo_Customer" Margin="0,0,0,0" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" VerticalAlignment="Center">
+                        x:Name="Combo_Customer" Margin="0,0,0,0" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" VerticalAlignment="Center" SelectionChanged="Combo_Customer_SelectionChanged">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel
                                             Orientation="Horizontal"
@@ -68,7 +68,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         materialDesign:TextFieldAssist.SuffixText=""
                         materialDesign:HintAssist.HelperText=""
-                        x:Name="Combo_Project" Margin="0,10,0,0" ItemsSource="{Binding availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
+                        x:Name="Combo_Project" Margin="0,10,0,0" ItemsSource="{Binding availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel
                                             Orientation="Horizontal"
@@ -84,7 +84,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         materialDesign:TextFieldAssist.SuffixText=""
                         materialDesign:HintAssist.HelperText=""
-                        x:Name="Combo_Task" ItemsSource="{Binding availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Cursor="Hand">
+                        x:Name="Combo_Task" ItemsSource="{Binding availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel
                                             Orientation="Horizontal"
@@ -97,20 +97,22 @@
                 </StackPanel>
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown"/>
+                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown">
+                        </Image>
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StartTime"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-                            materialDesign:HintAssist.Hint="Start time" SelectedTime="{Binding record_StartTime}"/>
+                            materialDesign:HintAssist.Hint="Start time" SelectedTime="{Binding record_StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedTimeChanged="TimePicker_StartTime_SelectedTimeChanged"/>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown"/>
+                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown">
+                        </Image>
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StopTime"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
-                            materialDesign:HintAssist.Hint="Stop time" SelectedTime="{Binding record_StopTime}"/>
+                            materialDesign:HintAssist.Hint="Stop time" SelectedTime="{Binding record_StopTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedTimeChanged="TimePicker_StopTime_SelectedTimeChanged"/>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_TimeEntry" Margin="20,0,0,0" VerticalAlignment="Center">
                         <StackPanel x:Name="StackPanel_Duration" Orientation="Horizontal">
@@ -118,8 +120,16 @@
                             <Label x:Name="Label_Duration" Content="{Binding record_Duration}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
                         </StackPanel>
                         <StackPanel x:Name="StackPanel_Save_Delete" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                            <Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand"/>
-                            <Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand"/>
+                            <Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand" IsEnabled="False">
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding AddRecordedTimeEntry, Mode=Default}"/>
+                                </Image.InputBindings>
+                            </Image>
+                            <Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand">
+                                <Image.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding RecordReset, Mode=Default}"/>
+                                </Image.InputBindings>
+                            </Image>
                         </StackPanel>
                     </StackPanel>
                     <Grid x:Name="Grid_ExtraButtons">

@@ -178,6 +178,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
         // Commands
+        private VIEWMODELS.Base.GEN_RelayCommand _AddRecordedTimeEntry;
+        private VIEWMODELS.Base.GEN_RelayCommand _RecordReset;
+
         private VIEWMODELS.Base.GEN_RelayCommand _AddCustomer;
         private VIEWMODELS.Base.GEN_RelayCommand _EditCustomer;
         private VIEWMODELS.Base.GEN_RelayCommand _DeleteCustomer;
@@ -1539,6 +1542,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Public command declarations
         // ---------------------------
         #region COMMANDS
+        public ICommand AddRecordedTimeEntry { get { return _AddRecordedTimeEntry; } }
+        public ICommand RecordReset { get { return _RecordReset; } }
+
         public ICommand AddCustomer { get { return _AddCustomer; } }
         public ICommand EditCustomer { get { return _EditCustomer; } }
         public ICommand DeleteCustomer { get { return _DeleteCustomer; } }
@@ -1981,6 +1987,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         /// </summary>
         private void LoadCommands()
         {
+            _AddRecordedTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_AddRecordedTimeEntry());
+            _RecordReset = new Base.GEN_RelayCommand(param => this.Perform_RecordReset());
+
             _AddCustomer = new Base.GEN_RelayCommand(param => this.Perform_AddCustomer());
             _EditCustomer = new Base.GEN_RelayCommand(param => this.Perform_EditCustomer());
             _DeleteCustomer = new Base.GEN_RelayCommand(param => this.Perform_DeleteCustomer());
@@ -2016,7 +2025,45 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             paletteHelper.SetTheme(theme);
         }
-        
+
+
+        private async void Perform_AddRecordedTimeEntry()
+        {
+            try
+            {
+                // Create new Time Entry
+                TimeEntry newTimeEntry = new TimeEntry()
+                {
+                    CreationDate = DateTime.Now,
+                    Duration = record_Duration,
+                    Start = record_StartTime,
+                    Stop = record_StopTime,
+                    TaskEntryId = selTaskEntry.Id,
+                    Date = record_StartTime
+                };
+
+                // Update in database
+                await myBackendService.AddTimeEntry(newTimeEntry);
+
+                // Update in current app session
+                newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
+                allTimeEntries.Add(newTimeEntry);
+
+                // Update UI
+                Reset("RECORD_TIMEENTRY");
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start adding new Time Entry: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+        private void Perform_RecordReset()
+        {
+            Reset("RECORD_TIMEENTRY");
+        }
+
         #region CUSTOMER CRUD
         private async void Perform_AddCustomer()
         {
