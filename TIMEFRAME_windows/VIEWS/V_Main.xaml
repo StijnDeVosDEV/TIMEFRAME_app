@@ -838,6 +838,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Border BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
+                <ScrollViewer Grid.Column="1">
                 <StackPanel x:Name="StackPanel_Report_Totals" Grid.Column="1">
                     <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
                         <materialDesign:PackIcon Kind="ChartLine" VerticalAlignment="Center" Width="24" Height="24" />
@@ -942,10 +943,35 @@
                             </ScrollViewer>
                         </Grid>
                     </StackPanel>
-                    <StackPanel x:Name="StackPanel_Report_Total_TreeView" Height="100" Margin="0,19.8,0,0">
+                    <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
                         <Label Content="Details" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+
+                        <TreeView x:Name="TreeView_Report_Totals">
+                            <TreeViewItem Header="Customer 1">
+                                <TreeViewItem Header="Project 1">
+                                    <TreeViewItem Header="Task 1"></TreeViewItem>
+                                    <TreeViewItem Header="Task 2"></TreeViewItem>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Project 2">
+                                    <TreeViewItem Header="Task 3"></TreeViewItem>
+                                    <TreeViewItem Header="Task 4"></TreeViewItem>
+                                </TreeViewItem>
+                            </TreeViewItem>
+                            <TreeViewItem Header="Customer 2">
+                                <TreeViewItem Header="Project 3">
+                                    <TreeViewItem Header="Task 5"></TreeViewItem>
+                                    <TreeViewItem Header="Task 6"></TreeViewItem>
+                                </TreeViewItem>
+                                <TreeViewItem Header="Project 4">
+                                    <TreeViewItem Header="Task 7"></TreeViewItem>
+                                    <TreeViewItem Header="Task 8"></TreeViewItem>
+                                </TreeViewItem>
+                            </TreeViewItem>
+                        </TreeView>
+
                     </StackPanel>
                 </StackPanel>
+                </ScrollViewer>
             </Grid>
         </Grid>
         <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
