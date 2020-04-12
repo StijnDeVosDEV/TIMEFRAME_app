@@ -904,8 +904,43 @@
                             Clear all
                         </Button>
                     </StackPanel>
-                    <StackPanel x:Name="StackPanel_Report_Totals_MainTime" Height="100"/>
-                    <StackPanel x:Name="StackPanel_Report_Total_TreeView" Height="100"/>
+                    <StackPanel x:Name="StackPanel_Report_Totals_Summary" Margin="0,20,0,0">
+                        <Label Content="Summary" FontStyle="Italic"/>
+                        <Grid x:Name="Grid_Report_Totals_Summary_Content">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid x:Name="Grid_Report_Totals_Summary_Amounts" Margin="0,0,30,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Content="# Customers" Margin="0,0,10,0"/>
+                                <Label Content="# Projects" Grid.Row="1"/>
+                                <Label Content="# Tasks" Grid.Row="2"/>
+                                <Label Content=".." Grid.Column="1"/>
+                                <Label Content=".." Grid.Column="1" Grid.Row="1"/>
+                                <Label Content=".." Grid.Column="1" Grid.Row="2"/>
+                            </Grid>
+                            <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Label x:Name="Label_Report_Totals_Summary_Hours" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                <Label Content="hours" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+                                <Label x:Name="Label_Report_Totals_Summary_Minutes" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                <Label Content="minutes" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+                                <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                <Label Content="seconds" VerticalContentAlignment="Center" FontSize="16"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_Report_Total_TreeView" Height="100" Margin="0,19.8,0,0">
+                        <Label Content="Details" FontStyle="Italic"/>
+                    </StackPanel>
                 </StackPanel>
             </Grid>
         </Grid>
