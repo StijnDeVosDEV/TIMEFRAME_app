@@ -176,6 +176,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Time Entry: delete
 
 
+        // REPORT BLOCK
+        // ------------
+        // ------------
+        // TOTALS
+        // ------
+        // Selection
+        private int _report_totals_selCustomerIndex;
+
 
         // Commands
         private VIEWMODELS.Base.GEN_RelayCommand _AddRecordedTimeEntry;
