@@ -843,6 +843,7 @@
                         <materialDesign:PackIcon Kind="ChartLine" VerticalAlignment="Center" Width="24" Height="24" />
                         <Label Content="Totals" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Center"/>
                     </StackPanel>
+                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                     <StackPanel x:Name="StackPanel_Report_Totals_Filters" Orientation="Horizontal" VerticalAlignment="Stretch">
                         <ComboBox
                             materialDesign:TextFieldAssist.HasClearButton="True"
@@ -900,12 +901,13 @@
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" />
                         <Button
                             Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="MaterialDesignOutlinedButton" Padding="4,0,4,0" Height="24" FontSize="12">
+                            ToolTip="Clear all filters" Padding="4,0,4,0" Height="24" FontSize="12">
                             Clear all
                         </Button>
                     </StackPanel>
+                    </ScrollViewer>
                     <StackPanel x:Name="StackPanel_Report_Totals_Summary" Margin="0,20,0,0">
-                        <Label Content="Summary" FontStyle="Italic"/>
+                        <Label Content="Summary" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
                         <Grid x:Name="Grid_Report_Totals_Summary_Content">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -928,6 +930,7 @@
                                 <Label Content=".." Grid.Column="1" Grid.Row="1"/>
                                 <Label Content=".." Grid.Column="1" Grid.Row="2"/>
                             </Grid>
+                            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Label x:Name="Label_Report_Totals_Summary_Hours" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
                                 <Label Content="hours" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
@@ -936,10 +939,11 @@
                                 <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
                                 <Label Content="seconds" VerticalContentAlignment="Center" FontSize="16"/>
                             </StackPanel>
+                            </ScrollViewer>
                         </Grid>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_Report_Total_TreeView" Height="100" Margin="0,19.8,0,0">
-                        <Label Content="Details" FontStyle="Italic"/>
+                        <Label Content="Details" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
                     </StackPanel>
                 </StackPanel>
             </Grid>
@@ -955,6 +959,10 @@
                         <MouseBinding Gesture="LeftClick" Command="{Binding CloseLoadingScreen, Mode=Default}"/>
                     </Label.InputBindings>
                 </Label>
+                <ProgressBar
+                    Style="{StaticResource MaterialDesignCircularProgressBar}"
+                    Value="0"
+                    IsIndeterminate="True" />
             </StackPanel>
         </Grid>
 
