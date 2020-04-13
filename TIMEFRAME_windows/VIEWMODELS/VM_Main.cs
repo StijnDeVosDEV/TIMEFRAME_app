@@ -198,6 +198,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<Project> _report_totals_targProjectColl;
         private ObservableCollection<TaskEntry> _report_totals_targTaskEntryColl;
         private ObservableCollection<TimeEntry> _report_totals_targTimeEntryColl;
+        private MODELS.TimeSpanHMS _report_totals_targTimeSpan;
+
+
+
 
 
         // Commands
@@ -324,6 +328,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             report_totals_targProjectColl = new ObservableCollection<Project>();
             report_totals_targTaskEntryColl = new ObservableCollection<TaskEntry>();
             report_totals_targTimeEntryColl = new ObservableCollection<TimeEntry>();
+
+            
 
 
             // Initializations
@@ -1715,6 +1721,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _report_totals_targTimeEntryColl; }
             set { if (value != _report_totals_targTimeEntryColl) { _report_totals_targTimeEntryColl = value; RaisePropertyChangedEvent("report_totals_targTimeEntryColl"); } }
         }
+
+        public MODELS.TimeSpanHMS report_totals_targTimeSpan
+        {
+            get { return _report_totals_targTimeSpan; }
+            set { if (value != _report_totals_targTimeSpan) { _report_totals_targTimeSpan = value; RaisePropertyChangedEvent("report_totals_targTimeSpan"); } }
+        }
         #endregion
 
         #endregion
@@ -2120,22 +2132,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             return popTimeEntries;
         }
-
-        //private void PopulateFullTimeEntryObjects()
-        //{
-        //    try
-        //    {
-        //        // Initializations
-        //        List<TimeEntry> populatedTimeEntries = new List<TimeEntry>();
-
-        //        // 
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Logger.Write("!ERROR while trying to PopulateFullTimeEntryObjects: " + Environment.NewLine +
-        //            e.ToString());
-        //    }
-        //}
         
         private void CalculateDuration(string requestor)
         {
@@ -2274,10 +2270,39 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     Logger.Write("   " + customer.Name);
                 }
 
+
+
+                // Calculate new total TimeSpan
+                // ----------------------------
+                // ----------------------------
+                CalculateTimespan_ReportTotals();
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while trying to get target data collections for Totals report: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        private void CalculateTimespan_ReportTotals()
+        {
+            try
+            {
+                // Initialize
+                TimeSpan timeSpan = new TimeSpan(0, 0, 0);
+
+                // Calculate sum of all target Time Entries
+                foreach (TimeEntry timeEntry in report_totals_targTimeEntryColl)
+                {
+                    timeSpan = timeSpan + timeEntry.Duration;
+                }
+
+                // Assign resulting TimeSpan data to correct object
+                report_totals_targTimeSpan = new TimeSpanHMS(timeSpan);
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to CalculateTimespan_ReportTotals: " + Environment.NewLine +
                     e.ToString());
             }
         }

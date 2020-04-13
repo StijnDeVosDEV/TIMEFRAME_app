@@ -933,11 +933,11 @@
                             </Grid>
                             <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Label x:Name="Label_Report_Totals_Summary_Hours" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                <Label x:Name="Label_Report_Totals_Summary_Hours" Content="{Binding report_totals_targTimeSpan.Hours}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
                                 <Label Content="hours" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-                                <Label x:Name="Label_Report_Totals_Summary_Minutes" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                <Label x:Name="Label_Report_Totals_Summary_Minutes" Content="{Binding report_totals_targTimeSpan.Minutes}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
                                 <Label Content="minutes" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-                                <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="Label" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="{Binding report_totals_targTimeSpan.Seconds}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
                                 <Label Content="seconds" VerticalContentAlignment="Center" FontSize="16"/>
                             </StackPanel>
                             </ScrollViewer>
