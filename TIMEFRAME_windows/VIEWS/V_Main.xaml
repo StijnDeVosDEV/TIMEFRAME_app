@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TIMEFRAME_windows.VIEWS"
         xmlns:VIEWMODELS="clr-namespace:TIMEFRAME_windows.VIEWMODELS"
+        xmlns:MODELS="clr-namespace:TIMEFRAME_windows.MODELS"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -946,8 +947,8 @@
                     <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
                         <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
 
-                        <TreeView x:Name="TreeView_Report_Totals">
-                            <TreeViewItem Header="Customer 1">
+                        <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl}">
+                            <!--<TreeViewItem Header="Customer 1">
                                 <TreeViewItem Header="Project 1">
                                     <TreeViewItem Header="Task 1"></TreeViewItem>
                                     <TreeViewItem Header="Task 2"></TreeViewItem>
@@ -966,7 +967,29 @@
                                     <TreeViewItem Header="Task 7"></TreeViewItem>
                                     <TreeViewItem Header="Task 8"></TreeViewItem>
                                 </TreeViewItem>
-                            </TreeViewItem>
+                            </TreeViewItem>-->
+
+                            <TreeView.ItemTemplate>
+                                
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Projects}" DataType="{x:Type MODELS:Customer}">
+                                        <Label Content="{Binding Name}"/>
+                                        <HierarchicalDataTemplate.ItemTemplate>
+
+                                            <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries}" DataType="{x:Type MODELS:Project}">
+                                                <Label Content="{Binding Name}"/>
+                                                <HierarchicalDataTemplate.ItemTemplate>
+
+                                                    <HierarchicalDataTemplate DataType="{x:Type MODELS:TaskEntry}">
+                                                        <Label Content="{Binding Name}"/>
+                                                    </HierarchicalDataTemplate>
+                                                    
+                                                </HierarchicalDataTemplate.ItemTemplate>
+                                            </HierarchicalDataTemplate>
+                                            
+                                        </HierarchicalDataTemplate.ItemTemplate>
+                                    </HierarchicalDataTemplate>
+                                
+                            </TreeView.ItemTemplate>
                         </TreeView>
 
                     </StackPanel>

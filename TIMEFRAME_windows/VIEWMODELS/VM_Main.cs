@@ -1780,6 +1780,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             allTaskEntries_fromDB = await myBackendService.GetTaskEntries();
             allTimeEntries_fromDB = await myBackendService.GetTimeEntries();
 
+            FullyPopulateObservableCollections();
+
             GetTargetCollections_ReportTotals();
             ToggleLoadingScreen_Visibility();
         }
@@ -2132,6 +2134,44 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             return popTimeEntries;
         }
+
+        private void FullyPopulateObservableCollections()
+        {
+            // TaskEntries
+            ObservableCollection<TaskEntry> populatedTaskEntries = new ObservableCollection<TaskEntry>();
+
+            foreach (TaskEntry taskEntry in allTaskEntries)
+            {
+                taskEntry.TimeEntries = allTimeEntries.Where(x => x.TaskEntryId == taskEntry.Id).ToList();
+                populatedTaskEntries.Add(taskEntry);
+            }
+
+            allTaskEntries = populatedTaskEntries;
+
+
+            // Projects
+            ObservableCollection<Project> populatedProjects = new ObservableCollection<Project>();
+
+            foreach (Project project in allProjects)
+            {
+                project.TaskEntries = allTaskEntries.Where(x => x.ProjectId == project.Id).ToList();
+                populatedProjects.Add(project);
+            }
+
+            allProjects = populatedProjects;
+
+
+            // Customers
+            ObservableCollection<Customer> populatedCustomers= new ObservableCollection<Customer>();
+
+            foreach (Customer customer in allCustomers)
+            {
+                customer.Projects = allProjects.Where(x => x.CustomerId == customer.Id).ToList();
+                populatedCustomers.Add(customer);
+            }
+
+            allCustomers = populatedCustomers;
+        }
         
         private void CalculateDuration(string requestor)
         {
@@ -2260,7 +2300,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     Logger.Write("   " + project.Name);
                 }
 
-                // get target Customers
+                // Get target Customers
                 // --------------------
                 if (report_totals_targCustomerColl != null) { report_totals_targCustomerColl.Clear(); }
                 Logger.Write("CUSTOMERS:");
@@ -2270,6 +2310,28 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     Logger.Write("   " + customer.Name);
                 }
 
+
+
+                // Fully populate all target customers
+                // Task Entries
+                foreach (TaskEntry taskEntry1 in report_totals_targTaskEntryColl)
+                {
+
+                }
+
+                foreach (Customer customer1 in report_totals_targCustomerColl)
+                {
+                    Logger.Write("Customer:  " + customer1.Name);
+                    Customer pop_Customer = customer1;
+                    if(customer1.Projects != null)
+                    {
+                        foreach (Project project in customer1.Projects)
+                        {
+                            Logger.Write(" -> Project:  " + project.Name);
+                        }
+                    }
+                    else { Logger.Write("  => .Projects = null"); }
+                }
 
 
                 // Calculate new total TimeSpan
@@ -2283,6 +2345,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     e.ToString());
             }
         }
+
+        
 
         private void CalculateTimespan_ReportTotals()
         {
