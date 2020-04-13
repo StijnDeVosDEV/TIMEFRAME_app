@@ -61,9 +61,12 @@ namespace TIMEFRAME_windows.SERVICES
             try
             {
                 // Calculate sum of all target Time Entries
-                foreach (TimeEntry timeEntry in taskEntry.TimeEntries)
+                if (taskEntry.TimeEntries != null)
                 {
-                    timeSpan = timeSpan + timeEntry.Duration;
+                    foreach (TimeEntry timeEntry in taskEntry.TimeEntries)
+                    {
+                        timeSpan = timeSpan + timeEntry.Duration;
+                    }
                 }
 
                 // Assign resulting TimeSpan data to correct object

@@ -323,8 +323,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             report_totals_selProjectIndex = -1;
             report_totals_selTaskEntryIndex = -1;
             report_totals_filter_FromDate = DateTime.MinValue;
-            report_totals_filter_ToDate = DateTime.Now;
-
+            report_totals_filter_ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 999);
             report_totals_targCustomerColl = new ObservableCollection<CustomerReport>();
             report_totals_targProjectColl = new ObservableCollection<ProjectReport>();
             report_totals_targTaskEntryColl = new ObservableCollection<TaskEntryReport>();
@@ -1766,11 +1765,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         //  -----------------
         //  Private functions
         //  -----------------
-        //public void InitializeServiceInjections(IBackendService backendService)
-        //{
-        //    myBackendService = backendService;
-        //}
-
         private async Task LoadDatabaseData()
         {
             LoadingScreen_Visibility = Visibility.Visible;
@@ -1968,6 +1962,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             db_shownProjects = PopulateProjectsRelatedCustomerObjects(allProjects);
             db_shownTaskEntries = PopulateTaskEntriesRelatedProjectObjects(allTaskEntries);
             db_shownTimeEntries = PopulateTimeEntriesRelatedTaskEntryObjects(allTimeEntries);
+
+            GetTargetCollections_ReportTotals();
         }
 
         private void Update_SecondaryViewVisibilities(dataCategory SecondaryViewShown, bool shouldADDopen)
@@ -2245,27 +2241,27 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         if (report_totals_selTaskEntryIndex > -1)
                         {
                             targTimeEntries = allTimeEntries
-                                .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks))
+                                .Where(x => (x.Date.Date >= report_totals_filter_FromDate.Date && x.Date.Date <= report_totals_filter_ToDate.Date))
                                 .Where(y => y.TaskEntryId == report_totals_selTaskEntry.Id).ToList();
                         }
                         else
                         {
                             targTimeEntries = allTimeEntries
-                            .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks))
+                            .Where(x => (x.Date.Date >= report_totals_filter_FromDate.Date && x.Date.Date <= report_totals_filter_ToDate.Date))
                             .Where(z => z.TaskEntry.ProjectId == report_totals_selProject.Id).ToList();
                         }
                     }
                     else
                     {
                         targTimeEntries = allTimeEntries
-                            .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks))
+                            .Where(x => (x.Date.Date >= report_totals_filter_FromDate.Date && x.Date.Date <= report_totals_filter_ToDate.Date))
                             .Where(a => a.TaskEntry.Project.CustomerId == report_totals_selCustomer.Id).ToList();
                     }
                 }
                 else
                 {
                     targTimeEntries = allTimeEntries
-                        .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks)).ToList();
+                        .Where(x => (x.Date.Date >= report_totals_filter_FromDate.Date && x.Date.Date <= report_totals_filter_ToDate.Date)).ToList();
                 }
 
                 //targTimeEntries = allTimeEntries
@@ -2326,32 +2322,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         }
 
         
-
-        //private void CalculateTimespan_ReportTotals()
-        //{
-        //    try
-        //    {
-        //        // Initialize
-        //        TimeSpan timeSpan = new TimeSpan(0, 0, 0);
-
-        //        // Calculate sum of all target Time Entries
-        //        foreach (TimeEntry timeEntry in report_totals_targTimeEntryColl)
-        //        {
-        //            timeSpan = timeSpan + timeEntry.Duration;
-        //        }
-
-        //        // Assign resulting TimeSpan data to correct object
-        //        report_totals_targTimeSpan = new TimeSpanHMS(timeSpan);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Logger.Write("!ERROR occurred while trying to CalculateTimespan_ReportTotals: " + Environment.NewLine +
-        //            e.ToString());
-        //    }
-        //}
-
-
-
         //  ----------------------
         // COMMAND RELATED METHODS
         //  ----------------------
@@ -2825,7 +2795,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 report_totals_selProjectIndex = -1;
                 report_totals_selTaskEntryIndex = -1;
                 report_totals_filter_FromDate = DateTime.MinValue;
-                report_totals_filter_ToDate = DateTime.Now;
+                report_totals_filter_ToDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 23, 59, 59, 999);
             }
             catch (Exception e)
             {
