@@ -947,40 +947,59 @@
                     <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
                         <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
 
-                        <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl}">
-                            <!--<TreeViewItem Header="Customer 1">
-                                <TreeViewItem Header="Project 1">
-                                    <TreeViewItem Header="Task 1"></TreeViewItem>
-                                    <TreeViewItem Header="Task 2"></TreeViewItem>
-                                </TreeViewItem>
-                                <TreeViewItem Header="Project 2">
-                                    <TreeViewItem Header="Task 3"></TreeViewItem>
-                                    <TreeViewItem Header="Task 4"></TreeViewItem>
-                                </TreeViewItem>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Customer 2">
-                                <TreeViewItem Header="Project 3">
-                                    <TreeViewItem Header="Task 5"></TreeViewItem>
-                                    <TreeViewItem Header="Task 6"></TreeViewItem>
-                                </TreeViewItem>
-                                <TreeViewItem Header="Project 4">
-                                    <TreeViewItem Header="Task 7"></TreeViewItem>
-                                    <TreeViewItem Header="Task 8"></TreeViewItem>
-                                </TreeViewItem>
-                            </TreeViewItem>-->
-
-                            <TreeView.ItemTemplate>
+                            <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl}">
+                                <TreeView.ItemTemplate>
                                 
                                     <HierarchicalDataTemplate ItemsSource="{Binding Projects}" DataType="{x:Type MODELS:Customer}">
-                                        <Label Content="{Binding Name}"/>
+                                        <Grid Width="500">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="User" VerticalAlignment="Center" />
+                                                <Label Content="{Binding Name}"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                                <Label Content="{Binding Projects.TaskEntries.Count}"/>
+                                                <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
+                                                <Label Content="{Binding Projects.Count}"/>
+                                                <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </Grid>
                                         <HierarchicalDataTemplate.ItemTemplate>
 
                                             <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries}" DataType="{x:Type MODELS:Project}">
-                                                <Label Content="{Binding Name}"/>
+                                                <Grid Width="500">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
+                                                        <Label Content="{Binding Name}"/>
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                                        <Label Content="{Binding Projects.TaskEntries.Count}"/>
+                                                        <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </Grid>
                                                 <HierarchicalDataTemplate.ItemTemplate>
 
                                                     <HierarchicalDataTemplate DataType="{x:Type MODELS:TaskEntry}">
-                                                        <Label Content="{Binding Name}"/>
+                                                        <Grid Width="500">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto"/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
+                                                                <Label Content="{Binding Name}"/>
+                                                            </StackPanel>
+                                                            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                                                
+                                                            </StackPanel>
+                                                        </Grid>
                                                     </HierarchicalDataTemplate>
                                                     
                                                 </HierarchicalDataTemplate.ItemTemplate>
