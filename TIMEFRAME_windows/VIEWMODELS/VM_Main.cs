@@ -213,6 +213,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private VIEWMODELS.Base.GEN_RelayCommand _EditTimeEntry;
         private VIEWMODELS.Base.GEN_RelayCommand _DeleteTimeEntry;
 
+        private VIEWMODELS.Base.GEN_RelayCommand _ReportTotals_ClearFilters;
+
         private VIEWMODELS.Base.GEN_RelayCommand _CloseLoadingScreen;
 
         private VIEWMODELS.Base.GEN_RelayCommand _ApplyBaseTheme;
@@ -1689,6 +1691,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand DeleteTimeEntry { get { return _DeleteTimeEntry; } }
 
 
+        public ICommand ReportTotals_ClearFilters { get { return _ReportTotals_ClearFilters; } }
+
+
         public ICommand CloseLoadingScreen { get { return _CloseLoadingScreen; } }
 
 
@@ -2136,10 +2141,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _EditTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_EditTimeEntry());
             _DeleteTimeEntry = new Base.GEN_RelayCommand(param => this.Perform_DeleteTimeEntry());
 
+            _ReportTotals_ClearFilters = new Base.GEN_RelayCommand(param => this.Perform_ReportTotals_ClearFilters());
+
             _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perform_CloseLoadingScreen());
 
             _ApplyBaseTheme = new Base.GEN_RelayCommand(param => this.Perform_ApplyBaseTheme((bool)param));
         }
+
 
         private void Perform_ApplyBaseTheme(bool isDark)
         {
@@ -2565,6 +2573,25 @@ namespace TIMEFRAME_windows.VIEWMODELS
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while trying to start delete existing time entry: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+        #endregion
+
+        #region REPORTS - Totals
+        private void Perform_ReportTotals_ClearFilters()
+        {
+            try
+            {
+                report_totals_selCustomerIndex = -1;
+                report_totals_selProjectIndex = -1;
+                report_totals_selTaskEntryIndex = -1;
+                report_totals_filter_FromDate = DateTime.MinValue;
+                report_totals_filter_ToDate = DateTime.Now;
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to clear Filters of Totals report: " + Environment.NewLine +
                     e.ToString());
             }
         }

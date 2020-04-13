@@ -902,7 +902,7 @@
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" DisplayDate="{Binding report_totals_filter_ToDate}" SelectedDate="{Binding report_totals_filter_ToDate}" />
                         <Button
                             Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="Clear all filters" Padding="4,0,4,0" Height="24" FontSize="12">
+                            ToolTip="Clear all filters" Padding="4,0,4,0" Height="24" FontSize="12" Command="{Binding ReportTotals_ClearFilters, Mode=Default}">
                             Clear all
                         </Button>
                     </StackPanel>
