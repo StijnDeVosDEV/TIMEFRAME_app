@@ -908,7 +908,7 @@
                     </StackPanel>
                     </ScrollViewer>
                     <StackPanel x:Name="StackPanel_Report_Totals_Summary" Margin="0,20,0,0">
-                        <Label Content="Summary" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        <Label Content="Summary of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
                         <Grid x:Name="Grid_Report_Totals_Summary_Content">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -927,9 +927,9 @@
                                 <Label Content="# Customers" Margin="0,0,10,0"/>
                                 <Label Content="# Projects" Grid.Row="1"/>
                                 <Label Content="# Tasks" Grid.Row="2"/>
-                                <Label Content=".." Grid.Column="1"/>
-                                <Label Content=".." Grid.Column="1" Grid.Row="1"/>
-                                <Label Content=".." Grid.Column="1" Grid.Row="2"/>
+                                <Label Content="{Binding report_totals_targCustomerColl.Count, Mode=OneWay}" Grid.Column="1" ToolTip="Number of Customers you recorded time for"/>
+                                <Label Content="{Binding report_totals_targProjectColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="1" ToolTip="Number of Projects you recorded time for"/>
+                                <Label Content="{Binding report_totals_targTaskEntryColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="2" ToolTip="Number of Tasks you recorded time for"/>
                             </Grid>
                             <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                             <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
@@ -944,7 +944,7 @@
                         </Grid>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
-                        <Label Content="Details" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
 
                         <TreeView x:Name="TreeView_Report_Totals">
                             <TreeViewItem Header="Customer 1">

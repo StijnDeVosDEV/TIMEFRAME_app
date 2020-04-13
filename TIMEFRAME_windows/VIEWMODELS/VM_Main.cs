@@ -181,7 +181,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // ------------
         // TOTALS
         // ------
-        // Selection
+        // Totals - Selection
         private int _report_totals_selCustomerIndex;
         private Customer _report_totals_selCustomer;
         private ObservableCollection<Project> _report_totals_availProjects;
@@ -193,7 +193,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private DateTime _report_totals_filter_FromDate;
         private DateTime _report_totals_filter_ToDate;
 
-
+        // Totals - Summary
+        private ObservableCollection<Customer> _report_totals_targCustomerColl;
+        private ObservableCollection<Project> _report_totals_targProjectColl;
+        private ObservableCollection<TaskEntry> _report_totals_targTaskEntryColl;
+        private ObservableCollection<TimeEntry> _report_totals_targTimeEntryColl;
 
 
         // Commands
@@ -316,6 +320,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             report_totals_filter_FromDate = DateTime.MinValue;
             report_totals_filter_ToDate = DateTime.Now;
 
+            report_totals_targCustomerColl = new ObservableCollection<Customer>();
+            report_totals_targProjectColl = new ObservableCollection<Project>();
+            report_totals_targTaskEntryColl = new ObservableCollection<TaskEntry>();
+            report_totals_targTimeEntryColl = new ObservableCollection<TimeEntry>();
+
 
             // Initializations
             LoadDatabaseData();
@@ -328,7 +337,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
             Logger.Initialize();
             
             // Search Background Worker event handler initialization
-            
         }
 
         // ----------------------------
@@ -1589,6 +1597,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         }
                     }
                     else { report_totals_selCustomer = null; if (report_totals_availProjects!=null) { report_totals_availProjects.Clear(); } }
+
+                    // Re-calculate target data collections for Totals report
+                    GetTargetCollections_ReportTotals();
                 } }
         }
 
@@ -1622,6 +1633,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         }
                     }
                     else { report_totals_selProject = null; if (report_totals_availTaskEntries != null) { report_totals_availTaskEntries.Clear(); } }
+
+                    // Re-calculate target data collections for Totals report
+                    GetTargetCollections_ReportTotals();
                 } }
         }
 
@@ -1646,6 +1660,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         report_totals_selTaskEntry = report_totals_availTaskEntries[report_totals_selTaskEntryIndex];
                     }
                     else { report_totals_selTaskEntry = null; }
+
+                    // Re-calculate target data collections for Totals report
+                    GetTargetCollections_ReportTotals();
                 } }
         }
 
@@ -1658,13 +1675,45 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public DateTime report_totals_filter_FromDate
         {
             get { return _report_totals_filter_FromDate; }
-            set { if (value != _report_totals_filter_FromDate) { _report_totals_filter_FromDate = value; RaisePropertyChangedEvent("report_totals_filter_FromDate"); } }
+            set { if (value != _report_totals_filter_FromDate) { _report_totals_filter_FromDate = value; RaisePropertyChangedEvent("report_totals_filter_FromDate");
+                    // Re-calculate target data collections for Totals report
+                    GetTargetCollections_ReportTotals();
+                } }
         }
 
         public DateTime report_totals_filter_ToDate
         {
             get { return _report_totals_filter_ToDate; }
-            set { if (value != _report_totals_filter_ToDate) { _report_totals_filter_ToDate = value; RaisePropertyChangedEvent("report_totals_filter_ToDate"); } }
+            set { if (value != _report_totals_filter_ToDate) { _report_totals_filter_ToDate = value; RaisePropertyChangedEvent("report_totals_filter_ToDate");
+                    // Re-calculate target data collections for Totals report
+                    GetTargetCollections_ReportTotals();
+                } }
+        }
+
+
+        // Totals report:  Summary
+        public ObservableCollection<Customer> report_totals_targCustomerColl
+        {
+            get { return _report_totals_targCustomerColl; }
+            set { if (value != _report_totals_targCustomerColl) { _report_totals_targCustomerColl = value; RaisePropertyChangedEvent("report_totals_targCustomerColl"); } }
+        }
+
+        public ObservableCollection<Project> report_totals_targProjectColl
+        {
+            get { return _report_totals_targProjectColl; }
+            set { if (value != _report_totals_targProjectColl) { _report_totals_targProjectColl = value; RaisePropertyChangedEvent("report_totals_targProjectColl"); } }
+        }
+
+        public ObservableCollection<TaskEntry> report_totals_targTaskEntryColl
+        {
+            get { return _report_totals_targTaskEntryColl; }
+            set { if (value != _report_totals_targTaskEntryColl) { _report_totals_targTaskEntryColl = value; RaisePropertyChangedEvent("report_totals_targTaskEntryColl"); } }
+        }
+
+        public ObservableCollection<TimeEntry> report_totals_targTimeEntryColl
+        {
+            get { return _report_totals_targTimeEntryColl; }
+            set { if (value != _report_totals_targTimeEntryColl) { _report_totals_targTimeEntryColl = value; RaisePropertyChangedEvent("report_totals_targTimeEntryColl"); } }
         }
         #endregion
 
@@ -1719,6 +1768,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             allTaskEntries_fromDB = await myBackendService.GetTaskEntries();
             allTimeEntries_fromDB = await myBackendService.GetTimeEntries();
 
+            GetTargetCollections_ReportTotals();
             ToggleLoadingScreen_Visibility();
         }
 
@@ -1745,6 +1795,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 ShowUINotification("No customers were found in storage!");
             }
 
+
             db_shownCustomers = allCustomers;
         }
 
@@ -1769,7 +1820,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 ShowUINotification("No projects were found in storage!");
             }
 
-            db_shownProjects = PopulateProjectsRelatedCustomerObjects(allProjects);
+            allProjects = PopulateProjectsRelatedCustomerObjects(allProjects);
+            db_shownProjects = allProjects;
         }
 
         private void ParseTaskEntryData()
@@ -1792,7 +1844,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 ShowUINotification("No Task Entries were found in storage!");
             }
 
-            db_shownTaskEntries = PopulateTaskEntriesRelatedProjectObjects(allTaskEntries);
+            allTaskEntries = PopulateTaskEntriesRelatedProjectObjects(allTaskEntries);
+            db_shownTaskEntries = allTaskEntries;
         }
 
         private void ParseTimeEntryData()
@@ -1815,7 +1868,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 ShowUINotification("No Time Entries were found in storage!");
             }
 
-            db_shownTimeEntries = PopulateTimeEntriesRelatedTaskEntryObjects(allTimeEntries);
+            allTimeEntries = PopulateTimeEntriesRelatedTaskEntryObjects(allTimeEntries);
+            db_shownTimeEntries = allTimeEntries;
 
 
             //ToggleLoadingScreen_Visibility();
@@ -1839,11 +1893,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     case dataCategory.Customer:
                         availProjects.Clear();
 
-                        foreach (Project project in allProjects)
+                        if(selCustomerindex > -1)
                         {
-                            if (project.CustomerId == selCustomer.Id)
+                            foreach (Project project in allProjects)
                             {
-                                availProjects.Add(project);
+                                if (project.CustomerId == selCustomer.Id)
+                                {
+                                    availProjects.Add(project);
+                                }
                             }
                         }
 
@@ -2064,6 +2121,22 @@ namespace TIMEFRAME_windows.VIEWMODELS
             return popTimeEntries;
         }
 
+        //private void PopulateFullTimeEntryObjects()
+        //{
+        //    try
+        //    {
+        //        // Initializations
+        //        List<TimeEntry> populatedTimeEntries = new List<TimeEntry>();
+
+        //        // 
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Logger.Write("!ERROR while trying to PopulateFullTimeEntryObjects: " + Environment.NewLine +
+        //            e.ToString());
+        //    }
+        //}
+        
         private void CalculateDuration(string requestor)
         {
             TimeSpan duration = new TimeSpan(0, 0, 0, 0);
@@ -2111,6 +2184,101 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 default:
                     break;
+            }
+        }
+
+        private void GetTargetCollections_ReportTotals()
+        {
+            try
+            {
+                Logger.Write(Environment.NewLine +
+                    "--- GET TARGET DATA COLLECTIONS FOR REPORT:  TOTALS ---");
+
+                // Get target Time Entries
+                // -----------------------
+                // Clear current selection
+                if (report_totals_targTimeEntryColl != null) { report_totals_targTimeEntryColl.Clear(); }
+                List<TimeEntry> targTimeEntries = new List<TimeEntry>();
+
+                // Assign filters
+                if (report_totals_selCustomerIndex > -1)
+                {
+                    if (report_totals_selProjectIndex > -1)
+                    {
+                        if (report_totals_selTaskEntryIndex > -1)
+                        {
+                            targTimeEntries = allTimeEntries
+                                .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks))
+                                .Where(y => y.TaskEntryId == report_totals_selTaskEntry.Id).ToList();
+                        }
+                        else
+                        {
+                            targTimeEntries = allTimeEntries
+                            .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks))
+                            .Where(z => z.TaskEntry.ProjectId == report_totals_selProject.Id).ToList();
+                        }
+                    }
+                    else
+                    {
+                        targTimeEntries = allTimeEntries
+                            .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks))
+                            .Where(a => a.TaskEntry.Project.CustomerId == report_totals_selCustomer.Id).ToList();
+                    }
+                }
+                else
+                {
+                    targTimeEntries = allTimeEntries
+                        .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks)).ToList();
+                }
+
+                //targTimeEntries = allTimeEntries
+                //    .Where(x => (x.Date.Ticks >= report_totals_filter_FromDate.Ticks && x.Date.Ticks <= report_totals_filter_ToDate.Ticks))
+                //    .Where(y => y.TaskEntryId == report_totals_selTaskEntry.Id)
+                //    .Where(z => z.TaskEntry.ProjectId == report_totals_selProject.Id)
+                //    .Where(a => a.TaskEntry.Project.CustomerId == report_totals_selCustomer.Id).ToList();
+
+                Logger.Write("TIME ENTRIES:");
+                foreach (TimeEntry timeEntry in targTimeEntries)
+                {
+                    report_totals_targTimeEntryColl.Add(timeEntry);
+                    Logger.Write("   " + timeEntry.Id);
+                }
+
+                // Get target Task Entries
+                // -----------------------
+                if (report_totals_targTaskEntryColl != null) { report_totals_targTaskEntryColl.Clear(); }
+                Logger.Write("TASK ENTRIES:");
+                foreach (TaskEntry taskEntry in report_totals_targTimeEntryColl.Select(x => x.TaskEntry).GroupBy(y => y.Id).Select(g => g.First()).ToList())
+                {
+                    report_totals_targTaskEntryColl.Add(taskEntry);
+                    Logger.Write("   " + taskEntry.Name);
+                }
+
+                // Get target Projects
+                // -------------------
+                if (report_totals_targProjectColl != null) { report_totals_targProjectColl.Clear(); }
+                Logger.Write("PROJECTS:");
+                foreach (Project project in report_totals_targTaskEntryColl.Select(x => x.Project).GroupBy(y => y.Id).Select(g => g.First()).ToList())
+                {
+                    report_totals_targProjectColl.Add(project);
+                    Logger.Write("   " + project.Name);
+                }
+
+                // get target Customers
+                // --------------------
+                if (report_totals_targCustomerColl != null) { report_totals_targCustomerColl.Clear(); }
+                Logger.Write("CUSTOMERS:");
+                foreach (Customer customer in report_totals_targProjectColl.Select(x => x.Customer).GroupBy(y => y.Id).Select(g => g.First()).ToList())
+                {
+                    report_totals_targCustomerColl.Add(customer);
+                    Logger.Write("   " + customer.Name);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to get target data collections for Totals report: " + Environment.NewLine +
+                    e.ToString());
             }
         }
 
