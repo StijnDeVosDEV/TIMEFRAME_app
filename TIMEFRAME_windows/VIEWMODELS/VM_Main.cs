@@ -183,6 +183,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // ------
         // Selection
         private int _report_totals_selCustomerIndex;
+        private Customer _report_totals_selCustomer;
+        private ObservableCollection<Project> _report_totals_availProjects;
+        private int _report_totals_selProjectIndex;
+        private Project _report_totals_selProject;
+        private ObservableCollection<TaskEntry> _report_totals_availTaskEntries;
+        private int _report_totals_selTaskEntryIndex;
+        private TaskEntry _report_totals_selTaskEntry;
+        private DateTime _report_totals_filter_FromDate;
+        private DateTime _report_totals_filter_ToDate;
+
+
 
 
         // Commands
@@ -294,6 +305,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
             //timeentry_edit_TimeStart = DateTime.Now;
             //timeentry_edit_TimeStop = DateTime.Now;
             timeentry_edit_Visibility = Visibility.Hidden;
+
+            report_totals_availProjects = new ObservableCollection<Project>();
+            report_totals_availTaskEntries = new ObservableCollection<TaskEntry>();
+            report_totals_selCustomerIndex = -1;
+            report_totals_selProjectIndex = -1;
+            report_totals_selTaskEntryIndex = -1;
+            report_totals_filter_FromDate = DateTime.MinValue;
+            report_totals_filter_ToDate = DateTime.Now;
 
 
             // Initializations
@@ -1545,6 +1564,109 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Time Entry: delete
         #endregion
 
+        #region REPORTS Component
+        #region TOTALS report
+        // TOTALS report
+        // -------------
+        // Totals report:  Selection
+        public int report_totals_selCustomerIndex
+        {
+            get { return _report_totals_selCustomerIndex; }
+            set { if (value != _report_totals_selCustomerIndex) { _report_totals_selCustomerIndex = value; RaisePropertyChangedEvent("report_totals_selCustomerIndex");
+                    if (report_totals_selCustomerIndex > -1)
+                    {
+                        report_totals_selCustomer = allCustomers[report_totals_selCustomerIndex];
+
+                        // Re-populate available Projects based on newly selected Customer object
+                        report_totals_selProjectIndex = -1;
+
+                        report_totals_availProjects.Clear();
+                        foreach (Project project in allProjects.Where(x => x.CustomerId == report_totals_selCustomer.Id))
+                        {
+                            report_totals_availProjects.Add(project);
+                        }
+                    }
+                    else { report_totals_selCustomer = null; if (report_totals_availProjects!=null) { report_totals_availProjects.Clear(); } }
+                } }
+        }
+
+        public Customer report_totals_selCustomer
+        {
+            get { return _report_totals_selCustomer; }
+            set { if (value != _report_totals_selCustomer) { _report_totals_selCustomer = value; RaisePropertyChangedEvent("report_totals_selCustomer"); } }
+        }
+
+        public ObservableCollection<Project> report_totals_availProjects
+        {
+            get { return _report_totals_availProjects; }
+            set { if (value != _report_totals_availProjects) { _report_totals_availProjects = value; RaisePropertyChangedEvent("report_totals_availProjects"); } }
+        }
+
+        public int report_totals_selProjectIndex
+        {
+            get { return _report_totals_selProjectIndex; }
+            set { if (value != _report_totals_selProjectIndex) { _report_totals_selProjectIndex = value; RaisePropertyChangedEvent("report_totals_selProjectIndex");
+                    if (report_totals_selProjectIndex > -1)
+                    {
+                        report_totals_selProject = report_totals_availProjects[report_totals_selProjectIndex];
+
+                        // Re-populate available Task Entries based on newly selected Project object
+                        report_totals_selTaskEntryIndex = -1;
+
+                        report_totals_availTaskEntries.Clear();
+                        foreach (TaskEntry task in allTaskEntries.Where(x => x.ProjectId == report_totals_selProject.Id))
+                        {
+                            report_totals_availTaskEntries.Add(task);
+                        }
+                    }
+                    else { report_totals_selProject = null; if (report_totals_availTaskEntries != null) { report_totals_availTaskEntries.Clear(); } }
+                } }
+        }
+
+        public Project report_totals_selProject
+        {
+            get { return _report_totals_selProject; }
+            set { if (value != _report_totals_selProject) { _report_totals_selProject = value; RaisePropertyChangedEvent("report_totals_selProject"); } }
+        }
+
+        public ObservableCollection<TaskEntry> report_totals_availTaskEntries
+        {
+            get { return _report_totals_availTaskEntries; }
+            set { if (value != _report_totals_availTaskEntries) { _report_totals_availTaskEntries = value; RaisePropertyChangedEvent("report_totals_availTaskEntries"); } }
+        }
+
+        public int report_totals_selTaskEntryIndex
+        {
+            get { return _report_totals_selTaskEntryIndex; }
+            set { if (value != _report_totals_selTaskEntryIndex) { _report_totals_selTaskEntryIndex = value; RaisePropertyChangedEvent("report_totals_selTaskEntryIndex");
+                    if (report_totals_selTaskEntryIndex > -1)
+                    {
+                        report_totals_selTaskEntry = report_totals_availTaskEntries[report_totals_selTaskEntryIndex];
+                    }
+                    else { report_totals_selTaskEntry = null; }
+                } }
+        }
+
+        public TaskEntry report_totals_selTaskEntry
+        {
+            get { return _report_totals_selTaskEntry; }
+            set { if (value != _report_totals_selTaskEntry) { _report_totals_selTaskEntry = value; RaisePropertyChangedEvent("report_totals_selTaskEntry"); } }
+        }
+
+        public DateTime report_totals_filter_FromDate
+        {
+            get { return _report_totals_filter_FromDate; }
+            set { if (value != _report_totals_filter_FromDate) { _report_totals_filter_FromDate = value; RaisePropertyChangedEvent("report_totals_filter_FromDate"); } }
+        }
+
+        public DateTime report_totals_filter_ToDate
+        {
+            get { return _report_totals_filter_ToDate; }
+            set { if (value != _report_totals_filter_ToDate) { _report_totals_filter_ToDate = value; RaisePropertyChangedEvent("report_totals_filter_ToDate"); } }
+        }
+        #endregion
+
+        #endregion
 
         // ---------------------------
         // Public command declarations

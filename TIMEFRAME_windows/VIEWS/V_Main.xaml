@@ -52,7 +52,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                         materialDesign:TextFieldAssist.SuffixText=""
                         materialDesign:HintAssist.HelperText=""
-                        x:Name="Combo_Customer" Margin="0,0,0,0" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" VerticalAlignment="Center" SelectionChanged="Combo_Customer_SelectionChanged">
+                        x:Name="Combo_Customer" Margin="0,0,0,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" VerticalAlignment="Center" SelectionChanged="Combo_Customer_SelectionChanged">
                         <materialDesign:HintAssist.Hint>
                             <StackPanel
                                             Orientation="Horizontal"
@@ -852,7 +852,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
-                            x:Name="TotalReport_Combo_Customer" Margin="10,0,17,0" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Cursor="Hand" VerticalAlignment="Center" SelectionChanged="Combo_Customer_SelectionChanged">
+                            x:Name="TotalReport_Combo_Customer" Margin="10,0,17,0" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Cursor="Hand" VerticalAlignment="Center" SelectedIndex="{Binding report_totals_selCustomerIndex}" ItemsSource="{Binding allCustomers}">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel
                                             Orientation="Horizontal"
@@ -868,7 +868,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
-                            x:Name="TotalReport_Combo_Project" Margin="0,0,20,0" DisplayMemberPath="Name" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged">
+                            x:Name="TotalReport_Combo_Project" Margin="0,0,20,0" DisplayMemberPath="Name" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged" SelectedIndex="{Binding report_totals_selProjectIndex}" ItemsSource="{Binding report_totals_availProjects}">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel
                                             Orientation="Horizontal"
@@ -884,7 +884,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
-                            x:Name="TotalReport_Combo_Task" DisplayMemberPath="Name" Margin="0,0,20,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged">
+                            x:Name="TotalReport_Combo_Task" DisplayMemberPath="Name" Margin="0,0,20,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged" ItemsSource="{Binding report_totals_availTaskEntries}" SelectedIndex="{Binding report_totals_selTaskEntryIndex}">
                             <materialDesign:HintAssist.Hint>
                                 <StackPanel
                                             Orientation="Horizontal"
@@ -896,10 +896,10 @@
                         </ComboBox>
                         <DatePicker x:Name="DatePicker_Report_Totals_FromDate" Width="100" 
                                     materialDesign:HintAssist.Hint="From Date" 
-                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" />
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" SelectedDate="{Binding report_totals_filter_FromDate}" DisplayDate="{Binding report_totals_filter_FromDate}" />
                         <DatePicker x:Name="DatePicker_Report_Totals_ToDate" Width="100" 
                                     materialDesign:HintAssist.Hint="To Date"
-                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" />
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" DisplayDate="{Binding report_totals_filter_ToDate}" SelectedDate="{Binding report_totals_filter_ToDate}" />
                         <Button
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="Clear all filters" Padding="4,0,4,0" Height="24" FontSize="12">
