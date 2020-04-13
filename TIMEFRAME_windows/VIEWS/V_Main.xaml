@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:TIMEFRAME_windows.VIEWS"
         xmlns:VIEWMODELS="clr-namespace:TIMEFRAME_windows.VIEWMODELS"
         xmlns:MODELS="clr-namespace:TIMEFRAME_windows.MODELS"
+        xmlns:MODELS_Report="clr-namespace:TIMEFRAME_windows.MODELS.Report"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -840,179 +841,199 @@
                 </StackPanel>
                 <Border BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
                 <ScrollViewer Grid.Column="1">
-                <StackPanel x:Name="StackPanel_Report_Totals" Grid.Column="1">
-                    <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
-                        <materialDesign:PackIcon Kind="ChartLine" VerticalAlignment="Center" Width="24" Height="24" />
-                        <Label Content="Totals" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Center"/>
-                    </StackPanel>
-                    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                    <StackPanel x:Name="StackPanel_Report_Totals_Filters" Orientation="Horizontal" VerticalAlignment="Stretch">
-                        <ComboBox
+                    <StackPanel x:Name="StackPanel_Report_Totals" Grid.Column="1">
+                        <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
+                            <materialDesign:PackIcon Kind="ChartLine" VerticalAlignment="Center" Width="24" Height="24" />
+                            <Label Content="Totals" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                            <StackPanel x:Name="StackPanel_Report_Totals_Filters" Orientation="Horizontal" VerticalAlignment="Stretch">
+                                <ComboBox
                             materialDesign:TextFieldAssist.HasClearButton="True"
                             IsEditable="True"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
-                            x:Name="TotalReport_Combo_Customer" Margin="10,0,17,0" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Cursor="Hand" VerticalAlignment="Center" SelectedIndex="{Binding report_totals_selCustomerIndex}" ItemsSource="{Binding allCustomers}">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel
+                            x:Name="TotalReport_Combo_Customer" Margin="10,0,17,0" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Cursor="Hand" VerticalAlignment="Center" ItemsSource="{Binding allCustomers}" SelectedIndex="{Binding report_totals_selCustomerIndex}">
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                    <materialDesign:PackIcon Kind="User" />
-                                    <TextBlock><Run Text="Customer"/></TextBlock>
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                        </ComboBox>
-                        <ComboBox
+                                            <materialDesign:PackIcon Kind="User" />
+                                            <TextBlock><Run Text="Customer"/></TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <ComboBox
                             materialDesign:TextFieldAssist.HasClearButton="True"
                             IsEditable="True"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
                             x:Name="TotalReport_Combo_Project" Margin="0,0,20,0" DisplayMemberPath="Name" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged" SelectedIndex="{Binding report_totals_selProjectIndex}" ItemsSource="{Binding report_totals_availProjects}">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                    <materialDesign:PackIcon Kind="FolderOpenOutline" />
-                                    <TextBlock><Run Text="Project"/></TextBlock>
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                        </ComboBox>
-                        <ComboBox
+                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                            <TextBlock><Run Text="Project"/></TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <ComboBox
                             materialDesign:TextFieldAssist.HasClearButton="True"
                             IsEditable="True"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
                             x:Name="TotalReport_Combo_Task" DisplayMemberPath="Name" Margin="0,0,20,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged" ItemsSource="{Binding report_totals_availTaskEntries}" SelectedIndex="{Binding report_totals_selTaskEntryIndex}">
-                            <materialDesign:HintAssist.Hint>
-                                <StackPanel
+                                    <materialDesign:HintAssist.Hint>
+                                        <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                    <materialDesign:PackIcon Kind="FileCheckOutline" />
-                                    <TextBlock><Run Text="Task"/></TextBlock>
-                                </StackPanel>
-                            </materialDesign:HintAssist.Hint>
-                        </ComboBox>
-                        <DatePicker x:Name="DatePicker_Report_Totals_FromDate" Width="100" 
+                                            <materialDesign:PackIcon Kind="FileCheckOutline" />
+                                            <TextBlock><Run Text="Task"/></TextBlock>
+                                        </StackPanel>
+                                    </materialDesign:HintAssist.Hint>
+                                </ComboBox>
+                                <DatePicker x:Name="DatePicker_Report_Totals_FromDate" Width="100" 
                                     materialDesign:HintAssist.Hint="From Date" 
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" SelectedDate="{Binding report_totals_filter_FromDate}" DisplayDate="{Binding report_totals_filter_FromDate}" />
-                        <DatePicker x:Name="DatePicker_Report_Totals_ToDate" Width="100" 
+                                <DatePicker x:Name="DatePicker_Report_Totals_ToDate" Width="100" 
                                     materialDesign:HintAssist.Hint="To Date"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" DisplayDate="{Binding report_totals_filter_ToDate}" SelectedDate="{Binding report_totals_filter_ToDate}" />
-                        <Button
+                                <Button
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="Clear all filters" Padding="4,0,4,0" Height="24" FontSize="12" Command="{Binding ReportTotals_ClearFilters, Mode=Default}">
-                            Clear all
-                        </Button>
-                    </StackPanel>
-                    </ScrollViewer>
-                    <StackPanel x:Name="StackPanel_Report_Totals_Summary" Margin="0,20,0,0">
-                        <Label Content="Summary of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                        <Grid x:Name="Grid_Report_Totals_Summary_Content">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid x:Name="Grid_Report_Totals_Summary_Amounts" Margin="0,0,30,0">
+                                    Clear all
+                                </Button>
+                            </StackPanel>
+                        </ScrollViewer>
+                        <StackPanel x:Name="StackPanel_Report_Totals_Summary" Margin="0,20,0,0">
+                            <Label Content="Summary of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                            <Grid x:Name="Grid_Report_Totals_Summary_Content">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Label Content="# Customers" Margin="0,0,10,0"/>
-                                <Label Content="# Projects" Grid.Row="1"/>
-                                <Label Content="# Tasks" Grid.Row="2"/>
-                                <Label Content="{Binding report_totals_targCustomerColl.Count, Mode=OneWay}" Grid.Column="1" ToolTip="Number of Customers you recorded time for"/>
-                                <Label Content="{Binding report_totals_targProjectColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="1" ToolTip="Number of Projects you recorded time for"/>
-                                <Label Content="{Binding report_totals_targTaskEntryColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="2" ToolTip="Number of Tasks you recorded time for"/>
+                                <Grid x:Name="Grid_Report_Totals_Summary_Amounts" Margin="0,0,30,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="# Customers" Margin="0,0,10,0"/>
+                                    <Label Content="# Projects" Grid.Row="1"/>
+                                    <Label Content="# Tasks" Grid.Row="2"/>
+                                    <Label Content="{Binding report_totals_targCustomerColl.Count, Mode=OneWay}" Grid.Column="1" ToolTip="Number of Customers you recorded time for"/>
+                                    <Label Content="{Binding report_totals_targProjectColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="1" ToolTip="Number of Projects you recorded time for"/>
+                                    <Label Content="{Binding report_totals_targTaskEntryColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="2" ToolTip="Number of Tasks you recorded time for"/>
+                                </Grid>
+                                <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                    <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Label x:Name="Label_Report_Totals_Summary_Hours" Content="{Binding report_totals_targTimeSpan.Hours}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                        <Label Content="hours" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+                                        <Label x:Name="Label_Report_Totals_Summary_Minutes" Content="{Binding report_totals_targTimeSpan.Minutes}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                        <Label Content="minutes" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+                                        <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="{Binding report_totals_targTimeSpan.Seconds}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                        <Label Content="seconds" VerticalContentAlignment="Center" FontSize="16"/>
+                                    </StackPanel>
+                                </ScrollViewer>
                             </Grid>
-                            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Label x:Name="Label_Report_Totals_Summary_Hours" Content="{Binding report_totals_targTimeSpan.Hours}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
-                                <Label Content="hours" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-                                <Label x:Name="Label_Report_Totals_Summary_Minutes" Content="{Binding report_totals_targTimeSpan.Minutes}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
-                                <Label Content="minutes" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-                                <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="{Binding report_totals_targTimeSpan.Seconds}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
-                                <Label Content="seconds" VerticalContentAlignment="Center" FontSize="16"/>
-                            </StackPanel>
-                            </ScrollViewer>
-                        </Grid>
-                    </StackPanel>
-                    <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
-                        <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                        </StackPanel>
+                        <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
+                            <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
 
                             <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl}">
                                 <TreeView.ItemTemplate>
-                                
-                                    <HierarchicalDataTemplate ItemsSource="{Binding Projects}" DataType="{x:Type MODELS:Customer}">
-                                        <Grid Width="500">
+
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Projects}" DataType="{x:Type MODELS_Report:CustomerReport}">
+                                        <Grid Width="500" Background="#33556A80">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
                                             <StackPanel Orientation="Horizontal">
                                                 <materialDesign:PackIcon Kind="User" VerticalAlignment="Center" />
-                                                <Label Content="{Binding Name}"/>
+                                                <Label Content="{Binding Customer.Name}"/>
                                             </StackPanel>
                                             <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                                <Label Content="{Binding Projects.TaskEntries.Count}"/>
+                                                <Label Content="{Binding AmTaskEntries}"/>
                                                 <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
-                                                <Label Content="{Binding Projects.Count}"/>
+                                                <Label Content="{Binding AmProjects}"/>
                                                 <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
+                                                <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
+                                                <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
+                                                <Label Content="m" Padding="0,4,0,4"/>
+                                                <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
+                                                <Label Content="h" Padding="0,4,0,4"/>
+                                                <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
                                             </StackPanel>
                                         </Grid>
                                         <HierarchicalDataTemplate.ItemTemplate>
 
-                                            <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries}" DataType="{x:Type MODELS:Project}">
-                                                <Grid Width="500">
+                                            <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries}" DataType="{x:Type MODELS_Report:ProjectReport}">
+                                                <Grid Width="485">
+                                                    <Grid.Background>
+                                                        <SolidColorBrush Color="#333FC1C9"/>
+                                                    </Grid.Background>
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="Auto"/>
                                                         <ColumnDefinition/>
                                                     </Grid.ColumnDefinitions>
                                                     <StackPanel Orientation="Horizontal">
                                                         <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
-                                                        <Label Content="{Binding Name}"/>
+                                                        <Label Content="{Binding Project.Name}"/>
                                                     </StackPanel>
                                                     <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                                        <Label Content="{Binding Projects.TaskEntries.Count}"/>
+                                                        <Label Content="{Binding AmTaskEntries}"/>
                                                         <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
+                                                        <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
+                                                        <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
+                                                        <Label Content="m" Padding="0,4,0,4"/>
+                                                        <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
+                                                        <Label Content="h" Padding="0,4,0,4"/>
+                                                        <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
                                                     </StackPanel>
                                                 </Grid>
                                                 <HierarchicalDataTemplate.ItemTemplate>
 
-                                                    <HierarchicalDataTemplate DataType="{x:Type MODELS:TaskEntry}">
-                                                        <Grid Width="500">
+                                                    <HierarchicalDataTemplate DataType="{x:Type MODELS_Report:TaskEntryReport}">
+                                                        <Grid Width="470" Background="#33349689">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto"/>
                                                                 <ColumnDefinition/>
                                                             </Grid.ColumnDefinitions>
                                                             <StackPanel Orientation="Horizontal">
                                                                 <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
-                                                                <Label Content="{Binding Name}"/>
+                                                                <Label Content="{Binding TaskEntry.Name}"/>
                                                             </StackPanel>
                                                             <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                                                
+                                                                <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
+                                                                <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
+                                                                <Label Content="m" Padding="0,4,0,4"/>
+                                                                <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
+                                                                <Label Content="h" Padding="0,4,0,4"/>
+                                                                <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
                                                             </StackPanel>
                                                         </Grid>
                                                     </HierarchicalDataTemplate>
-                                                    
+
                                                 </HierarchicalDataTemplate.ItemTemplate>
                                             </HierarchicalDataTemplate>
-                                            
+
                                         </HierarchicalDataTemplate.ItemTemplate>
                                     </HierarchicalDataTemplate>
-                                
-                            </TreeView.ItemTemplate>
-                        </TreeView>
 
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
                 </ScrollViewer>
             </Grid>
         </Grid>

@@ -10,6 +10,7 @@ using TIMEFRAME_windows.MODELS;
 using TIMEFRAME_windows.SERVICES;
 using TIMEFRAME_windows.SERVICES.Interfaces;
 using MaterialDesignThemes.Wpf;
+using TIMEFRAME_windows.MODELS.Report;
 
 namespace TIMEFRAME_windows.VIEWMODELS
 {
@@ -194,9 +195,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private DateTime _report_totals_filter_ToDate;
 
         // Totals - Summary
-        private ObservableCollection<Customer> _report_totals_targCustomerColl;
-        private ObservableCollection<Project> _report_totals_targProjectColl;
-        private ObservableCollection<TaskEntry> _report_totals_targTaskEntryColl;
+        private ObservableCollection<CustomerReport> _report_totals_targCustomerColl;
+        private ObservableCollection<ProjectReport> _report_totals_targProjectColl;
+        private ObservableCollection<TaskEntryReport> _report_totals_targTaskEntryColl;
         private ObservableCollection<TimeEntry> _report_totals_targTimeEntryColl;
         private MODELS.TimeSpanHMS _report_totals_targTimeSpan;
 
@@ -324,9 +325,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
             report_totals_filter_FromDate = DateTime.MinValue;
             report_totals_filter_ToDate = DateTime.Now;
 
-            report_totals_targCustomerColl = new ObservableCollection<Customer>();
-            report_totals_targProjectColl = new ObservableCollection<Project>();
-            report_totals_targTaskEntryColl = new ObservableCollection<TaskEntry>();
+            report_totals_targCustomerColl = new ObservableCollection<CustomerReport>();
+            report_totals_targProjectColl = new ObservableCollection<ProjectReport>();
+            report_totals_targTaskEntryColl = new ObservableCollection<TaskEntryReport>();
             report_totals_targTimeEntryColl = new ObservableCollection<TimeEntry>();
 
             
@@ -1698,19 +1699,19 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
         // Totals report:  Summary
-        public ObservableCollection<Customer> report_totals_targCustomerColl
+        public ObservableCollection<CustomerReport> report_totals_targCustomerColl
         {
             get { return _report_totals_targCustomerColl; }
             set { if (value != _report_totals_targCustomerColl) { _report_totals_targCustomerColl = value; RaisePropertyChangedEvent("report_totals_targCustomerColl"); } }
         }
 
-        public ObservableCollection<Project> report_totals_targProjectColl
+        public ObservableCollection<ProjectReport> report_totals_targProjectColl
         {
             get { return _report_totals_targProjectColl; }
             set { if (value != _report_totals_targProjectColl) { _report_totals_targProjectColl = value; RaisePropertyChangedEvent("report_totals_targProjectColl"); } }
         }
 
-        public ObservableCollection<TaskEntry> report_totals_targTaskEntryColl
+        public ObservableCollection<TaskEntryReport> report_totals_targTaskEntryColl
         {
             get { return _report_totals_targTaskEntryColl; }
             set { if (value != _report_totals_targTaskEntryColl) { _report_totals_targTaskEntryColl = value; RaisePropertyChangedEvent("report_totals_targTaskEntryColl"); } }
@@ -2286,7 +2287,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 Logger.Write("TASK ENTRIES:");
                 foreach (TaskEntry taskEntry in report_totals_targTimeEntryColl.Select(x => x.TaskEntry).GroupBy(y => y.Id).Select(g => g.First()).ToList())
                 {
-                    report_totals_targTaskEntryColl.Add(taskEntry);
+                    report_totals_targTaskEntryColl.Add(new TaskEntryReport(taskEntry));
                     Logger.Write("   " + taskEntry.Name);
                 }
 
@@ -2294,9 +2295,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // -------------------
                 if (report_totals_targProjectColl != null) { report_totals_targProjectColl.Clear(); }
                 Logger.Write("PROJECTS:");
-                foreach (Project project in report_totals_targTaskEntryColl.Select(x => x.Project).GroupBy(y => y.Id).Select(g => g.First()).ToList())
+                foreach (Project project in report_totals_targTaskEntryColl.Select(x => x.TaskEntry.Project).GroupBy(y => y.Id).Select(g => g.First()).ToList())
                 {
-                    report_totals_targProjectColl.Add(project);
+                    report_totals_targProjectColl.Add(new ProjectReport(project));
                     Logger.Write("   " + project.Name);
                 }
 
@@ -2304,40 +2305,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // --------------------
                 if (report_totals_targCustomerColl != null) { report_totals_targCustomerColl.Clear(); }
                 Logger.Write("CUSTOMERS:");
-                foreach (Customer customer in report_totals_targProjectColl.Select(x => x.Customer).GroupBy(y => y.Id).Select(g => g.First()).ToList())
+                foreach (Customer customer in report_totals_targProjectColl.Select(x => x.Project.Customer).GroupBy(y => y.Id).Select(g => g.First()).ToList())
                 {
-                    report_totals_targCustomerColl.Add(customer);
+                    report_totals_targCustomerColl.Add(new CustomerReport(customer));
                     Logger.Write("   " + customer.Name);
                 }
-
-
-
-                // Fully populate all target customers
-                // Task Entries
-                foreach (TaskEntry taskEntry1 in report_totals_targTaskEntryColl)
-                {
-
-                }
-
-                foreach (Customer customer1 in report_totals_targCustomerColl)
-                {
-                    Logger.Write("Customer:  " + customer1.Name);
-                    Customer pop_Customer = customer1;
-                    if(customer1.Projects != null)
-                    {
-                        foreach (Project project in customer1.Projects)
-                        {
-                            Logger.Write(" -> Project:  " + project.Name);
-                        }
-                    }
-                    else { Logger.Write("  => .Projects = null"); }
-                }
-
+                
 
                 // Calculate new total TimeSpan
                 // ----------------------------
                 // ----------------------------
-                CalculateTimespan_ReportTotals();
+                report_totals_targTimeSpan = HelperService.CalculateTimespanHMS(report_totals_targTimeEntryColl.ToList());
+                //CalculateTimespan_ReportTotals();
             }
             catch (Exception e)
             {
@@ -2348,28 +2327,30 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         
 
-        private void CalculateTimespan_ReportTotals()
-        {
-            try
-            {
-                // Initialize
-                TimeSpan timeSpan = new TimeSpan(0, 0, 0);
+        //private void CalculateTimespan_ReportTotals()
+        //{
+        //    try
+        //    {
+        //        // Initialize
+        //        TimeSpan timeSpan = new TimeSpan(0, 0, 0);
 
-                // Calculate sum of all target Time Entries
-                foreach (TimeEntry timeEntry in report_totals_targTimeEntryColl)
-                {
-                    timeSpan = timeSpan + timeEntry.Duration;
-                }
+        //        // Calculate sum of all target Time Entries
+        //        foreach (TimeEntry timeEntry in report_totals_targTimeEntryColl)
+        //        {
+        //            timeSpan = timeSpan + timeEntry.Duration;
+        //        }
 
-                // Assign resulting TimeSpan data to correct object
-                report_totals_targTimeSpan = new TimeSpanHMS(timeSpan);
-            }
-            catch (Exception e)
-            {
-                Logger.Write("!ERROR occurred while trying to CalculateTimespan_ReportTotals: " + Environment.NewLine +
-                    e.ToString());
-            }
-        }
+        //        // Assign resulting TimeSpan data to correct object
+        //        report_totals_targTimeSpan = new TimeSpanHMS(timeSpan);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        Logger.Write("!ERROR occurred while trying to CalculateTimespan_ReportTotals: " + Environment.NewLine +
+        //            e.ToString());
+        //    }
+        //}
+
+
 
         //  ----------------------
         // COMMAND RELATED METHODS
