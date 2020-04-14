@@ -20,6 +20,14 @@
     <Window.DataContext>
         <VIEWMODELS:VM_Main></VIEWMODELS:VM_Main>
     </Window.DataContext>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DialogHost.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid x:Name="Grid_Main">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
@@ -157,7 +165,7 @@
                 <Image x:Name="Img_Settings" Source="/IMAGES/Settings_black.PNG" Cursor="Hand" MouseDown="Img_Settings_MouseDown" MouseEnter="Img_Settings_MouseEnter" MouseLeave="Img_Settings_MouseLeave"/>
             </StackPanel>
             <Border x:Name="Border_PrimaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-            <Grid x:Name="Grid_Configuration" Grid.Column="1" d:IsHidden="True">
+            <Grid x:Name="Grid_Configuration" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
@@ -181,7 +189,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -197,11 +205,73 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selindex}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Projects.Name}" Header="Linked Projects"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+                        
+                        <materialDesign:DialogHost x:Name="Dialog_Customer_Edit" CloseOnClickAway="True">
+                            <materialDesign:DialogHost.DialogContent>
+                                <Grid x:Name="Grid_ConfigCustomers_Edit" Background="#BFE6E6E6" MinWidth="450">
+                                    <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Properties">
+                                        <Label Content="Edit Customer" FontWeight="Bold" Foreground="Black"/>
+                                        <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Customer_Edit_Name" Text="{Binding customer_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
+                                        <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Last Name"
+                                    x:Name="TB_Customer_Edit_Surname" Text="{Binding customer_edit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
+                                        <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Email"
+                                    x:Name="TB_Customer_Edit_Email" Text="{Binding customer_edit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Email_TextChanged"/>
+                                        <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Image x:Name="Img_ConfigCustomers_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit customer" Cursor="Hand" IsEnabled="False">
+                                                <Image.InputBindings>
+                                                    <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
+                                                </Image.InputBindings>
+                                            </Image>
+                                            <Image x:Name="Img_ConfigCustomers_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_Edit_Cancel_MouseDown"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:DialogHost.DialogContent>
+
+                            <materialDesign:DialogHost x:Name="Dialog_Customer_Add" CloseOnClickAway="True">
+                                <materialDesign:DialogHost.DialogContent>
+                                    <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BFE6E6E6" MinWidth="450">
+                                        <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
+                                            <Label Content="Add new Customer" FontWeight="Bold" Foreground="Black"/>
+                                            <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
+                                            <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Last Name"
+                                    x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
+                                            <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Email"
+                                    x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
+                                            <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image x:Name="Img_ConfigCustomers_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add customer" Cursor="Hand" IsEnabled="False">
+                                                    <Image.InputBindings>
+                                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddCustomer, Mode=Default}"/>
+                                                    </Image.InputBindings>
+                                                </Image>
+                                                <Image x:Name="Img_ConfigCustomers_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_AddEdit_Cancel_MouseDown"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </materialDesign:DialogHost.DialogContent>
+                                <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selindex}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Projects.Name}" Header="Linked Projects"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </materialDesign:DialogHost>
+                        </materialDesign:DialogHost>
+                        
+                        
                         <StackPanel x:Name="StackPanel_Customers_buttons" Grid.Column="1">
                             <Image x:Name="Img_Customers_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Customers_Add_MouseDown"/>
                             <Image x:Name="Img_Customers_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Customers_Edit_MouseDown" IsEnabled="{Binding customer_edit_IsEnabled}"/>
@@ -210,57 +280,11 @@
                                     <MouseBinding Gesture="LeftClick" Command="{Binding DeleteCustomer, Mode=Default}"/>
                                 </Image.InputBindings>
                             </Image>
+                            <Label MouseDown="Label_MouseDown">Add</Label>
+                            <Label MouseDown="Label_MouseDown_1">Edit</Label>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BFE6E6E6" Visibility="{Binding customer_addedit_Visibility}">
-                            <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
-                                <Label Content="Add new Customer" FontWeight="Bold" Foreground="Black"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Last Name"
-                                    x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Email"
-                                    x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
-                                <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image x:Name="Img_ConfigCustomers_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add customer" Cursor="Hand" IsEnabled="False">
-                                        <Image.InputBindings>
-                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddCustomer, Mode=Default}"/>
-                                        </Image.InputBindings>
-                                    </Image>
-                                    <Image x:Name="Img_ConfigCustomers_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_AddEdit_Cancel_MouseDown"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                        <Grid x:Name="Grid_ConfigCustomers_Edit" Background="#BFE6E6E6" Visibility="{Binding customer_edit_Visibility}">
-                            <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Properties">
-                                <Label Content="Edit Customer" FontWeight="Bold" Foreground="Black"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_Customer_Edit_Name" Text="{Binding customer_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Last Name"
-                                    x:Name="TB_Customer_Edit_Surname" Text="{Binding customer_edit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Email"
-                                    x:Name="TB_Customer_Edit_Email" Text="{Binding customer_edit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Email_TextChanged"/>
-                                <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image x:Name="Img_ConfigCustomers_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit customer" Cursor="Hand" IsEnabled="False">
-                                        <Image.InputBindings>
-                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
-                                        </Image.InputBindings>
-                                    </Image>
-                                    <Image x:Name="Img_ConfigCustomers_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_Edit_Cancel_MouseDown"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
+                        
+                        
                     </Grid>
                 </Grid>
                 <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
@@ -529,7 +553,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -824,7 +848,7 @@
                     </materialDesign:Card>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="Grid_Reports" Grid.Column="1">
+            <Grid x:Name="Grid_Reports" Grid.Column="1" d:IsHidden="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>

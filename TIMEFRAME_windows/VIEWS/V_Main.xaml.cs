@@ -998,5 +998,15 @@ namespace TIMEFRAME_windows.VIEWS
         {
             SetEnablement_SaveButton();
         }
+
+        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Customer_Add.IsOpen = !Dialog_Customer_Add.IsOpen;
+        }
+
+        private void Label_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
+        }
     }
 }
