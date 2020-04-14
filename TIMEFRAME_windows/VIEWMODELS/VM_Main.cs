@@ -2313,6 +2313,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // ----------------------------
                 report_totals_targTimeSpan = HelperService.CalculateTimespanHMS(report_totals_targTimeEntryColl.ToList());
                 //CalculateTimespan_ReportTotals();
+
+
             }
             catch (Exception e)
             {

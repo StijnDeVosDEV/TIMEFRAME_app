@@ -15,9 +15,12 @@ namespace TIMEFRAME_windows.MODELS.Report
             Project = project;
 
             TaskEntries = new List<TaskEntryReport>();
-            foreach (TaskEntry taskEntry in project.TaskEntries)
+            if (project.TaskEntries != null)
             {
-                TaskEntries.Add(new TaskEntryReport(taskEntry));
+                foreach (TaskEntry taskEntry in project.TaskEntries)
+                {
+                    TaskEntries.Add(new TaskEntryReport(taskEntry));
+                }
             }
 
             AmTaskEntries = project.TaskEntries.Count;

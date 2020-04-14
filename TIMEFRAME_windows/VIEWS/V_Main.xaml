@@ -854,7 +854,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
-                            x:Name="TotalReport_Combo_Customer" Margin="10,0,17,0" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Cursor="Hand" VerticalAlignment="Center" ItemsSource="{Binding allCustomers}" SelectedIndex="{Binding report_totals_selCustomerIndex}">
+                            x:Name="TotalReport_Combo_Customer" Margin="10,0,17,0" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Cursor="Hand" VerticalAlignment="Center" ItemsSource="{Binding allCustomers}" SelectedIndex="{Binding report_totals_selCustomerIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel
                                             Orientation="Horizontal"
@@ -870,7 +870,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
-                            x:Name="TotalReport_Combo_Project" Margin="0,0,20,0" DisplayMemberPath="Name" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged" SelectedIndex="{Binding report_totals_selProjectIndex}" ItemsSource="{Binding report_totals_availProjects}">
+                            x:Name="TotalReport_Combo_Project" Margin="0,0,20,0" DisplayMemberPath="Name" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged" SelectedIndex="{Binding report_totals_selProjectIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding report_totals_availProjects}">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel
                                             Orientation="Horizontal"
@@ -886,7 +886,7 @@
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
-                            x:Name="TotalReport_Combo_Task" DisplayMemberPath="Name" Margin="0,0,20,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged" ItemsSource="{Binding report_totals_availTaskEntries}" SelectedIndex="{Binding report_totals_selTaskEntryIndex}">
+                            x:Name="TotalReport_Combo_Task" DisplayMemberPath="Name" Margin="0,0,20,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged" ItemsSource="{Binding report_totals_availTaskEntries}" SelectedIndex="{Binding report_totals_selTaskEntryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                     <materialDesign:HintAssist.Hint>
                                         <StackPanel
                                             Orientation="Horizontal"
@@ -948,10 +948,10 @@
                         <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
                             <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
 
-                            <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl}">
+                            <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <TreeView.ItemTemplate>
 
-                                    <HierarchicalDataTemplate ItemsSource="{Binding Projects}" DataType="{x:Type MODELS_Report:CustomerReport}">
+                                    <HierarchicalDataTemplate ItemsSource="{Binding Projects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DataType="{x:Type MODELS_Report:CustomerReport}">
                                         <Grid Width="500" Background="#33556A80">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto"/>
@@ -976,7 +976,7 @@
                                         </Grid>
                                         <HierarchicalDataTemplate.ItemTemplate>
 
-                                            <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries}" DataType="{x:Type MODELS_Report:ProjectReport}">
+                                            <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DataType="{x:Type MODELS_Report:ProjectReport}">
                                                 <Grid Width="485">
                                                     <Grid.Background>
                                                         <SolidColorBrush Color="#333FC1C9"/>
