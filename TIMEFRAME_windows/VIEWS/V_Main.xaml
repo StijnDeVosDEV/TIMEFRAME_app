@@ -241,17 +241,17 @@
                                         <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
                                             <Label Content="Add new Customer" FontWeight="Bold" Foreground="Black"/>
                                             <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
+                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                materialDesign:HintAssist.Hint="Name"
+                                                x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
                                             <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Last Name"
-                                    x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
+                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                materialDesign:HintAssist.Hint="Last Name"
+                                                x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
                                             <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Email"
-                                    x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
+                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                materialDesign:HintAssist.Hint="Email"
+                                                x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
                                             <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
                                                 <Image x:Name="Img_ConfigCustomers_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add customer" Cursor="Hand" IsEnabled="False">
                                                     <Image.InputBindings>
@@ -280,8 +280,6 @@
                                     <MouseBinding Gesture="LeftClick" Command="{Binding DeleteCustomer, Mode=Default}"/>
                                 </Image.InputBindings>
                             </Image>
-                            <Label MouseDown="Label_MouseDown">Add</Label>
-                            <Label MouseDown="Label_MouseDown_1">Edit</Label>
                         </StackPanel>
                         
                         

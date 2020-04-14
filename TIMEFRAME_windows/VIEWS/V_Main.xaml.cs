@@ -67,7 +67,7 @@ namespace TIMEFRAME_windows.VIEWS
 
 
             // Initialize Configuration area
-            Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
+
 
             // Initialize Settings area
             ScrollViewer_LogFile.Visibility = Visibility.Hidden;
@@ -341,24 +341,28 @@ namespace TIMEFRAME_windows.VIEWS
         #region CONFIGURATION CUSTOMERS
         private void Img_Customers_Add_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            switch (Grid_ConfigCustomers_AddEdit.Visibility)
-            {
-                case Visibility.Visible:
-                    Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
-                    break;
-                case Visibility.Hidden:
-                    Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Visible;
-                    break;
-                case Visibility.Collapsed:
-                    break;
-                default:
-                    break;
-            }
+            Dialog_Customer_Add.IsOpen = !Dialog_Customer_Add.IsOpen;
+
+            //switch (Grid_ConfigCustomers_AddEdit.Visibility)
+            //{
+            //    case Visibility.Visible:
+            //        Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
+            //        break;
+            //    case Visibility.Hidden:
+            //        Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Visible;
+            //        break;
+            //    case Visibility.Collapsed:
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         private void Img_ConfigCustomers_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
+            Dialog_Customer_Add.IsOpen = false;
+
+            //Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
         }
 
         private void TB_Customer_AddEdit_Name_TextChanged(object sender, TextChangedEventArgs e)
@@ -377,19 +381,23 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Img_Customers_Edit_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (Grid_ConfigCustomers_Edit.Visibility == Visibility.Visible)
-            {
-                Grid_ConfigCustomers_Edit.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                Grid_ConfigCustomers_Edit.Visibility = Visibility.Visible;
-            }
+            Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
+
+            //if (Grid_ConfigCustomers_Edit.Visibility == Visibility.Visible)
+            //{
+            //    Grid_ConfigCustomers_Edit.Visibility = Visibility.Hidden;
+            //}
+            //else
+            //{
+            //    Grid_ConfigCustomers_Edit.Visibility = Visibility.Visible;
+            //}
         }
 
         private void Img_ConfigCustomers_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigCustomers_Edit.Visibility = Visibility.Hidden;
+            Dialog_Customer_Edit.IsOpen = false;
+
+            //Grid_ConfigCustomers_Edit.Visibility = Visibility.Hidden;
         }
 
         private void TB_Customer_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
@@ -1007,6 +1015,11 @@ namespace TIMEFRAME_windows.VIEWS
         private void Label_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
             Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
+        }
+
+        private void Button_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Customer_Add.IsOpen = !Dialog_Customer_Add.IsOpen;
         }
     }
 }
