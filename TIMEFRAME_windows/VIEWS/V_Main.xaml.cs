@@ -582,12 +582,16 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Img_ConfigTimeEntries_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTimeEntries_AddEdit.Visibility = Visibility.Hidden;
+            Dialog_TimeEntry_Add.IsOpen = false;
+
+            //Grid_ConfigTimeEntries_AddEdit.Visibility = Visibility.Hidden;
         }
 
         private void Img_ConfigTimeEntries_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTimeEntries_Edit.Visibility = Visibility.Hidden;
+            Dialog_TimeEntry_Edit.IsOpen = false;
+
+            //Grid_ConfigTimeEntries_Edit.Visibility = Visibility.Hidden;
         }
         #endregion
 
@@ -657,16 +661,24 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Img_TimeEntries_Add_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTimeEntries_AddEdit.Visibility = (Grid_ConfigTimeEntries_AddEdit.Visibility == Visibility.Visible)
-                ? Visibility.Hidden
-                : Visibility.Visible;
+            Dialog_TimeEntry_Add.IsOpen = !Dialog_TimeEntry_Add.IsOpen;
+
+            Dialog_TimeEntry_Edit.IsOpen = false;
+
+            //Grid_ConfigTimeEntries_AddEdit.Visibility = (Grid_ConfigTimeEntries_AddEdit.Visibility == Visibility.Visible)
+            //    ? Visibility.Hidden
+            //    : Visibility.Visible;
         }
 
         private void Img_TimeEntries_Edit_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTimeEntries_Edit.Visibility = (Grid_ConfigTimeEntries_Edit.Visibility == Visibility.Visible)
-                ? Visibility.Hidden
-                : Visibility.Visible;
+            Dialog_TimeEntry_Edit.IsOpen = !Dialog_TimeEntry_Edit.IsOpen;
+
+            Dialog_TimeEntry_Add.IsOpen = false;
+
+            //Grid_ConfigTimeEntries_Edit.Visibility = (Grid_ConfigTimeEntries_Edit.Visibility == Visibility.Visible)
+            //    ? Visibility.Hidden
+            //    : Visibility.Visible;
         }
 
         private void DataGrid_TimeEntries_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1025,21 +1037,6 @@ namespace TIMEFRAME_windows.VIEWS
         private void TimePicker_StopTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
         {
             SetEnablement_SaveButton();
-        }
-
-        private void Label_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Dialog_Customer_Add.IsOpen = !Dialog_Customer_Add.IsOpen;
-        }
-
-        private void Label_MouseDown_1(object sender, MouseButtonEventArgs e)
-        {
-            Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
-        }
-
-        private void Button_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Dialog_Customer_Add.IsOpen = !Dialog_Customer_Add.IsOpen;
         }
     }
 }
