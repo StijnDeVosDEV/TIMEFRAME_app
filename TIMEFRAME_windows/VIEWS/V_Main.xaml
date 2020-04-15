@@ -206,7 +206,7 @@
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
                         
-                        <materialDesign:DialogHost x:Name="Dialog_Customer_Edit" CloseOnClickAway="True">
+                        <materialDesign:DialogHost x:Name="Dialog_Customer_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
                             <materialDesign:DialogHost.DialogContent>
                                 <Grid x:Name="Grid_ConfigCustomers_Edit" Background="#BFE6E6E6" MinWidth="450">
                                     <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Properties">
@@ -235,7 +235,7 @@
                                 </Grid>
                             </materialDesign:DialogHost.DialogContent>
 
-                            <materialDesign:DialogHost x:Name="Dialog_Customer_Add" CloseOnClickAway="True">
+                            <materialDesign:DialogHost x:Name="Dialog_Customer_Add" CloseOnClickAway="True" DialogTheme="Inherit">
                                 <materialDesign:DialogHost.DialogContent>
                                     <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BFE6E6E6" MinWidth="450">
                                         <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
