@@ -195,36 +195,85 @@
                 </StackPanel>
                 <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
                 <Grid x:Name="Grid_ConfigOverview" Grid.Column="1">
-                    <Expander
-                        ExpandDirection="Right">
-                        <Expander.Header>
-                            <TextBlock
-                                Text="Expander Example 3b"
-                                RenderTransformOrigin=".5,.5">
-                                <TextBlock.LayoutTransform>
-                                    <RotateTransform
-                                      Angle="90" />
-                                </TextBlock.LayoutTransform>
-                            </TextBlock>
-                        </Expander.Header>
-                        <StackPanel
-                            Orientation="Vertical"
-                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                            Margin="8,24,16,24">
-                            <TextBlock
-                                Text="Your Content" />
-                            <TextBlock
-                                Opacity=".68"
-                                Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-                                MaxWidth="180"
-                                TextWrapping="Wrap" />
-                        </StackPanel>
-                    </Expander>
-                    <Border
-                      Background="{DynamicResource MaterialDesignDivider}"
-                      Width="1"
-                      VerticalAlignment="Stretch"
-                      SnapsToDevicePixels="True" />
+                    <StackPanel Orientation="Horizontal" >
+                        <Expander x:Name="Config_Overview_Expander_Customers" ExpandDirection="Right" Background="{x:Null}">
+                            <Expander.Header>
+                                <TextBlock
+                                    Text="Customers"
+                                    RenderTransformOrigin=".5,.5" Foreground="{DynamicResource PrimaryHueMidBrush}">
+                                    <TextBlock.LayoutTransform>
+                                        <RotateTransform
+                                          Angle="90" />
+                                    </TextBlock.LayoutTransform>
+                                </TextBlock>
+                            </Expander.Header>
+                            <StackPanel
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="8,24,16,24">
+                                <TextBlock Text="Customers" />
+                                <DataGrid x:Name="DataGrid_Config_Overview_Expander_Customers" ItemsSource="{Binding allCustomers}" AutoGenerateColumns="False">
+                                    
+                                </DataGrid>
+                            </StackPanel>
+                        </Expander>
+                        <Border
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            Width="1"
+                            VerticalAlignment="Stretch"
+                            SnapsToDevicePixels="True" />
+                        <Expander x:Name="Config_Overview_Expander_Projects" ExpandDirection="Right" Background="{x:Null}">
+                            <Expander.Header>
+                                <TextBlock
+                                    Text="Projects"
+                                    RenderTransformOrigin=".5,.5" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                    <TextBlock.LayoutTransform>
+                                        <RotateTransform
+                                          Angle="90" />
+                                    </TextBlock.LayoutTransform>
+                                </TextBlock>
+                            </Expander.Header>
+                            <StackPanel
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="8,24,16,24">
+                                <TextBlock Text="Projects" />
+                                <TextBlock
+                                    Opacity=".68"
+                                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                    MaxWidth="180"
+                                    TextWrapping="Wrap" Width="180" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </Expander>
+                        <Border
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            Width="1"
+                            VerticalAlignment="Stretch"
+                            SnapsToDevicePixels="True" />
+                        <Expander x:Name="Config_Overview_Expander_Tasks" ExpandDirection="Right" Background="{x:Null}">
+                            <Expander.Header>
+                                <TextBlock
+                                    Text="Tasks"
+                                    RenderTransformOrigin=".5,.5" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                    <TextBlock.LayoutTransform>
+                                        <RotateTransform
+                                          Angle="90" />
+                                    </TextBlock.LayoutTransform>
+                                </TextBlock>
+                            </Expander.Header>
+                            <StackPanel
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="8,24,16,24">
+                                <TextBlock Text="Tasks" />
+                                <TextBlock
+                                    Opacity=".68"
+                                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                                    MaxWidth="180"
+                                    TextWrapping="Wrap" Width="180" HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
                 </Grid>
                 <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>

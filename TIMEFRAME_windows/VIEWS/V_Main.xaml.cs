@@ -31,7 +31,7 @@ namespace TIMEFRAME_windows.VIEWS
         private static bool IsActive_Reports = false;
         private static bool IsActive_Settings = false;
 
-        private static ConfigBlocks Config_ActiveState; 
+        //private static ConfigBlocks Config_ActiveState; 
 
         enum ConfigBlocks
         {
@@ -58,13 +58,13 @@ namespace TIMEFRAME_windows.VIEWS
 
             Img_Configuration.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Database_White.png"));
 
-            Grid_ConfigCustomers.Visibility = Visibility.Visible;
+            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
             Grid_ConfigProjects.Visibility = Visibility.Hidden;
             Grid_ConfigTasks.Visibility = Visibility.Hidden;
             Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
 
-            Config_ActiveState = ConfigBlocks.Customers;
-            StackPanel_Config_Customer.Background = highlightColor_SecondMenu;
+            //Config_ActiveState = ConfigBlocks.Customers;
+            //StackPanel_Config_Customer.Background = highlightColor_SecondMenu;
 
 
             // Initialize Configuration area
