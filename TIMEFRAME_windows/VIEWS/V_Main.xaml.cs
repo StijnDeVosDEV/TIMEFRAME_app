@@ -422,40 +422,48 @@ namespace TIMEFRAME_windows.VIEWS
         #region CONFIGURATION PROJECTS
         private void Img_Projects_Add_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            switch (Grid_ConfigProjects_AddEdit.Visibility)
-            {
-                case Visibility.Visible:
-                    Grid_ConfigProjects_AddEdit.Visibility = Visibility.Hidden;
-                    break;
-                case Visibility.Hidden:
-                    Grid_ConfigProjects_AddEdit.Visibility = Visibility.Visible;
-                    break;
-                case Visibility.Collapsed:
-                    break;
-                default:
-                    break;
-            }
+            Dialog_Project_Add.IsOpen = !Dialog_Project_Add.IsOpen;
+
+            //switch (Grid_ConfigProjects_AddEdit.Visibility)
+            //{
+            //    case Visibility.Visible:
+            //        Grid_ConfigProjects_AddEdit.Visibility = Visibility.Hidden;
+            //        break;
+            //    case Visibility.Hidden:
+            //        Grid_ConfigProjects_AddEdit.Visibility = Visibility.Visible;
+            //        break;
+            //    case Visibility.Collapsed:
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         private void Img_ConfigProjects_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigProjects_AddEdit.Visibility = Visibility.Hidden;
+            Dialog_Project_Add.IsOpen = false;
+
+            //Grid_ConfigProjects_AddEdit.Visibility = Visibility.Hidden;
         }
 
         private void Img_Projects_Edit_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (Grid_ConfigProjects_Edit.Visibility == Visibility.Visible)
-            {
-                Grid_ConfigProjects_Edit.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                Grid_ConfigProjects_Edit.Visibility = Visibility.Visible;
-            }
+            Dialog_Project_Edit.IsOpen = !Dialog_Project_Edit.IsOpen;
+
+            //if (Grid_ConfigProjects_Edit.Visibility == Visibility.Visible)
+            //{
+            //    Grid_ConfigProjects_Edit.Visibility = Visibility.Hidden;
+            //}
+            //else
+            //{
+            //    Grid_ConfigProjects_Edit.Visibility = Visibility.Visible;
+            //}
         }
         private void Img_ConfigProjects_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigProjects_Edit.Visibility = Visibility.Hidden;
+            Dialog_Project_Edit.IsOpen = false;
+
+            //Grid_ConfigProjects_Edit.Visibility = Visibility.Hidden;
         }
 
         private void Combo_Project_AddEdit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)

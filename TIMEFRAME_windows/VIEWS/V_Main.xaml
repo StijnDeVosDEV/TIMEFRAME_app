@@ -189,7 +189,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -285,7 +285,7 @@
                         
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -301,17 +301,103 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_project_selindex}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
-                                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
-                                <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
-                                <DataGridTextColumn Binding="{Binding Customer.Name, Mode=OneWay}" Header="Customer"/>
-                                <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer ID"/>
-                                <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
-                                <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
+
+                        <materialDesign:DialogHost x:Name="Dialog_Project_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
+                            <materialDesign:DialogHost.DialogContent>
+                                <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BFE6E6E6" MinWidth="450">
+                                    <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
+                                        <Label Content="Edit Project" FontWeight="Bold" Foreground="Black"/>
+                                        <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding project_edit_selCustindex}" SelectionChanged="Combo_Project_Edit_AvailCustomers_SelectionChanged">
+                                            <materialDesign:HintAssist.Hint>
+                                                <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                                    <materialDesign:PackIcon Kind="User" />
+                                                    <TextBlock>Customer</TextBlock>
+                                                </StackPanel>
+                                            </materialDesign:HintAssist.Hint>
+                                        </ComboBox>
+                                        <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Name_TextChanged"/>
+                                        <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Description"
+                                    x:Name="TB_Project_Edit_Description" Text="{Binding project_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Description_TextChanged"/>
+                                        <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Image x:Name="Img_ConfigProjects_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
+                                                <Image.InputBindings>
+                                                    <MouseBinding Gesture="LeftClick" Command="{Binding EditProject, Mode=Default}"/>
+                                                </Image.InputBindings>
+                                            </Image>
+                                            <Image x:Name="Img_ConfigProjects_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_Edit_Cancel_MouseDown"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+                            </materialDesign:DialogHost.DialogContent>
+
+                            <materialDesign:DialogHost x:Name="Dialog_Project_Add" CloseOnClickAway="True" DialogTheme="Inherit" MinWidth="450">
+                                <materialDesign:DialogHost.DialogContent>
+                                    <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BFE6E6E6" MinWidth="450">
+                                        <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
+                                            <Label Content="Add new Project" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
+                                            <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustindex}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged">
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                                        <materialDesign:PackIcon Kind="User" />
+                                                        <TextBlock>Customer</TextBlock>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </ComboBox>
+                                            <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
+                                            <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Description"
+                                    x:Name="TB_Project_AddEdit_Description" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Description_TextChanged" Text="{Binding project_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image x:Name="Img_ConfigProjects_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
+                                                    <Image.InputBindings>
+                                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>
+                                                    </Image.InputBindings>
+                                                </Image>
+                                                <Image x:Name="Img_ConfigProjects_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_AddEdit_Cancel_MouseDown"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </materialDesign:DialogHost.DialogContent>
+
+                                <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_project_selindex}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
+                                        <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                                        <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                                        <DataGridTextColumn Binding="{Binding Customer.Name, Mode=OneWay}" Header="Customer"/>
+                                        <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer ID"/>
+                                        <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
+                                        <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </materialDesign:DialogHost>
+                        </materialDesign:DialogHost>
+
                         <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
                             <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
                             <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
@@ -321,80 +407,6 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BFE6E6E6" Visibility="{Binding project_addedit_Visibility}">
-                            <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
-                                <Label Content="Add new Project" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
-                                <ComboBox
-                                    materialDesign:TextFieldAssist.HasClearButton="True"
-                                    IsEditable="True"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    materialDesign:TextFieldAssist.SuffixText=""
-                                    materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustindex}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
-                                            <materialDesign:PackIcon Kind="User" />
-                                            <TextBlock>Customer</TextBlock>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </ComboBox>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Description"
-                                    x:Name="TB_Project_AddEdit_Description" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Description_TextChanged" Text="{Binding project_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image x:Name="Img_ConfigProjects_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
-                                        <Image.InputBindings>
-                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>
-                                        </Image.InputBindings>
-                                    </Image>
-                                    <Image x:Name="Img_ConfigProjects_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_AddEdit_Cancel_MouseDown"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                        <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BFE6E6E6" Visibility="{Binding project_edit_Visibility}">
-                            <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
-                                <Label Content="Edit Project" FontWeight="Bold" Foreground="Black"/>
-                                <ComboBox
-                                    materialDesign:TextFieldAssist.HasClearButton="True"
-                                    IsEditable="True"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    materialDesign:TextFieldAssist.SuffixText=""
-                                    materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding project_edit_selCustindex}" SelectionChanged="Combo_Project_Edit_AvailCustomers_SelectionChanged">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
-                                            <materialDesign:PackIcon Kind="User" />
-                                            <TextBlock>Customer</TextBlock>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </ComboBox>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Name_TextChanged"/>
-                                <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Description"
-                                    x:Name="TB_Project_Edit_Description" Text="{Binding project_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Description_TextChanged"/>
-                                <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Image x:Name="Img_ConfigProjects_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
-                                        <Image.InputBindings>
-                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditProject, Mode=Default}"/>
-                                        </Image.InputBindings>
-                                    </Image>
-                                    <Image x:Name="Img_ConfigProjects_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_Edit_Cancel_MouseDown"/>
-                                </StackPanel>
-                            </StackPanel>
-                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
