@@ -198,14 +198,17 @@
                     <StackPanel Orientation="Horizontal" >
                         <Expander x:Name="Config_Overview_Expander_Customers" ExpandDirection="Right" Background="{x:Null}">
                             <Expander.Header>
-                                <TextBlock
-                                    Text="Customers"
-                                    RenderTransformOrigin=".5,.5" Foreground="{DynamicResource PrimaryHueMidBrush}">
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform
-                                          Angle="90" />
-                                    </TextBlock.LayoutTransform>
-                                </TextBlock>
+                                <StackPanel Orientation="Horizontal" RenderTransformOrigin=".5,.5">
+                                    <StackPanel.LayoutTransform>
+                                        <RotateTransform Angle="90"/>
+                                    </StackPanel.LayoutTransform>
+                                    <materialDesign:PackIcon Kind="User" Foreground="{DynamicResource PrimaryHueDarkBrush}" />
+                                    <TextBlock Text="Customers" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0"></TextBlock>
+
+                                    <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Add" Kind="Plus" />
+                                    <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Edit" Kind="Plus" />
+                                    <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Delete" Kind="Plus" />
+                                </StackPanel>
                             </Expander.Header>
                             <StackPanel
                                 Orientation="Vertical"
