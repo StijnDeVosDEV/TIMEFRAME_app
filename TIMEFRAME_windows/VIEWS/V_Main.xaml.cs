@@ -501,30 +501,42 @@ namespace TIMEFRAME_windows.VIEWS
         #region CONFIGURATION TASK ENTRIES
         private void Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
+            Dialog_Task_Add.IsOpen = false;
+
+            //Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
         }
 
         private void Img_ConfigTaskEntries_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
+            Dialog_Task_Edit.IsOpen = false;
+
+            //Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
         }
 
         private void Img_Tasks_Add_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTaskEntries_AddEdit.Visibility = (Grid_ConfigTaskEntries_AddEdit.Visibility == Visibility.Visible)
-                ? Visibility.Hidden
-                : Visibility.Visible;
+            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
 
-            Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
+            Dialog_Task_Edit.IsOpen = false;
+
+            //Grid_ConfigTaskEntries_AddEdit.Visibility = (Grid_ConfigTaskEntries_AddEdit.Visibility == Visibility.Visible)
+            //    ? Visibility.Hidden
+            //    : Visibility.Visible;
+
+            //Grid_ConfigTaskEntries_Edit.Visibility = Visibility.Hidden;
         }
 
         private void Img_Tasks_Edit_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            Grid_ConfigTaskEntries_Edit.Visibility = (Grid_ConfigTaskEntries_Edit.Visibility == Visibility.Visible)
-                ? Visibility.Hidden
-                : Visibility.Visible;
+            Dialog_Task_Edit.IsOpen = !Dialog_Task_Edit.IsOpen;
 
-            Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
+            Dialog_Task_Add.IsOpen = false;
+
+            //Grid_ConfigTaskEntries_Edit.Visibility = (Grid_ConfigTaskEntries_Edit.Visibility == Visibility.Visible)
+            //    ? Visibility.Hidden
+            //    : Visibility.Visible;
+
+            //Grid_ConfigTaskEntries_AddEdit.Visibility = Visibility.Hidden;
         }
 
         private void Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged(object sender, SelectionChangedEventArgs e)
