@@ -534,27 +534,71 @@ namespace TIMEFRAME_windows.VIEWMODELS
         #region CONFIGURATION Component
         // EXPANDER
         #region EXPANDER
-        private ObservableCollection<Customer> _config_expander_shownCustomers;
-        private ObservableCollection<Project> _config_expander_shownProjects;
-        private ObservableCollection<TaskEntry> _config_expander_shownTaskEntries;
-        private ObservableCollection<TimeEntry> _config_expander_shownTimeEntries;
+        public ObservableCollection<Customer> config_expander_shownCustomers
+        {
+            get { return _config_expander_shownCustomers; }
+            set { if (value != _config_expander_shownCustomers) { _config_expander_shownCustomers = value; RaisePropertyChangedEvent("config_expander_shownCustomers"); } }
+        }
 
+        public ObservableCollection<Project> config_expander_shownProjects
+        {
+            get { return _config_expander_shownProjects; }
+            set { if (value != _config_expander_shownProjects) { _config_expander_shownProjects = value; RaisePropertyChangedEvent("config_expander_shownProjects"); } }
+        }
 
+        public ObservableCollection<TaskEntry> config_expander_shownTaskEntries
+        {
+            get { return _config_expander_shownTaskEntries; }
+            set { if (value != _config_expander_shownTaskEntries) { _config_expander_shownTaskEntries = value; RaisePropertyChangedEvent("config_expander_shownTaskEntries"); } }
+        }
+
+        public ObservableCollection<TimeEntry> config_expander_shownTimeEntries
+        {
+            get { return _config_expander_shownTimeEntries; }
+            set { if (value != _config_expander_shownTimeEntries) { _config_expander_shownTimeEntries = value; RaisePropertyChangedEvent("config_expander_shownTimeEntries"); } }
+        }
 
         // EXPANDER - Customer
         // -------------------
-        private int _config_expander_customer_selCustomerIndex;
-        private Customer _config_expander_customer_selCustomer;
+        public int config_expander_customer_selCustomerIndex
+        {
+            get { return _config_expander_customer_selCustomerIndex; }
+            set { if (value != _config_expander_customer_selCustomerIndex) { _config_expander_customer_selCustomerIndex = value; RaisePropertyChangedEvent("config_expander_customer_selCustomerIndex"); } }
+        }
+
+        public Customer config_expander_customer_selCustomer
+        {
+            get { return _config_expander_customer_selCustomer; }
+            set { if (value != _config_expander_customer_selCustomer) { _config_expander_customer_selCustomer = value; RaisePropertyChangedEvent("config_expander_customer_selCustomer"); } }
+        }
 
         // EXPANDER - Project
         // ------------------
-        private int _config_expander_project_selProjectIndex;
-        private Project _config_expander_project_selProject;
+        public int config_expander_project_selProjectIndex
+        {
+            get { return _config_expander_project_selProjectIndex; }
+            set { if (value != _config_expander_project_selProjectIndex) { _config_expander_project_selProjectIndex = value; RaisePropertyChangedEvent("config_expander_project_selProjectIndex"); } }
+        }
+
+        public Project config_expander_project_selProject
+        {
+            get { return _config_expander_project_selProject; }
+            set { if (value != _config_expander_project_selProject) { _config_expander_project_selProject = value; RaisePropertyChangedEvent("config_expander_project_selProject"); } }
+        }
 
         // EXPANDER - Task
         // ---------------
-        private int _config_expander_task_selTaskEntryIndex;
-        private TaskEntry _config_expander_task_selTaskEntry;
+        public int config_expander_task_selTaskEntryIndex
+        {
+            get { return _config_expander_task_selTaskEntryIndex; }
+            set { if (value != _config_expander_task_selTaskEntryIndex) { _config_expander_task_selTaskEntryIndex = value; RaisePropertyChangedEvent("config_expander_task_selTaskEntryIndex"); } }
+        }
+
+        public TaskEntry config_expander_task_selTaskEntry
+        {
+            get { return _config_expander_task_selTaskEntry; }
+            set { if (value != _config_expander_task_selTaskEntry) { _config_expander_task_selTaskEntry = value; RaisePropertyChangedEvent("config_expander_task_selTaskEntry"); } }
+        }
         #endregion
 
 
