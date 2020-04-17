@@ -61,8 +61,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<Customer> _config_expander_shownCustomers;
         private ObservableCollection<Project> _config_expander_shownProjects;
         private ObservableCollection<TaskEntry> _config_expander_shownTaskEntries;
-        private ObservableCollection<TimeEntry> _config_expander_shownTimeEntries;
-
+        //private ObservableCollection<TimeEntry> _config_expander_shownTimeEntries;
+        
         // EXPANDER - Customer
         // -------------------
         private int _config_expander_customer_selCustomerIndex;
@@ -290,6 +290,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
             selProjectindex = -1;
             selTaskEntryindex = -1;
             Reset("RECORD_TIMEENTRY");
+
+            config_expander_shownCustomers = new ObservableCollection<Customer>();
+            config_expander_shownProjects = new ObservableCollection<Project>();
+            config_expander_shownTaskEntries = new ObservableCollection<TaskEntry>();
+
+            config_expander_customer_selCustomerIndex = -1;
+            config_expander_project_selProjectIndex = -1;
+            config_expander_task_selTaskEntryIndex = -1;
 
             db_shownCustomers = new ObservableCollection<Customer>();
             db_shownProjects = new ObservableCollection<Project>();
@@ -552,18 +560,32 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if (value != _config_expander_shownTaskEntries) { _config_expander_shownTaskEntries = value; RaisePropertyChangedEvent("config_expander_shownTaskEntries"); } }
         }
 
-        public ObservableCollection<TimeEntry> config_expander_shownTimeEntries
-        {
-            get { return _config_expander_shownTimeEntries; }
-            set { if (value != _config_expander_shownTimeEntries) { _config_expander_shownTimeEntries = value; RaisePropertyChangedEvent("config_expander_shownTimeEntries"); } }
-        }
+        //public ObservableCollection<TimeEntry> config_expander_shownTimeEntries
+        //{
+        //    get { return _config_expander_shownTimeEntries; }
+        //    set { if (value != _config_expander_shownTimeEntries) { _config_expander_shownTimeEntries = value; RaisePropertyChangedEvent("config_expander_shownTimeEntries"); } }
+        //}
 
         // EXPANDER - Customer
         // -------------------
         public int config_expander_customer_selCustomerIndex
         {
             get { return _config_expander_customer_selCustomerIndex; }
-            set { if (value != _config_expander_customer_selCustomerIndex) { _config_expander_customer_selCustomerIndex = value; RaisePropertyChangedEvent("config_expander_customer_selCustomerIndex"); } }
+            set { if (value != _config_expander_customer_selCustomerIndex) { _config_expander_customer_selCustomerIndex = value; RaisePropertyChangedEvent("config_expander_customer_selCustomerIndex");
+                    if(config_expander_customer_selCustomerIndex > -1)
+                    {
+                        // Assign selected Customer
+                        config_expander_customer_selCustomer = config_expander_shownCustomers[config_expander_customer_selCustomerIndex];
+
+                        // Populate related Projects
+                        if(config_expander_shownProjects != null) { config_expander_shownProjects.Clear(); }
+                        foreach (Project project in allProjects.Where(x => x.CustomerId == config_expander_customer_selCustomer.Id).ToList())
+                        {
+                            config_expander_shownProjects.Add(project);
+                        }
+                    }
+                    else { if(config_expander_shownProjects != null) { config_expander_shownProjects.Clear(); } config_expander_customer_selCustomer = null; }
+                } }
         }
 
         public Customer config_expander_customer_selCustomer
@@ -577,7 +599,21 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int config_expander_project_selProjectIndex
         {
             get { return _config_expander_project_selProjectIndex; }
-            set { if (value != _config_expander_project_selProjectIndex) { _config_expander_project_selProjectIndex = value; RaisePropertyChangedEvent("config_expander_project_selProjectIndex"); } }
+            set { if (value != _config_expander_project_selProjectIndex) { _config_expander_project_selProjectIndex = value; RaisePropertyChangedEvent("config_expander_project_selProjectIndex");
+                    if(config_expander_project_selProjectIndex > -1)
+                    {
+                        // Assign selected Project
+                        config_expander_project_selProject = config_expander_shownProjects[config_expander_project_selProjectIndex];
+
+                        // Populate related Task Entries
+                        if(config_expander_shownTaskEntries != null) { config_expander_shownTaskEntries.Clear(); }
+                        foreach (TaskEntry taskEntry in allTaskEntries.Where(x => x.ProjectId == config_expander_project_selProject.Id))
+                        {
+                            config_expander_shownTaskEntries.Add(taskEntry);
+                        }
+                    }
+                    else { config_expander_project_selProject = null; if (config_expander_shownTaskEntries != null) { config_expander_shownTaskEntries.Clear(); } }
+                } }
         }
 
         public Project config_expander_project_selProject
@@ -591,7 +627,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public int config_expander_task_selTaskEntryIndex
         {
             get { return _config_expander_task_selTaskEntryIndex; }
-            set { if (value != _config_expander_task_selTaskEntryIndex) { _config_expander_task_selTaskEntryIndex = value; RaisePropertyChangedEvent("config_expander_task_selTaskEntryIndex"); } }
+            set { if (value != _config_expander_task_selTaskEntryIndex) { _config_expander_task_selTaskEntryIndex = value; RaisePropertyChangedEvent("config_expander_task_selTaskEntryIndex");
+                    if(config_expander_task_selTaskEntryIndex > -1)
+                    {
+                        // Assign selected Task Entry
+                        config_expander_task_selTaskEntry = config_expander_shownTaskEntries[config_expander_task_selTaskEntryIndex];
+                    }
+                    else { config_expander_task_selTaskEntry = null; }
+                } }
         }
 
         public TaskEntry config_expander_task_selTaskEntry
@@ -1900,6 +1943,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
             db_shownCustomers = allCustomers;
+            config_expander_shownCustomers = allCustomers;
         }
 
         private void ParseProjectData()
