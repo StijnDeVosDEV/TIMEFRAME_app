@@ -546,9 +546,9 @@ namespace TIMEFRAME_windows.VIEWS
         }
         #endregion
 
-        // ------------
-        // TASK ENTRIES
-        // ------------
+        // --------------------------
+        // CONFIGURATION TASK ENTRIES
+        // --------------------------
         #region CONFIGURATION TASK ENTRIES
         private void Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -646,9 +646,9 @@ namespace TIMEFRAME_windows.VIEWS
         }
         #endregion
 
-        // ------------
-        // TIME ENTRIES
-        // ------------
+        // --------------------------
+        // CONFIGURATION TIME ENTRIES
+        // --------------------------
         #region CONFIGURATION TIME ENTRIES
         private void TB_TimeEntry_AddEdit_StartTime_HH_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -799,7 +799,101 @@ namespace TIMEFRAME_windows.VIEWS
         }
         #endregion
 
-        
+        // ----------------------
+        // CONFIGURATION EXPANDER
+        // ----------------------
+        #region CONFIGURATION EXPANDER
+        private void Icon_Config_Overview_Expander_Customer_Add_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Add.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Add_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Edit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Edit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Delete.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Add_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Add.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Add_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Edit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Edit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Delete.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Add_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Add.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Add_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Edit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Edit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Delete.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+        #endregion
+
         // --------------
         // SETTINGS PANEL
         // --------------
