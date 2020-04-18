@@ -19,7 +19,7 @@ namespace TIMEFRAME_windows
     public partial class App : Application
     {
         // CONFIGURATION AUTHENTICATION BASED ON AZURE AD
-        private static readonly string Tenant = "timeframeb2c.onmicrosoft.com";
+        private static readonly string Tenant = "https://timeframeb2c.onmicrosoft.com";
         private static readonly string AzureAdB2CHostname = "timeframeb2c.onmicrosoft.com";
         private static readonly string ClientId = "c456c692-848a-4027-a3ee-52d7b936c482";
         public static string PolicySignUpSignIn = "B2C_1_SignUp_SignIn_TimeFrame";
