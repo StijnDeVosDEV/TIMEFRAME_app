@@ -36,6 +36,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private string _UInotification;
         private Visibility _LoadingScreen_Visibility;
 
+        private Visibility _LoginScreen_Visibility;
 
         // RECORD block
         // ------------
@@ -228,9 +229,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private VIEWMODELS.Base.GEN_RelayCommand _ApplyBaseTheme;
 
+        private VIEWMODELS.Base.GEN_RelayCommand _LogIn;
+
         // Services
         private IBackendService myBackendService;
-
+        private IAuthenticationService myAuthenticator;
 
         //  -----------------------------
         //  Actual Class variables
@@ -244,12 +247,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             // Initialization
             UInotification = "";
-            LoadingScreen_Visibility = Visibility.Visible;
+            LoadingScreen_Visibility = Visibility.Hidden;
+            LoginScreen_Visibility = Visibility.Visible;
+
 
             // Inject Services
             //InitializeServiceInjections(new BackendService());
             myBackendService = new BackendService();
+            myAuthenticator = new AuthenticationService();
 
+
+            // Initialize Properties
             allCustomers = new ObservableCollection<Customer>();
             allCustomers_fromDB = new List<Customer>();
             allProjects = new ObservableCollection<Project>();
@@ -333,7 +341,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
             // Initializations
-            LoadDatabaseData();
+            //LoadDatabaseData();   // --> DO THIS ONLY AFTER LOGGING IN SUCCESSFULLY!
 
             // Load commands
             LoadCommands();
@@ -415,6 +423,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             get { return _LoadingScreen_Visibility; }
             set { if (value != _LoadingScreen_Visibility) { _LoadingScreen_Visibility = value; RaisePropertyChangedEvent("LoadingScreen_Visibility"); } }
+        }
+
+        public Visibility LoginScreen_Visibility
+        {
+            get { return _LoginScreen_Visibility; }
+            set { if (value != _LoginScreen_Visibility) { _LoginScreen_Visibility = value; RaisePropertyChangedEvent("LoginScreen_Visibility"); } }
         }
         #endregion
 
@@ -1759,6 +1773,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
         public ICommand ApplyBaseTheme { get { return _ApplyBaseTheme; } }
+
+        public ICommand LogIn { get { return _LogIn; } }
         #endregion
 
 
@@ -2356,15 +2372,16 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perform_CloseLoadingScreen());
 
             _ApplyBaseTheme = new Base.GEN_RelayCommand(param => this.Perform_ApplyBaseTheme((bool)param));
-        }
 
+            _LogIn = new Base.GEN_RelayCommand(param => this.Perform_LogIn());
+        }
 
         private void Perform_ApplyBaseTheme(bool isDark)
         {
             ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
         }
 
-        private static void ModifyTheme(Action<ITheme> modificationAction)
+        private void ModifyTheme(Action<ITheme> modificationAction)
         {
             PaletteHelper paletteHelper = new PaletteHelper();
             ITheme theme = paletteHelper.GetTheme();
@@ -2372,6 +2389,18 @@ namespace TIMEFRAME_windows.VIEWMODELS
             modificationAction?.Invoke(theme);
 
             paletteHelper.SetTheme(theme);
+        }
+
+
+        private async void Perform_LogIn()
+        {
+            await myAuthenticator.Login();
+
+            if (!myAuthenticator.loginResult.IsError)
+            {
+                LoginScreen_Visibility = Visibility.Hidden;
+                LoadDatabaseData();
+            }
         }
 
 

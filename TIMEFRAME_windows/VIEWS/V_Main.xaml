@@ -1049,7 +1049,7 @@
         <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
             <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
-        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
             <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
                 <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <Label Content="Close" Cursor="Hand" HorizontalContentAlignment="Center" Foreground="White" FontStyle="Italic" FontSize="16">
@@ -1063,7 +1063,7 @@
                     IsIndeterminate="True" />
             </StackPanel>
         </Grid>
-        <Grid x:Name="Grid_Login" Grid.RowSpan="3" Background="#B2FFFFFF">
+        <Grid x:Name="Grid_Login" Grid.RowSpan="3" Background="#B2FFFFFF" Visibility="{Binding LoginScreen_Visibility}">
             <StackPanel x:Name="StackPanel_Login" VerticalAlignment="Center">
                 <Image x:Name="Img_Login_logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
                 <TextBlock Text="Welcome to TimeFrame!" TextWrapping="Wrap" FontSize="24" HorizontalAlignment="Center" FontWeight="Normal" Margin="0,25,0,0"/>
@@ -1072,7 +1072,7 @@
                         materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
                         materialDesign:ButtonProgressAssist.Value="-1"
                         materialDesign:ButtonProgressAssist.IsIndeterminate="True"
-                        Margin="0,50,0,0" HorizontalAlignment="Center">
+                        Margin="0,50,0,0" HorizontalAlignment="Center" Command="{Binding LogIn, Mode=OneWay}">
                     LOG IN
                 </Button>
             </StackPanel>
