@@ -60,6 +60,10 @@ namespace TIMEFRAME_windows.SERVICES
                     {
                         switch (claim.Type)
                         {
+                            case "sub":
+                                User.UserID = claim.Value;
+                                break;
+
                             case "name":
                                 User.Name = claim.Value;
                                 break;

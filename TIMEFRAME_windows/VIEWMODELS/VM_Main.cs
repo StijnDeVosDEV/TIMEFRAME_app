@@ -1811,10 +1811,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             LoadingScreen_Visibility = Visibility.Visible;
 
             // Get all data from database
-            allCustomers_fromDB = await myBackendService.GetCustomers();
-            allProjects_fromDB = await myBackendService.GetProjects();
-            allTaskEntries_fromDB = await myBackendService.GetTaskEntries();
-            allTimeEntries_fromDB = await myBackendService.GetTimeEntries();
+            allCustomers_fromDB = await myBackendService.GetCustomers(myUser);
+            allProjects_fromDB = await myBackendService.GetProjects(myUser);
+            allTaskEntries_fromDB = await myBackendService.GetTaskEntries(myUser);
+            allTimeEntries_fromDB = await myBackendService.GetTimeEntries(myUser);
 
             FullyPopulateObservableCollections();
 
@@ -2496,6 +2496,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Customer
                 Customer newCustomer = new Customer()
                 {
+                    UserID = myUser.UserID,
                     Name = customer_addedit_Name,
                     Surname = customer_addedit_Surname,
                     Email = customer_addedit_Email,
@@ -2507,7 +2508,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.AddCustomer(newCustomer);
 
                 // Update in current app session
-                newCustomer.Id = allCustomers.Select(x => x.Id).Max() + 1;
+                //newCustomer.Id = allCustomers.Count > 0 ? allCustomers.Select(x => x.Id).Max() + 1 : 1;
+                newCustomer.Id = myBackendService.Customer_maxIndex + 1;
                 allCustomers.Add(newCustomer);
 
                 // Update UI
@@ -2531,6 +2533,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Get modified Customer
                 Customer modCustomer = new Customer()
                 {
+                    UserID = myUser.UserID,
                     Id = config_customer_selCustomer.Id,
                     Name = customer_edit_Name,
                     Surname = customer_edit_Surname,
@@ -2588,6 +2591,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Project
                 Project newProject = new Project()
                 {
+                    UserID = myUser.UserID,
                     CustomerId = project_addedit_selCust.Id,
                     //Customer = project_addedit_selCust,
                     Name = project_addedit_Name,
@@ -2596,19 +2600,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     Status = "Active"
                 };
 
-                Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine +
-                    "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine +
-                    //"Customer      = " + newProject.Customer.Name + Environment.NewLine +
-                    "Name          = " + newProject.Name + Environment.NewLine +
-                    "Description   = " + newProject.Description + Environment.NewLine +
-                    "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine +
-                    "Status        = " + newProject.Status);
+                //Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine +
+                //    "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine +
+                //    //"Customer      = " + newProject.Customer.Name + Environment.NewLine +
+                //    "Name          = " + newProject.Name + Environment.NewLine +
+                //    "Description   = " + newProject.Description + Environment.NewLine +
+                //    "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine +
+                //    "Status        = " + newProject.Status);
 
                 // Update in database
                 await myBackendService.AddProject(newProject);
 
                 // Update in current app session
-                newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
+                newProject.Id = myBackendService.Project_maxIndex + 1;
+                //newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
                 allProjects.Add(newProject);
 
                 // Update UI
@@ -2686,6 +2691,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Task Entry
                 TaskEntry newTaskEntry = new TaskEntry()
                 {
+                    UserID = myUser.UserID,
                     ProjectId = taskentry_addedit_selProj.Id,
                     Name = taskentry_addedit_Name,
                     Description = taskentry_addedit_Description,
@@ -2697,7 +2703,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.AddTaskEntry(newTaskEntry);
 
                 // Update in current app session
-                newTaskEntry.Id = allTaskEntries.Count > 0 ? allTaskEntries.Select(x => x.Id).Max() + 1 : 1;
+                newTaskEntry.Id = myBackendService.TaskEntry_maxIndex + 1; ;
+                //newTaskEntry.Id = allTaskEntries.Count > 0 ? allTaskEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTaskEntries.Add(newTaskEntry);
 
                 // Update UI
@@ -2777,6 +2784,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Time Entry
                 TimeEntry newTimeEntry = new TimeEntry()
                 {
+                    UserID = myUser.UserID,
                     CreationDate = DateTime.Now,
                     Duration = timeentry_addedit_Duration,
                     Start = timeentry_addedit_DateTimeStart,
@@ -2789,7 +2797,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.AddTimeEntry(newTimeEntry);
 
                 // Update in current app session
-                newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
+                newTimeEntry.Id = myBackendService.TimeEntry_maxIndex + 1;
+                //newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTimeEntries.Add(newTimeEntry);
 
                 // Update UI

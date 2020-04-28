@@ -8,6 +8,7 @@ namespace TIMEFRAME_windows.MODELS
     public class User
     {
         // FIELDS
+        private string _UserID;
         private string _Name;
         private string _Email;
         private string _PicturePath;
@@ -17,14 +18,16 @@ namespace TIMEFRAME_windows.MODELS
         // CONSTRUCTOR
         public User()
         {
+            UserID = "";
             Name = "";
             Email = "";
             PicturePath = "";
             EmailVerified = false;
         }
 
-        public User(string inp_Name, string inp_Email, string inp_PicturePath, bool inp_EmailVerified)
+        public User(string inp_UserID, string inp_Name, string inp_Email, string inp_PicturePath, bool inp_EmailVerified)
         {
+            UserID = inp_UserID;
             Name = inp_Name;
             Email = inp_Email;
             PicturePath = inp_PicturePath;
@@ -33,6 +36,12 @@ namespace TIMEFRAME_windows.MODELS
 
 
         // PROPERTIES
+        public string UserID
+        {
+            get { return _UserID; }
+            set { if (value != _UserID) { _UserID = value; } }
+        }
+
         public string Name
         {
             get { return _Name; }

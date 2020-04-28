@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,10 @@ namespace TIMEFRAME_windows.SERVICES
     {
         // FIELDS
         private HttpClient client = new HttpClient();
+        private int _Customer_maxIndex;
+        private int _Project_maxIndex;
+        private int _TaskEntry_maxIndex;
+        private int _TimeEntry_maxIndex;
 
 
         // CONSTRUCTOR
@@ -20,9 +25,35 @@ namespace TIMEFRAME_windows.SERVICES
         {
             // Initialize HTTP client
             InitializeHTTPclient();
+
+            // Initialize Properties
+            Customer_maxIndex = 0;
+            Project_maxIndex = 0;
+            TaskEntry_maxIndex = 0;
+            TimeEntry_maxIndex = 0;
         }
 
         // PROPERTIES
+        public int Customer_maxIndex
+        {
+            get { return _Customer_maxIndex; }
+            set { if (value != _Customer_maxIndex) { _Customer_maxIndex = value; } }
+        }
+        public int Project_maxIndex
+        {
+            get { return _Project_maxIndex; }
+            set { if (value != _Project_maxIndex) { _Project_maxIndex = value; } }
+        }
+        public int TaskEntry_maxIndex
+        {
+            get { return _TaskEntry_maxIndex; }
+            set { if (value != _TaskEntry_maxIndex) { _TaskEntry_maxIndex = value; } }
+        }
+        public int TimeEntry_maxIndex
+        {
+            get { return _TimeEntry_maxIndex; }
+            set { if (value != _TimeEntry_maxIndex) { _TimeEntry_maxIndex = value; } }
+        }
 
 
         // METHODS
@@ -52,7 +83,7 @@ namespace TIMEFRAME_windows.SERVICES
         }
 
         // GET all Customers
-        public async Task<List<Customer>> GetCustomers()
+        public async Task<List<Customer>> GetCustomers(MODELS.User myUser)
         {
             List<Customer> allCustomers = null;
 
@@ -63,13 +94,16 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allCustomers = await response.Content.ReadAsAsync<List<Customer>>();
+
+                    Customer_maxIndex = allCustomers.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    return allCustomers;
                 }
 
-                return allCustomers;
+                return allCustomers.Where(x => x.UserID == myUser.UserID).ToList();
             }
             catch (Exception e)
             {
@@ -137,7 +171,7 @@ namespace TIMEFRAME_windows.SERVICES
         }
         
         // GET all Projects
-        public async Task<List<Project>> GetProjects()
+        public async Task<List<Project>> GetProjects(MODELS.User myUser)
         {
             List<Project> allProjects = null;
 
@@ -148,13 +182,16 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allProjects = await response.Content.ReadAsAsync<List<Project>>();
+
+                    Project_maxIndex = allProjects.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    return allProjects;
                 }
 
-                return allProjects;
+                return allProjects.Where(x => x.UserID == myUser.UserID).ToList();
             }
             catch (Exception e)
             {
@@ -220,7 +257,7 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
 
-        public async Task<List<TaskEntry>> GetTaskEntries()
+        public async Task<List<TaskEntry>> GetTaskEntries(MODELS.User myUser)
         {
             List<TaskEntry> allTaskEntries = null;
 
@@ -231,13 +268,16 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allTaskEntries = await response.Content.ReadAsAsync<List<TaskEntry>>();
+
+                    TaskEntry_maxIndex = allTaskEntries.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    return allTaskEntries;
                 }
 
-                return allTaskEntries;
+                return allTaskEntries.Where(x => x.UserID == myUser.UserID).ToList();
             }
             catch (Exception e)
             {
@@ -301,7 +341,7 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
 
-        public async Task<List<TimeEntry>> GetTimeEntries()
+        public async Task<List<TimeEntry>> GetTimeEntries(MODELS.User myUser)
         {
             List<TimeEntry> allTimeEntries = null;
 
@@ -312,13 +352,16 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allTimeEntries = await response.Content.ReadAsAsync<List<TimeEntry>>();
+
+                    TimeEntry_maxIndex = allTimeEntries.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    return allTimeEntries;
                 }
 
-                return allTimeEntries;
+                return allTimeEntries.Where(x => x.UserID == myUser.UserID).ToList();
             }
             catch (Exception e)
             {
