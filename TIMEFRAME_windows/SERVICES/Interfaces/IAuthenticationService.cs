@@ -8,9 +8,12 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
 {
     interface IAuthenticationService
     {
+        // PROPERTIES
         public LoginResult loginResult { get; set; }
         public MODELS.User User { get; set; }
 
-        public Task Login();
+        // METHODS
+        public Task<bool> Login();
+        public Task<bool> Logout();
     }
 }

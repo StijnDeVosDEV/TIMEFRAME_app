@@ -30,11 +30,12 @@
     </Window.Resources>
     <Grid x:Name="Grid_Main">
         <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="150"/>
             <RowDefinition/>
             <RowDefinition Height="17"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="Grid_Core" Height="150">
+        <Grid x:Name="Grid_Core" Height="150" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0"/>
                 <ColumnDefinition/>
@@ -151,7 +152,7 @@
                 <Border x:Name="Border_Divider" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Left"/>
             </Grid>
         </Grid>
-        <Grid x:Name="Grid_Content" Grid.Row="1">
+        <Grid x:Name="Grid_Content" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40"/>
                 <ColumnDefinition/>
@@ -1046,7 +1047,7 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
+        <Grid x:Name="Grid_Notifications" Grid.Row="3" Background="#FF556A80">
             <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
         <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
@@ -1066,16 +1067,21 @@
         <Grid x:Name="Grid_Login" Grid.RowSpan="3" Background="#B2FFFFFF" Visibility="{Binding LoginScreen_Visibility}">
             <StackPanel x:Name="StackPanel_Login" VerticalAlignment="Center">
                 <Image x:Name="Img_Login_logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
-                <TextBlock Text="Welcome to TimeFrame!" TextWrapping="Wrap" FontSize="24" HorizontalAlignment="Center" FontWeight="Normal" Margin="0,25,0,0"/>
+                <TextBlock Text="Welcome to TimeFrame!" TextWrapping="Wrap" FontSize="24" HorizontalAlignment="Center" FontWeight="Normal" Margin="0,25,0,0" Foreground="{DynamicResource MaterialDesignBody}"/>
                 <Button x:Name="Button_Login" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
-                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
-                        materialDesign:ButtonProgressAssist.Value="-1"
-                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
                         Margin="0,50,0,0" HorizontalAlignment="Center" Command="{Binding LogIn, Mode=OneWay}">
                     LOG IN
                 </Button>
+                <TextBlock Text="{Binding LoginScreen_message}" TextWrapping="Wrap" FontWeight="Normal" Foreground="{DynamicResource ValidationErrorBrush}" HorizontalAlignment="Center" Margin="0,10,0,0"/>
             </StackPanel>
         </Grid>
+        <StackPanel x:Name="StackPanel_MenuBar" FlowDirection="RightToLeft" Orientation="Horizontal" Margin="0,0,20,0">
+            <Button x:Name="Button_Logout" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        HorizontalAlignment="Center" Command="{Binding LogOut, Mode=OneWay}" Height="20" VerticalAlignment="Center" FontSize="10" Content="LOG OUT" Padding="4,2,4,2" Margin="0,0,10,0" Visibility="Hidden"/>
+            <TextBox x:Name="TB_UserName" Cursor="Hand" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource PrimaryHueLightBrush}" Text="{Binding myUser.Name}" VerticalContentAlignment="Center" TextChanged="TB_UserName_TextChanged" IsReadOnly="True"/>
+            <materialDesign:PackIcon Kind="User" Width="25" Height="25" Foreground="{DynamicResource PrimaryHueLightBrush}" />
+        </StackPanel>
     </Grid>
 </Window>

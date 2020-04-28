@@ -1038,5 +1038,10 @@ namespace TIMEFRAME_windows.VIEWS
         {
             SetEnablement_SaveButton();
         }
+
+        private void TB_UserName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Button_Logout.Visibility = TB_UserName.Text != "" ? Visibility.Visible : Visibility.Hidden;
+        }
     }
 }

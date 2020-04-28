@@ -1,11 +1,13 @@
 ﻿using Auth0.OidcClient;
 using IdentityModel.OidcClient;
+using IdentityModel.OidcClient.Browser;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TIMEFRAME_windows.SERVICES
 {
@@ -35,7 +37,7 @@ namespace TIMEFRAME_windows.SERVICES
         }
 
         // METHODS
-        public async Task Login()
+        public async Task<bool> Login()
         {
             try
             {
@@ -80,17 +82,45 @@ namespace TIMEFRAME_windows.SERVICES
                     }
 
                     Logger.Write("LOGIN |  User successfully logged in (" + User.Name + ")");
+                    return true;
                 }
                 else
                 {
                     this.User = null;
                     Logger.Write("LOGIN |  Error occurred while trying to login in : login service returned empty user");
+                    return false;
                 }
             }
             catch (Exception e)
             {
                 Logger.Write("LOGIN |  Error occurred while trying to login in : " + Environment.NewLine +
                     e.ToString());
+                return false;
+            }
+        }
+
+        public async Task<bool> Logout()
+        {
+            try
+            {
+                BrowserResultType browserResult = await client.LogoutAsync();
+
+                if (browserResult != BrowserResultType.Success)
+                {
+                    MessageBox.Show(browserResult.ToString(), "Logout error:");
+                    return false;
+                }
+
+                this.User = new MODELS.User();
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Logger.Write("LOGIN |  Error occurred while trying to logout : " + Environment.NewLine +
+                    e.ToString());
+
+                return false;
             }
         }
     }

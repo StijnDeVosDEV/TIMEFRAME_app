@@ -41,6 +41,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // --------------
         private Visibility _LoginScreen_Visibility;
         private MODELS.User _myUser;
+        private string _LoginScreen_message;
 
 
         // RECORD block
@@ -235,6 +236,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private VIEWMODELS.Base.GEN_RelayCommand _ApplyBaseTheme;
 
         private VIEWMODELS.Base.GEN_RelayCommand _LogIn;
+        private VIEWMODELS.Base.GEN_RelayCommand _LogOut;
 
         // Services
         private IBackendService myBackendService;
@@ -264,6 +266,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             // Initialize Properties
             LoginScreen_Visibility = Visibility.Visible;
             myUser = new MODELS.User();
+            LoginScreen_message = "";
 
             allCustomers = new ObservableCollection<Customer>();
             allCustomers_fromDB = new List<Customer>();
@@ -374,6 +377,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             get { return _LoginScreen_Visibility; }
             set { if (value != _LoginScreen_Visibility) { _LoginScreen_Visibility = value; RaisePropertyChangedEvent("LoginScreen_Visibility"); } }
+        }
+
+        public string LoginScreen_message
+        {
+            get { return _LoginScreen_message; }
+            set { if (value != _LoginScreen_message) { _LoginScreen_message = value; RaisePropertyChangedEvent("LoginScreen_message"); } }
         }
         #endregion
 
@@ -1790,6 +1799,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand ApplyBaseTheme { get { return _ApplyBaseTheme; } }
 
         public ICommand LogIn { get { return _LogIn; } }
+        public ICommand LogOut { get { return _LogOut; } }
         #endregion
 
 
@@ -2389,6 +2399,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _ApplyBaseTheme = new Base.GEN_RelayCommand(param => this.Perform_ApplyBaseTheme((bool)param));
 
             _LogIn = new Base.GEN_RelayCommand(param => this.Perform_LogIn());
+            _LogOut = new Base.GEN_RelayCommand(param => this.Perform_LogOut());
         }
 
         private void Perform_ApplyBaseTheme(bool isDark)
@@ -2409,13 +2420,33 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private async void Perform_LogIn()
         {
-            await myAuthenticator.Login();
+            bool logoutSuccess = await myAuthenticator.Login();
 
-            if (!myAuthenticator.loginResult.IsError)
+            if (logoutSuccess)
             {
+                LoginScreen_message = "";
                 LoginScreen_Visibility = Visibility.Hidden;
                 myUser = myAuthenticator.User;
                 LoadDatabaseData();
+            }
+            else
+            {
+                LoginScreen_message = "Login process failed.";
+            }
+        }
+
+        private async void Perform_LogOut()
+        {
+            bool logoutSuccess = await myAuthenticator.Logout();
+
+            if (logoutSuccess)
+            {
+                LoginScreen_Visibility = Visibility.Visible;
+                myUser = new User();
+            }
+            else
+            {
+                LoginScreen_Visibility = Visibility.Hidden;
             }
         }
 
