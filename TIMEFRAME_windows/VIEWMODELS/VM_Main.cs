@@ -36,7 +36,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private string _UInotification;
         private Visibility _LoadingScreen_Visibility;
 
+
+        // LOGIN elements
+        // --------------
         private Visibility _LoginScreen_Visibility;
+        private MODELS.User _myUser;
+
 
         // RECORD block
         // ------------
@@ -248,7 +253,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
             // Initialization
             UInotification = "";
             LoadingScreen_Visibility = Visibility.Hidden;
-            LoginScreen_Visibility = Visibility.Visible;
 
 
             // Inject Services
@@ -258,6 +262,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
             // Initialize Properties
+            LoginScreen_Visibility = Visibility.Visible;
+            myUser = new MODELS.User();
+
             allCustomers = new ObservableCollection<Customer>();
             allCustomers_fromDB = new List<Customer>();
             allProjects = new ObservableCollection<Project>();
@@ -356,6 +363,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // ----------------------------
         // Public variable declarations
         // ----------------------------
+        #region LOGIN
+        public User myUser
+        {
+            get { return _myUser; }
+            set { if (value != _myUser) { _myUser = value; RaisePropertyChangedEvent("myUser"); } }
+        }
+
+        public Visibility LoginScreen_Visibility
+        {
+            get { return _LoginScreen_Visibility; }
+            set { if (value != _LoginScreen_Visibility) { _LoginScreen_Visibility = value; RaisePropertyChangedEvent("LoginScreen_Visibility"); } }
+        }
+        #endregion
+
         #region GENERAL
         public ObservableCollection<Customer> allCustomers
         {
@@ -423,12 +444,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             get { return _LoadingScreen_Visibility; }
             set { if (value != _LoadingScreen_Visibility) { _LoadingScreen_Visibility = value; RaisePropertyChangedEvent("LoadingScreen_Visibility"); } }
-        }
-
-        public Visibility LoginScreen_Visibility
-        {
-            get { return _LoginScreen_Visibility; }
-            set { if (value != _LoginScreen_Visibility) { _LoginScreen_Visibility = value; RaisePropertyChangedEvent("LoginScreen_Visibility"); } }
         }
         #endregion
 
@@ -2399,6 +2414,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             if (!myAuthenticator.loginResult.IsError)
             {
                 LoginScreen_Visibility = Visibility.Hidden;
+                myUser = myAuthenticator.User;
                 LoadDatabaseData();
             }
         }

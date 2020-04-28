@@ -9,6 +9,7 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
     interface IAuthenticationService
     {
         public LoginResult loginResult { get; set; }
+        public MODELS.User User { get; set; }
 
         public Task Login();
     }
