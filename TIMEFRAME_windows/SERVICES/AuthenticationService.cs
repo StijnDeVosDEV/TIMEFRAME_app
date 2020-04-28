@@ -14,6 +14,7 @@ namespace TIMEFRAME_windows.SERVICES
         // FIELDS
         private Auth0Client client;
         private LoginResult _loginResult;
+        private MODELS.User _User;
 
         // CONSTRUCTOR
         public AuthenticationService()
@@ -27,26 +28,70 @@ namespace TIMEFRAME_windows.SERVICES
             set { if (_loginResult != value) { _loginResult = value; } }
         }
 
+        public MODELS.User User
+        {
+            get { return _User; }
+            set { if (value != _User) { _User = value; } }
+        }
+
         // METHODS
         public async Task Login()
         {
-            string domain = ConfigurationManager.AppSettings["Auth0:Domain"];
-            string clientId = ConfigurationManager.AppSettings["Auth0:ClientId"];
-
-            client = new Auth0Client(new Auth0ClientOptions
+            try
             {
-                Domain = domain,
-                ClientId = clientId
-            });
+                string domain = ConfigurationManager.AppSettings["Auth0:Domain"];
+                string clientId = ConfigurationManager.AppSettings["Auth0:ClientId"];
 
-            loginResult = await client.LoginAsync();
+                client = new Auth0Client(new Auth0ClientOptions
+                {
+                    Domain = domain,
+                    ClientId = clientId
+                });
 
-            foreach (Claim claim in loginResult.User.Claims)
-            {
-                Logger.Write(claim.Subject.ToString() + " = " + claim.Value);
+                loginResult = await client.LoginAsync();
+
+                if (!loginResult.IsError)
+                {
+                    User = new MODELS.User();
+
+                    foreach (Claim claim in loginResult.User.Claims)
+                    {
+                        switch (claim.Type)
+                        {
+                            case "name":
+                                User.Name = claim.Value;
+                                break;
+
+                            case "email":
+                                User.Email = claim.Value;
+                                break;
+
+                            case "email_verified":
+                                if (claim.Value == "true") { User.EmailVerified = true; } else { User.EmailVerified = false; }
+                                break;
+
+                            case "picture":
+                                User.PicturePath = claim.Value;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+
+                    Logger.Write("LOGIN |  User successfully logged in (" + User.Name + ")");
+                }
+                else
+                {
+                    this.User = null;
+                    Logger.Write("LOGIN |  Error occurred while trying to login in : login service returned empty user");
+                }
             }
-
-            //return !loginResult.IsError;
+            catch (Exception e)
+            {
+                Logger.Write("LOGIN |  Error occurred while trying to login in : " + Environment.NewLine +
+                    e.ToString());
+            }
         }
     }
 }
