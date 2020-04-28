@@ -107,8 +107,7 @@
                 </StackPanel>
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown">
-                        </Image>
+                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown"/>
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StartTime"
@@ -116,8 +115,7 @@
                             materialDesign:HintAssist.Hint="Start time" SelectedTime="{Binding record_StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedTimeChanged="TimePicker_StartTime_SelectedTimeChanged"/>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown">
-                        </Image>
+                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown"/>
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StopTime"
@@ -189,7 +187,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -205,7 +203,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        
+
                         <materialDesign:DialogHost x:Name="Dialog_Customer_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
                             <materialDesign:DialogHost.DialogContent>
                                 <Grid x:Name="Grid_ConfigCustomers_Edit" MinWidth="450">
@@ -270,8 +268,8 @@
                                 </DataGrid>
                             </materialDesign:DialogHost>
                         </materialDesign:DialogHost>
-                        
-                        
+
+
                         <StackPanel x:Name="StackPanel_Customers_buttons" Grid.Column="1">
                             <Image x:Name="Img_Customers_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Customers_Add_MouseDown"/>
                             <Image x:Name="Img_Customers_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Customers_Edit_MouseDown" IsEnabled="{Binding customer_edit_IsEnabled}"/>
@@ -281,11 +279,11 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        
-                        
+
+
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -409,7 +407,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition/>
@@ -573,7 +571,7 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        
+
                     </Grid>
                 </Grid>
                 <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1">
@@ -792,11 +790,11 @@
                                 </Image.InputBindings>
                             </Image>
                         </StackPanel>
-                        
+
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid x:Name="Grid_Settings" Grid.Column="1" d:IsHidden="True">
+            <Grid x:Name="Grid_Settings" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
@@ -814,7 +812,7 @@
                     </Border>
                 </StackPanel>
                 <Border x:Name="Border_SettingsMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1" Visibility="Visible" d:IsHidden="True">
+                <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1" Visibility="Visible">
                     <TextBlock x:Name="TextBlock_LogFile" Text="TextBlock" TextWrapping="Wrap"/>
                 </ScrollViewer>
                 <StackPanel x:Name="StackPanel_Style" Grid.Column="1" Margin="0,1,0,0">
@@ -835,7 +833,7 @@
                     </materialDesign:Card>
                 </StackPanel>
             </Grid>
-            <Grid x:Name="Grid_Reports" Grid.Column="1" d:IsHidden="True">
+            <Grid x:Name="Grid_Reports" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
@@ -1051,7 +1049,7 @@
         <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
             <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
-        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
             <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
                 <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <Label Content="Close" Cursor="Hand" HorizontalContentAlignment="Center" Foreground="White" FontStyle="Italic" FontSize="16">
@@ -1065,6 +1063,19 @@
                     IsIndeterminate="True" />
             </StackPanel>
         </Grid>
-
+        <Grid x:Name="Grid_Login" Grid.RowSpan="3" Background="#B2FFFFFF">
+            <StackPanel x:Name="StackPanel_Login" VerticalAlignment="Center">
+                <Image x:Name="Img_Login_logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
+                <TextBlock Text="Welcome to TimeFrame!" TextWrapping="Wrap" FontSize="24" HorizontalAlignment="Center" FontWeight="Normal" Margin="0,25,0,0"/>
+                <Button x:Name="Button_Login" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                        materialDesign:ButtonProgressAssist.Value="-1"
+                        materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                        Margin="0,50,0,0" HorizontalAlignment="Center">
+                    LOG IN
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
