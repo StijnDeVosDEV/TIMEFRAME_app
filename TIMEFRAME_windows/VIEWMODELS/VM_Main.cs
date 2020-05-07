@@ -33,7 +33,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<TimeEntry> _allTimeEntries;
         private List<TimeEntry> _allTimeEntries_fromDB;
 
-        private string _UInotification;
         private Visibility _LoadingScreen_Visibility;
 
 
@@ -253,7 +252,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public VM_Main()
         {
             // Initialization
-            UInotification = "";
             LoadingScreen_Visibility = Visibility.Hidden;
 
 
@@ -441,12 +439,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if (value != _allTimeEntries_fromDB) { _allTimeEntries_fromDB = value; RaisePropertyChangedEvent("allTimeEntries_fromDB");
                     ParseTimeEntryData();
                 } }
-        }
-
-        public string UInotification
-        {
-            get { return _UInotification; }
-            set { if (value != _UInotification) { _UInotification = value; RaisePropertyChangedEvent("UInotification"); } }
         }
 
         public Visibility LoadingScreen_Visibility
@@ -2041,7 +2033,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private void ShowUINotification(string message)
         {
-            UInotification = message;
+            
         }
 
         private void Update_EditSelectionData(dataCategory targetEditView)
