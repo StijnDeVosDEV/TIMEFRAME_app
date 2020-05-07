@@ -134,7 +134,7 @@ namespace TIMEFRAME_windows.VIEWS
                 Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
 
                 OrigHeight = V_Main1.Height;
-                V_Main1.Height = Grid_Core.Height + 35;
+                V_Main1.Height = Grid_Core.Height + 65;
             }
             else
             {
