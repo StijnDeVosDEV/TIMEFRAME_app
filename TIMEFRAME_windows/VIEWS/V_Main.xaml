@@ -33,7 +33,6 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="150"/>
             <RowDefinition/>
-            <RowDefinition Height="17"/>
         </Grid.RowDefinitions>
         <Grid x:Name="Grid_Core" Height="150" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -1047,9 +1046,6 @@
                 </ScrollViewer>
             </Grid>
         </Grid>
-        <Grid x:Name="Grid_Notifications" Grid.Row="3" Background="#FF556A80">
-            <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
-        </Grid>
         <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
             <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
                 <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -1064,7 +1060,7 @@
                     IsIndeterminate="True" />
             </StackPanel>
         </Grid>
-        <Grid x:Name="Grid_Login" Grid.RowSpan="3" Background="#B2FFFFFF" Visibility="{Binding LoginScreen_Visibility}">
+        <Grid x:Name="Grid_Login" Grid.RowSpan="3" Background="#B2FFFFFF" Visibility="{Binding LoginScreen_Visibility}" d:IsHidden="True">
             <StackPanel x:Name="StackPanel_Login" VerticalAlignment="Center">
                 <Image x:Name="Img_Login_logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
                 <TextBlock Text="Welcome to TimeFrame!" TextWrapping="Wrap" FontSize="24" HorizontalAlignment="Center" FontWeight="Normal" Margin="0,25,0,0" Foreground="{DynamicResource MaterialDesignBody}"/>
