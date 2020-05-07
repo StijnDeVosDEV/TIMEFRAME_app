@@ -998,20 +998,35 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void SetEnablement_SaveButton()
         {
-            if (Img_Save != null)
+            if (Icon_Save != null)
             {
                 if (Combo_Customer.SelectedIndex > -1 &&
                 Combo_Project.SelectedIndex > -1 &&
                 Combo_Task.SelectedIndex > -1 &&
                 ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
                 {
-                    Img_Save.IsEnabled = true;
+                    Icon_Save.IsEnabled = true;
                 }
                 else
                 {
-                    Img_Save.IsEnabled = false;
+                    Icon_Save.IsEnabled = false;
                 }
             }
+
+            //if (Img_Save != null)
+            //{
+            //    if (Combo_Customer.SelectedIndex > -1 &&
+            //    Combo_Project.SelectedIndex > -1 &&
+            //    Combo_Task.SelectedIndex > -1 &&
+            //    ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
+            //    {
+            //        Img_Save.IsEnabled = true;
+            //    }
+            //    else
+            //    {
+            //        Img_Save.IsEnabled = false;
+            //    }
+            //}
         }
 
         private void Combo_Customer_SelectionChanged(object sender, SelectionChangedEventArgs e)

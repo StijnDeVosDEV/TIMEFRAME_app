@@ -108,7 +108,7 @@
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
                         <!--<Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown"/>-->
-                        <materialDesign:PackIcon x:Name="Icon_Play" Height="100" Width="100" Kind="PlayCircleOutline" Cursor="Hand" MouseDown="Img_Play_MouseDown" Foreground="{DynamicResource PrimaryHueDarkBrush}" />
+                        <materialDesign:PackIcon x:Name="Icon_Play" Height="100" Width="100" Kind="PlayCircleOutline" Cursor="Hand" MouseDown="Img_Play_MouseDown" Foreground="{DynamicResource PrimaryHueDarkBrush}" Background="Transparent" />
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StartTime"
@@ -117,7 +117,7 @@
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
                         <!--<Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown"/>-->
-                        <materialDesign:PackIcon x:Name="Icon_Stopo" Kind="StopCircleOutline" Height="100" Width="100" Cursor="Hand" MouseDown="Img_Stopo_MouseDown" Foreground="{DynamicResource MaterialDesignBody}"/>
+                        <materialDesign:PackIcon x:Name="Icon_Stopo" Kind="StopCircleOutline" Height="100" Width="100" Cursor="Hand" MouseDown="Img_Stopo_MouseDown" Foreground="{DynamicResource MaterialDesignBody}" Background="Transparent"/>
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StopTime"
@@ -130,16 +130,26 @@
                             <Label x:Name="Label_Duration" Content="{Binding record_Duration}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
                         </StackPanel>
                         <StackPanel x:Name="StackPanel_Save_Delete" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                            <Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand" IsEnabled="False">
+                            <materialDesign:PackIcon x:Name="Icon_Save" Kind="ContentSaveOutline" Height="50" Width="50" Cursor="Hand" IsEnabled="False" Background="Transparent">
+                                <materialDesign:PackIcon.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding AddRecordedTimeEntry, Mode=Default}"/>
+                                </materialDesign:PackIcon.InputBindings>
+                            </materialDesign:PackIcon>
+                            <!--<Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand" IsEnabled="False">
                                 <Image.InputBindings>
                                     <MouseBinding Gesture="LeftClick" Command="{Binding AddRecordedTimeEntry, Mode=Default}"/>
                                 </Image.InputBindings>
-                            </Image>
-                            <Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand">
+                            </Image>-->
+                            <materialDesign:PackIcon x:Name="Icon_Delete" Kind="Close" Height="50" Width="50" Cursor="Hand" Background="Transparent">
+                                <materialDesign:PackIcon.InputBindings>
+                                    <MouseBinding Gesture="LeftClick" Command="{Binding RecordReset, Mode=Default}"/>
+                                </materialDesign:PackIcon.InputBindings>
+                            </materialDesign:PackIcon>
+                            <!--<Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand">
                                 <Image.InputBindings>
                                     <MouseBinding Gesture="LeftClick" Command="{Binding RecordReset, Mode=Default}"/>
                                 </Image.InputBindings>
-                            </Image>
+                            </Image>-->
                         </StackPanel>
                     </StackPanel>
                     <Grid x:Name="Grid_ExtraButtons">
