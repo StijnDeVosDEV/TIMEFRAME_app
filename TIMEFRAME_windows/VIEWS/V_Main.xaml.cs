@@ -1056,7 +1056,8 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void TB_UserName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Button_Logout.Visibility = TB_UserName.Text != "" ? Visibility.Visible : Visibility.Hidden;
+            //Button_Logout.Visibility = TB_UserName.Text != "" ? Visibility.Visible : Visibility.Hidden;
+            //Button_Logout.Visibility = Button_UserName.Content.ToString() != "" ? Visibility.Visible : Visibility.Hidden;
         }
     }
 }

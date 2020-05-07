@@ -57,11 +57,11 @@
                 <Button x:Name="Button_Logout" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
                         HorizontalAlignment="Center" Command="{Binding LogOut, Mode=OneWay}" Height="20" VerticalAlignment="Center" FontSize="10" Content="LOG OUT" Padding="4,2,4,2" Margin="0,0,10,0" Visibility="Hidden"/>
-                <TextBox x:Name="TB_UserName" Cursor="Hand" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource PrimaryHueLightBrush}" Text="{Binding myUser.Name}" VerticalContentAlignment="Center" TextChanged="TB_UserName_TextChanged" IsReadOnly="True">
-                    <TextBox.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Right}"/>
-                    </TextBox.InputBindings>
-                </TextBox>
+
+                <Button x:Name="Button_UserName" Content="{Binding myUser.Name}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Right}" Style="{StaticResource MaterialDesignFlatButton}" Visibility="{Binding LogoutButtonVisibility}">
+                    <!--<TextBox x:Name="TB_UserName" Cursor="Hand" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource PrimaryHueLightBrush}" Text="{Binding myUser.Name}" VerticalContentAlignment="Center" TextChanged="TB_UserName_TextChanged" IsReadOnly="True">
+                    </TextBox>-->
+                </Button>
                 <materialDesign:PackIcon Kind="User" Width="25" Height="25" Foreground="{DynamicResource PrimaryHueLightBrush}" />
             </StackPanel>
             <Grid x:Name="Grid_Core" Height="150" Grid.Row="1">

@@ -42,6 +42,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private Visibility _LoginScreen_Visibility;
         private MODELS.User _myUser;
         private string _LoginScreen_message;
+        private Visibility _LogoutButtonVisibility;
 
 
         // RECORD block
@@ -267,6 +268,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             // Initialize Properties
             LoginScreen_Visibility = Visibility.Visible;
+            LogoutButtonVisibility = Visibility.Hidden;
             myUser = new MODELS.User();
             LoginScreen_message = "";
 
@@ -378,13 +380,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public Visibility LoginScreen_Visibility
         {
             get { return _LoginScreen_Visibility; }
-            set { if (value != _LoginScreen_Visibility) { _LoginScreen_Visibility = value; RaisePropertyChangedEvent("LoginScreen_Visibility"); } }
+            set { if (value != _LoginScreen_Visibility) { _LoginScreen_Visibility = value; RaisePropertyChangedEvent("LoginScreen_Visibility");
+                    LogoutButtonVisibility = LoginScreen_Visibility != Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
+                } }
         }
 
         public string LoginScreen_message
         {
             get { return _LoginScreen_message; }
             set { if (value != _LoginScreen_message) { _LoginScreen_message = value; RaisePropertyChangedEvent("LoginScreen_message"); } }
+        }
+        public Visibility LogoutButtonVisibility
+        {
+            get { return _LogoutButtonVisibility; }
+            set { if (value != _LogoutButtonVisibility) { _LogoutButtonVisibility = value; RaisePropertyChangedEvent("LogoutButtonVisibility"); } }
         }
         #endregion
 
