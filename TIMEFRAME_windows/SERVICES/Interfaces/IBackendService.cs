@@ -53,9 +53,11 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
 
         #region TIME ENTRIES
         // POST Time Entry
-        public Task AddTimeEntry(TimeEntry timeEntry);
+        public Task<bool> AddTimeEntry(TimeEntry timeEntry);
 
         // GET all Time Entries
+        public Task<bool> TimeEntryExists(int index);
+
         public Task<List<TimeEntry>> GetTimeEntries(MODELS.User myUser);
 
         public Task EditTimeEntry(TimeEntry timeEntry);

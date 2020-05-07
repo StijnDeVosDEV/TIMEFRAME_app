@@ -34,6 +34,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private List<TimeEntry> _allTimeEntries_fromDB;
 
         private Visibility _LoadingScreen_Visibility;
+        private ISnackbarMessageQueue _myMessageQueue;
 
 
         // LOGIN elements
@@ -237,6 +238,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private VIEWMODELS.Base.GEN_RelayCommand _LogIn;
         private VIEWMODELS.Base.GEN_RelayCommand _LogOut;
 
+        private VIEWMODELS.Base.GEN_RelayCommand _ShowMessage;
+
         // Services
         private IBackendService myBackendService;
         private IAuthenticationService myAuthenticator;
@@ -254,6 +257,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             // Initialization
             LoadingScreen_Visibility = Visibility.Hidden;
 
+            myMessageQueue = new SnackbarMessageQueue();
 
             // Inject Services
             //InitializeServiceInjections(new BackendService());
@@ -445,6 +449,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             get { return _LoadingScreen_Visibility; }
             set { if (value != _LoadingScreen_Visibility) { _LoadingScreen_Visibility = value; RaisePropertyChangedEvent("LoadingScreen_Visibility"); } }
+        }
+
+        public ISnackbarMessageQueue myMessageQueue
+        {
+            get { return _myMessageQueue; }
+            set { if (value != _myMessageQueue) { _myMessageQueue = value; RaisePropertyChangedEvent("myMessageQueue"); } }
         }
         #endregion
 
@@ -1792,6 +1802,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         public ICommand LogIn { get { return _LogIn; } }
         public ICommand LogOut { get { return _LogOut; } }
+
+        public ICommand ShowMessage { get { return _ShowMessage; } }
         #endregion
 
 
@@ -2392,6 +2404,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
             _LogIn = new Base.GEN_RelayCommand(param => this.Perform_LogIn());
             _LogOut = new Base.GEN_RelayCommand(param => this.Perform_LogOut());
+
+            _ShowMessage = new Base.GEN_RelayCommand(param => this.Perform_ShowMessage());
+        }
+
+        private void Perform_ShowMessage()
+        {
+            myMessageQueue.Enqueue("Hello world?");
+            Logger.Write("Tried to enqueue message  in myMessageQueue...");
         }
 
         private void Perform_ApplyBaseTheme(bool isDark)
@@ -2450,6 +2470,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Time Entry
                 TimeEntry newTimeEntry = new TimeEntry()
                 {
+                    UserID = myUser.UserID,
                     CreationDate = DateTime.Now,
                     Duration = record_Duration,
                     Start = record_StartTime,
@@ -2459,10 +2480,22 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 };
 
                 // Update in database
-                await myBackendService.AddTimeEntry(newTimeEntry);
+                //await myBackendService.AddTimeEntry(newTimeEntry);
+                bool success = await myBackendService.AddTimeEntry(newTimeEntry);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Added new Time Entry!");
+                }
 
                 // Update in current app session
-                newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
+                newTimeEntry.Id = myBackendService.TimeEntry_maxIndex;
+                //newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTimeEntries.Add(newTimeEntry);
 
                 // Update UI
@@ -2473,8 +2506,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start adding new Time Entry: " + Environment.NewLine +
                     e.ToString());
+
+                myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
             }
         }
+
         private void Perform_RecordReset()
         {
             Reset("RECORD_TIMEENTRY");
@@ -2786,10 +2822,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 };
 
                 // Update in database
-                await myBackendService.AddTimeEntry(newTimeEntry);
+                bool success = await myBackendService.AddTimeEntry(newTimeEntry);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Added new Time Entry!");
+                }
 
                 // Update in current app session
-                newTimeEntry.Id = myBackendService.TimeEntry_maxIndex + 1;
+                newTimeEntry.Id = myBackendService.TimeEntry_maxIndex;
                 //newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTimeEntries.Add(newTimeEntry);
 
@@ -2808,6 +2854,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start adding new Time Entry: " + Environment.NewLine +
                     e.ToString());
+
+                myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
             }
         }
 

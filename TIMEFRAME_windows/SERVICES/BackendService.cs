@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Xps.Serialization;
 using TIMEFRAME_windows.MODELS;
 using TIMEFRAME_windows.SERVICES.Interfaces;
 
@@ -317,7 +318,7 @@ namespace TIMEFRAME_windows.SERVICES
         #endregion
 
         #region TIME ENTRIES
-        public async Task AddTimeEntry(TimeEntry timeEntry)
+        public async Task<bool> AddTimeEntry(TimeEntry timeEntry)
         {
             try
             {
@@ -332,12 +333,46 @@ namespace TIMEFRAME_windows.SERVICES
                         "Content        : " + response.Content + Environment.NewLine +
                         "RequestMessage : " + response.RequestMessage + Environment.NewLine +
                         "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Time Entry in database");
+
+                    return false;
+                }
+                else
+                {
+                    TimeEntry_maxIndex += 1;
+
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while adding new time entry (BackendService - AddTimeEntry) : " + Environment.NewLine +
                     e.ToString());
+
+                return false;
+            }
+        }
+
+        public async Task<bool> TimeEntryExists(int index)
+        {
+            bool TimeEntryExists = false;
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + @"api/timeentries/" + index.ToString());
+
+                if (response.IsSuccessStatusCode)
+                {
+                    TimeEntryExists = true;
+                }
+
+                return TimeEntryExists;
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while retrieving time entry (BackendService - TimeEntryExists) : " + Environment.NewLine +
+                    e.ToString());
+
+                return TimeEntryExists;
             }
         }
 
