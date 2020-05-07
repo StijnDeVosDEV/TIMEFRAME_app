@@ -107,7 +107,8 @@
                 </StackPanel>
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown"/>
+                        <!--<Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown"/>-->
+                        <materialDesign:PackIcon x:Name="Icon_Play" Height="100" Width="100" Kind="PlayCircleOutline" Cursor="Hand" MouseDown="Img_Play_MouseDown" Foreground="{DynamicResource PrimaryHueDarkBrush}" />
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StartTime"
@@ -115,7 +116,8 @@
                             materialDesign:HintAssist.Hint="Start time" SelectedTime="{Binding record_StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedTimeChanged="TimePicker_StartTime_SelectedTimeChanged"/>
                     </StackPanel>
                     <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown"/>
+                        <!--<Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown"/>-->
+                        <materialDesign:PackIcon x:Name="Icon_Stopo" Kind="StopCircleOutline" Height="100" Width="100" Cursor="Hand" MouseDown="Img_Stopo_MouseDown" Foreground="{DynamicResource MaterialDesignBody}"/>
                         <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StopTime"
