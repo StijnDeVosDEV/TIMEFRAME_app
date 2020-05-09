@@ -275,7 +275,151 @@
                         <Button Command="{Binding ShowMessage, Mode=OneWay}">Show Message</Button>
                     </StackPanel>
                     <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                    <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1">
+                    <Grid x:Name="Grid_ConfigOverview" Grid.Column="1">
+                        <StackPanel Orientation="Horizontal" >
+                            <Expander x:Name="Config_Overview_Expander_Customers" ExpandDirection="Right" Background="{x:Null}" IsExpanded="True">
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal" RenderTransformOrigin=".5,.5">
+                                        <StackPanel.LayoutTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </StackPanel.LayoutTransform>
+                                        <materialDesign:PackIcon Kind="User" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
+                                        <TextBlock Text="Customers" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
+
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Add_MouseLeave" />
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Edit_MouseLeave">
+                                            <materialDesign:PackIcon.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </materialDesign:PackIcon.RenderTransform>
+                                        </materialDesign:PackIcon>
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Delete_MouseLeave" >
+                                            <materialDesign:PackIcon.LayoutTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </materialDesign:PackIcon.LayoutTransform>
+                                        </materialDesign:PackIcon>
+                                    </StackPanel>
+                                </Expander.Header>
+                                <StackPanel
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="8,24,16,24">
+                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Customers" ItemsSource="{Binding config_expander_shownCustomers}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_customer_selCustomerIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None">
+                                        <DataGrid.Columns>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Name}" Width="{Binding ActualWidth, ElementName=DataGrid_Config_Overview_Expander_Customers, Mode=OneWay}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </Expander>
+                            <Border
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            Width="1"
+                            VerticalAlignment="Stretch"
+                            SnapsToDevicePixels="True" />
+                            <Expander x:Name="Config_Overview_Expander_Projects" ExpandDirection="Right" Background="{x:Null}" IsExpanded="True">
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal" RenderTransformOrigin=".5,.5">
+                                        <StackPanel.LayoutTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </StackPanel.LayoutTransform>
+                                        <materialDesign:PackIcon Kind="FolderOpenOutline" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
+                                        <TextBlock Text="Projects" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
+
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Add_MouseLeave" />
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Edit_MouseLeave">
+                                            <materialDesign:PackIcon.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </materialDesign:PackIcon.RenderTransform>
+                                        </materialDesign:PackIcon>
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Delete_MouseLeave" >
+                                            <materialDesign:PackIcon.LayoutTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </materialDesign:PackIcon.LayoutTransform>
+                                        </materialDesign:PackIcon>
+                                    </StackPanel>
+                                </Expander.Header>
+                                <StackPanel
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="8,24,16,24">
+                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Projects" ItemsSource="{Binding config_expander_shownProjects}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_project_selProjectIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None">
+                                        <DataGrid.Columns>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Name}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </Expander>
+                            <Border
+                            Background="{DynamicResource MaterialDesignDivider}"
+                            Width="1"
+                            VerticalAlignment="Stretch"
+                            SnapsToDevicePixels="True" />
+                            <Expander x:Name="Config_Overview_Expander_Tasks" ExpandDirection="Right" Background="{x:Null}" IsExpanded="True">
+                                <Expander.Header>
+                                    <StackPanel Orientation="Horizontal" RenderTransformOrigin=".5,.5">
+                                        <StackPanel.LayoutTransform>
+                                            <RotateTransform Angle="90"/>
+                                        </StackPanel.LayoutTransform>
+                                        <materialDesign:PackIcon Kind="FileCheckOutline" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
+                                        <TextBlock Text="Tasks" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
+
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Add_MouseLeave" />
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Edit_MouseLeave">
+                                            <materialDesign:PackIcon.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </materialDesign:PackIcon.RenderTransform>
+                                        </materialDesign:PackIcon>
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Delete_MouseLeave" >
+                                            <materialDesign:PackIcon.LayoutTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform Angle="-90"/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </materialDesign:PackIcon.LayoutTransform>
+                                        </materialDesign:PackIcon>
+                                    </StackPanel>
+                                </Expander.Header>
+                                <StackPanel
+                                Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="8,24,16,24">
+                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Tasks" ItemsSource="{Binding config_expander_shownTaskEntries}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_task_selTaskEntryIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None">
+                                        <DataGrid.Columns>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Name}"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </Expander>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="0"/>
@@ -371,7 +515,7 @@
 
                         </Grid>
                     </Grid>
-                    <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
+                    <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="0"/>
@@ -495,7 +639,7 @@
                             </StackPanel>
                         </Grid>
                     </Grid>
-                    <Grid x:Name="Grid_ConfigTasks" Grid.Column="1">
+                    <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition/>
@@ -662,7 +806,7 @@
 
                         </Grid>
                     </Grid>
-                    <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1">
+                    <Grid x:Name="Grid_ConfigTimeEntries" Grid.Column="1" d:IsHidden="True">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="30"/>
                             <RowDefinition Height="0"/>
