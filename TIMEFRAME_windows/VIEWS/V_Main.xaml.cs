@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TIMEFRAME_windows.MODELS.Auxiliary;
 
 namespace TIMEFRAME_windows.VIEWS
 {
@@ -22,8 +23,8 @@ namespace TIMEFRAME_windows.VIEWS
     {
         // Local variables
         private static BrushConverter bc = new BrushConverter();
-        private Brush highlightColor_SecondMenu = (Brush)bc.ConvertFrom("#FF3FC1C9");
-        private Brush highlightColor_Transparent = new SolidColorBrush(Colors.Transparent);
+        private System.Windows.Media.Brush highlightColor_SecondMenu = (System.Windows.Media.Brush)bc.ConvertFrom("#FF3FC1C9");
+        private System.Windows.Media.Brush highlightColor_Transparent = new SolidColorBrush(Colors.Transparent);
 
         private static double OrigHeight = 0.0;
 
@@ -73,6 +74,38 @@ namespace TIMEFRAME_windows.VIEWS
             // Initialize Settings area
             ScrollViewer_LogFile.Visibility = Visibility.Hidden;
             StackPanel_Style.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_Expand2_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Grid_Content.Visibility == Visibility.Visible)
+            {
+                Grid_Content.Visibility = Visibility.Collapsed;
+                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
+
+                OrigHeight = V_Main1.Height;
+                V_Main1.Height = Grid_Core.Height + 65;
+            }
+            else
+            {
+                Grid_Content.Visibility = Visibility.Visible;
+                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
+
+                V_Main1.Height = OrigHeight;
+            }
+
+            //if (Grid_Content.Height > 0)
+            //{
+            //    OrigHeight = Grid_Content.Height;
+            //    Grid_Content.Height = 0;
+
+            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
+            //}
+            //else
+            //{
+            //    Grid_Content.Height = OrigHeight;
+            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
+            //}
         }
 
         #region MENU - MAIN
@@ -302,68 +335,11 @@ namespace TIMEFRAME_windows.VIEWS
         }
         #endregion
 
-
-
-
-
-
-
-
-
-
-
-        private void Img_Expand2_MouseDown(object sender, MouseButtonEventArgs e)
+        #region MENU - REPORTS
+        private enum Menu_Reports
         {
-            if (Grid_Content.Visibility == Visibility.Visible)
-            {
-                Grid_Content.Visibility = Visibility.Collapsed;
-                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
-
-                OrigHeight = V_Main1.Height;
-                V_Main1.Height = Grid_Core.Height + 65;
-            }
-            else
-            {
-                Grid_Content.Visibility = Visibility.Visible;
-                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
-
-                V_Main1.Height = OrigHeight;
-            }
-
-            //if (Grid_Content.Height > 0)
-            //{
-            //    OrigHeight = Grid_Content.Height;
-            //    Grid_Content.Height = 0;
-                
-            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
-            //}
-            //else
-            //{
-            //    Grid_Content.Height = OrigHeight;
-            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
-            //}
-        }
-
-        private void StackPanel_LogFileButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            StackPanel_LogFileButton.Background = highlightColor_SecondMenu;
-        }
-
-        private void StackPanel_LogFileButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            StackPanel_LogFileButton.Background = highlightColor_Transparent;
-        }
-
-        
-
-        
-
-        private void StackPanel_LogFileButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            SERVICES.Logger.Write("Getting log content...");
-            TextBlock_LogFile.Text = SERVICES.Logger.GetLogContent();
-
-            toggleVisibility_Settings(SettingsPanels.Log);
+            Totals,
+            OpenAir
         }
 
         private void StackPanel_OpenAirButton_MouseEnter(object sender, MouseEventArgs e)
@@ -385,10 +361,25 @@ namespace TIMEFRAME_windows.VIEWS
         {
             StackPanel_TotalsButton.Background = highlightColor_Transparent;
         }
+        #endregion
 
-        
+        #region MENU - SETTINGS
+        private enum Menu_Settings
+        {
+            Log,
+            Style
+        }
 
+        private void StackPanel_LogFileButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_LogFileButton.Background = highlightColor_SecondMenu;
+        }
 
+        private void StackPanel_LogFileButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            StackPanel_LogFileButton.Background = highlightColor_Transparent;
+        }
+        #endregion
 
         // -----------------------
         // CONFIGURATION CUSTOMERS
@@ -803,9 +794,238 @@ namespace TIMEFRAME_windows.VIEWS
         }
         #endregion
 
+        // ----------------------
+        // CONFIGURATION EXPANDER
+        // ----------------------
+        #region CONFIGURATION EXPANDER
+        private void Icon_Config_Overview_Expander_Customer_Add_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Add.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Add_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Edit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Edit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Delete.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Customer_Delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Customer_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Add_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Add.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Add_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Edit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Edit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Delete.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Project_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Add_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Add.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Add_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Edit_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Edit_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Delete.SetResourceReference(ForegroundProperty, FontState.Active);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Icon_Config_Overview_Expander_Task_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+        #endregion
+
+        // --------------
+        // SETTINGS PANEL
+        // --------------
+        #region SETTINGS PANEL
+        private enum SettingsPanels
+        {
+            Log,
+            Style
+        }
+
+        private void toggleVisibility_Settings(SettingsPanels target)
+        {
+            // Hide everything in Settings panel
+            ScrollViewer_LogFile.Visibility = Visibility.Hidden;
+
+            StackPanel_Style.Visibility = Visibility.Hidden;
+            Border_StyleButton.BorderThickness = new Thickness(0);
+
+            // Show only what is requested
+            switch (target)
+            {
+                case SettingsPanels.Log:
+                    ScrollViewer_LogFile.Visibility = Visibility.Visible;
+                    break;
+                case SettingsPanels.Style:
+                    StackPanel_Style.Visibility = Visibility.Visible;
+                    Border_StyleButton.BorderThickness = new Thickness(1);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void StackPanel_StyleButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //Label_StyleButton.Foreground = MaterialDesignColors.SecondaryColor.
+            //MaterialDesignThemes.Wpf.ColorZoneAssist.SetMode(Label_StyleButton, ColorZoneMode.Accent);
+            //MaterialDesignThemes.Wpf.
+        }
+
+        private void StackPanel_StyleButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            toggleVisibility_Settings(SettingsPanels.Style);
+        }
+
+        private void StackPanel_LogFileButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SERVICES.Logger.Write("Getting log content...");
+            TextBlock_LogFile.Text = SERVICES.Logger.GetLogContent();
+
+            toggleVisibility_Settings(SettingsPanels.Log);
+        }
+        #endregion
+
+        // ----------------
+        // RECORD COMPONENT
+        // ----------------
+        #region RECORD COMPONENT
+        private void Img_Play_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TimePicker_StartTime.SelectedTime = DateTime.Now;
+        }
+
+        private void Img_Stopo_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            TimePicker_StopTime.SelectedTime = DateTime.Now;
+        }
+
+        private void SetEnablement_SaveButton()
+        {
+            if (Icon_Save != null)
+            {
+                if (Combo_Customer.SelectedIndex > -1 &&
+                Combo_Project.SelectedIndex > -1 &&
+                Combo_Task.SelectedIndex > -1 &&
+                ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
+                {
+                    Icon_Save.IsEnabled = true;
+                }
+                else
+                {
+                    Icon_Save.IsEnabled = false;
+                }
+            }
+
+            //if (Img_Save != null)
+            //{
+            //    if (Combo_Customer.SelectedIndex > -1 &&
+            //    Combo_Project.SelectedIndex > -1 &&
+            //    Combo_Task.SelectedIndex > -1 &&
+            //    ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
+            //    {
+            //        Img_Save.IsEnabled = true;
+            //    }
+            //    else
+            //    {
+            //        Img_Save.IsEnabled = false;
+            //    }
+            //}
+        }
+
+        private void Combo_Customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetEnablement_SaveButton();
+        }
+
+        private void Combo_Project_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetEnablement_SaveButton();
+        }
+
+        private void Combo_Task_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SetEnablement_SaveButton();
+        }
+
+        private void TimePicker_StartTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            SetEnablement_SaveButton();
+        }
+
+        private void TimePicker_StopTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            SetEnablement_SaveButton();
+        }
+
+        private void TB_UserName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //Button_Logout.Visibility = TB_UserName.Text != "" ? Visibility.Visible : Visibility.Hidden;
+            //Button_Logout.Visibility = Button_UserName.Content.ToString() != "" ? Visibility.Visible : Visibility.Hidden;
+        }
+        #endregion
+
         // -------------------------
         // CUSTOM METHODS
         // -------------------------
+        #region CUSTOM METHODS
         private void ActivateMenu_Configuration(Menu_Config requestor)
         {
             // Deactivate all Configuration panels and set Font styles to Normal
@@ -939,9 +1159,9 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Update_TaskEntryConfig_EditButton()
         {
-            if (TB_TaskEntry_Edit_Name.Text != "" && 
-                TB_TaskEntry_Edit_Description.Text != "" && 
-                Combo_TaskEntry_Edit_AvailProjects.SelectedIndex > -1 && 
+            if (TB_TaskEntry_Edit_Name.Text != "" &&
+                TB_TaskEntry_Edit_Description.Text != "" &&
+                Combo_TaskEntry_Edit_AvailProjects.SelectedIndex > -1 &&
                 Combo_TaskEntry_Edit_AvailCustomers.SelectedIndex > -1)
             {
                 Img_ConfigTaskEntries_Edit_Edit.IsEnabled = true;
@@ -1062,128 +1282,6 @@ namespace TIMEFRAME_windows.VIEWS
             Regex regex = new Regex("[^0-9]+");
             return regex.IsMatch(inputText);
         }
-
-
-        // --------------
-        // SETTINGS PANEL
-        // --------------
-        private enum SettingsPanels
-        {
-            Log,
-            Style
-        }
-
-        private void toggleVisibility_Settings(SettingsPanels target)
-        {
-            // Hide everything in Settings panel
-            ScrollViewer_LogFile.Visibility = Visibility.Hidden;
-
-            StackPanel_Style.Visibility = Visibility.Hidden;
-            Border_StyleButton.BorderThickness = new Thickness(0);
-
-            // Show only what is requested
-            switch (target)
-            {
-                case SettingsPanels.Log:
-                    ScrollViewer_LogFile.Visibility = Visibility.Visible;
-                    break;
-                case SettingsPanels.Style:
-                    StackPanel_Style.Visibility = Visibility.Visible;
-                    Border_StyleButton.BorderThickness = new Thickness(1);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        #region SETTINGS PANEL
-        private void StackPanel_StyleButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            //Label_StyleButton.Foreground = MaterialDesignColors.SecondaryColor.
-            //MaterialDesignThemes.Wpf.ColorZoneAssist.SetMode(Label_StyleButton, ColorZoneMode.Accent);
-            //MaterialDesignThemes.Wpf.
-        }
-
-        private void StackPanel_StyleButton_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            toggleVisibility_Settings(SettingsPanels.Style);
-        }
         #endregion
-
-
-        // RECORD COMPONENT
-        private void Img_Play_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            TimePicker_StartTime.SelectedTime = DateTime.Now;
-        }
-
-        private void Img_Stopo_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            TimePicker_StopTime.SelectedTime = DateTime.Now;
-        }
-
-        private void SetEnablement_SaveButton()
-        {
-            if (Icon_Save != null)
-            {
-                if (Combo_Customer.SelectedIndex > -1 &&
-                Combo_Project.SelectedIndex > -1 &&
-                Combo_Task.SelectedIndex > -1 &&
-                ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
-                {
-                    Icon_Save.IsEnabled = true;
-                }
-                else
-                {
-                    Icon_Save.IsEnabled = false;
-                }
-            }
-
-            //if (Img_Save != null)
-            //{
-            //    if (Combo_Customer.SelectedIndex > -1 &&
-            //    Combo_Project.SelectedIndex > -1 &&
-            //    Combo_Task.SelectedIndex > -1 &&
-            //    ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
-            //    {
-            //        Img_Save.IsEnabled = true;
-            //    }
-            //    else
-            //    {
-            //        Img_Save.IsEnabled = false;
-            //    }
-            //}
-        }
-
-        private void Combo_Customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void Combo_Project_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void Combo_Task_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void TimePicker_StartTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void TimePicker_StopTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void TB_UserName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //Button_Logout.Visibility = TB_UserName.Text != "" ? Visibility.Visible : Visibility.Hidden;
-            //Button_Logout.Visibility = Button_UserName.Content.ToString() != "" ? Visibility.Visible : Visibility.Hidden;
-        }
     }
 }
