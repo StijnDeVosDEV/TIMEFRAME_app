@@ -497,9 +497,13 @@
                                             </StackPanel>
                                         </Grid>
                                     </materialDesign:DialogHost.DialogContent>
-                                    <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selindex}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
+                                    <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selindex}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
                                         <DataGrid.Columns>
-                                            <DataGridTextColumn Binding="{Binding Projects.Name}" Header="Linked Projects"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Surname}" Header="Surname"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Email}" Header="Email"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
                                         </DataGrid.Columns>
                                     </DataGrid>
                                 </materialDesign:DialogHost>
