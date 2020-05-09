@@ -28,146 +28,219 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid x:Name="Grid_Main">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
-            <RowDefinition/>
-            <RowDefinition Height="17"/>
-        </Grid.RowDefinitions>
-        <Grid x:Name="Grid_Core" Height="150">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <StackPanel x:Name="StackPanel_Logo_User" VerticalAlignment="Center">
-                <Image x:Name="Img_Logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
-                <Grid x:Name="Grid_User">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="45"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label Content="User:" Height="29" Width="75" VerticalAlignment="Center" VerticalContentAlignment="Top"/>
-                    <Label Content="&lt;username&gt;" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
-                </Grid>
-            </StackPanel>
-            <Grid x:Name="Grid_Record" Grid.Column="1">
+    <materialDesign:DrawerHost>
+        <materialDesign:DrawerHost.RightDrawerContent>
+            <Grid MinWidth="300" Margin="10,10,10,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel x:Name="StackPanel_RecordSettings" VerticalAlignment="Center" Margin="20,0,0,0">
-                    <ComboBox
-                        materialDesign:TextFieldAssist.HasClearButton="True"
-                        IsEditable="True"
-                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                        materialDesign:TextFieldAssist.SuffixText=""
-                        materialDesign:HintAssist.HelperText=""
-                        x:Name="Combo_Customer" Margin="0,0,0,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" VerticalAlignment="Center" SelectionChanged="Combo_Customer_SelectionChanged">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
-                                <materialDesign:PackIcon Kind="User" />
-                                <TextBlock>Customer</TextBlock>
-                            </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </ComboBox>
-                    <ComboBox
-                        materialDesign:TextFieldAssist.HasClearButton="True"
-                        IsEditable="True"
-                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                        materialDesign:TextFieldAssist.SuffixText=""
-                        materialDesign:HintAssist.HelperText=""
-                        x:Name="Combo_Project" Margin="0,10,0,0" ItemsSource="{Binding availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
-                                <materialDesign:PackIcon Kind="FolderOpenOutline" />
-                                <TextBlock>Project</TextBlock>
-                            </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </ComboBox>
-                    <ComboBox
-                        materialDesign:TextFieldAssist.HasClearButton="True"
-                        IsEditable="True"
-                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                        materialDesign:TextFieldAssist.SuffixText=""
-                        materialDesign:HintAssist.HelperText=""
-                        x:Name="Combo_Task" ItemsSource="{Binding availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged">
-                        <materialDesign:HintAssist.Hint>
-                            <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
-                                <materialDesign:PackIcon Kind="FileCheckOutline" />
-                                <TextBlock>Task</TextBlock>
-                            </StackPanel>
-                        </materialDesign:HintAssist.Hint>
-                    </ComboBox>
+                <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,20">
+                    <materialDesign:PackIcon Kind="User" Width="24" Height="24" Foreground="{DynamicResource PrimaryHueLightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Foreground="{DynamicResource PrimaryHueLightBrush}" FontWeight="Bold" FontSize="16" Margin="10,0,0,0">Account Details</TextBlock>
                 </StackPanel>
-                <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown">
-                        </Image>
-                        <materialDesign:TimePicker
+                
+                <StackPanel MinWidth="100" Grid.Row="1">
+                    <TextBlock FontWeight="Bold" Foreground="{DynamicResource PrimaryHueDarkBrush}" Margin="0,0,0,5">ID</TextBlock>
+                    <TextBlock FontWeight="Bold" Foreground="{DynamicResource PrimaryHueDarkBrush}" Margin="0,0,0,5">Name</TextBlock>
+                    <TextBlock FontWeight="Bold" Foreground="{DynamicResource PrimaryHueDarkBrush}" Margin="0,0,0,5">Email</TextBlock>
+                    <TextBlock FontWeight="Bold" Foreground="{DynamicResource PrimaryHueDarkBrush}" Margin="0,0,0,5">Verified</TextBlock>
+                </StackPanel>
+                <StackPanel MinWidth="100" Grid.Column="1" Grid.Row="1">
+                    <TextBlock Margin="0,0,0,5" Text="{Binding myUser.UserID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                    <TextBlock Margin="0,0,0,5" Text="{Binding myUser.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                    <TextBlock Margin="0,0,0,5" Text="{Binding myUser.Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                    <TextBlock Margin="0,0,0,5" Text="{Binding myUser.EmailVerified, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Button x:Name="Button_Logout2" 
+                                Style="{StaticResource MaterialDesignOutlinedButton}"
+                                HorizontalAlignment="Center" 
+                                Command="{Binding LogOut, Mode=OneWay}" Height="20" VerticalAlignment="Center" FontSize="10" Content="LOG OUT" Padding="4,2,4,2" Margin="0,0,10,0" Visibility="{Binding LogoutButtonVisibility}"/>
+                        <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                                CommandParameter="{x:Static Dock.Right}"
+                                Margin="4" HorizontalAlignment="Center"
+                                Style="{DynamicResource MaterialDesignFlatButton}">
+                            CLOSE
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+            <!--<StackPanel MinWidth="200">
+                <TextBlock>ID</TextBlock>
+                <TextBlock></TextBlock>
+                <TextBlock>Name</TextBlock>
+                <TextBox IsEnabled="False"
+                         materialDesign:HintAssist.Hint="Name"
+                         materialDesign:HintAssist.HelperText=""
+                         Text="{Binding myUser.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                </TextBox>
+                <TextBlock>Email</TextBlock>
+                <TextBlock>Verified</TextBlock>
+                <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Right}"
+                            Margin="4" HorizontalAlignment="Center"
+                            Style="{DynamicResource MaterialDesignFlatButton}">
+                    CLOSE
+                </Button>
+            </StackPanel>-->
+        </materialDesign:DrawerHost.RightDrawerContent>
+
+        <Grid x:Name="Grid_Main">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="150"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid x:Name="Grid_Snackbar" Grid.RowSpan="3" Panel.ZIndex="999999999" d:IsHidden="True">
+                <materialDesign:Snackbar x:Name="Snackbar_Notification" MessageQueue="{Binding myMessageQueue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Bottom" Panel.ZIndex="999999999" />
+            </Grid>
+            <StackPanel x:Name="StackPanel_MenuBar" FlowDirection="RightToLeft" Orientation="Horizontal" Margin="0,0,20,0">
+                <Button x:Name="Button_Logout" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        HorizontalAlignment="Center" Command="{Binding LogOut, Mode=OneWay}" Height="20" VerticalAlignment="Center" FontSize="10" Content="LOG OUT" Padding="4,2,4,2" Margin="0,0,10,0" Visibility="{Binding LogoutButtonVisibility}"/>
+
+                <Button x:Name="Button_UserName" Content="{Binding myUser.Name}" Command="{x:Static materialDesign:DrawerHost.OpenDrawerCommand}" CommandParameter="{x:Static Dock.Right}" Style="{StaticResource MaterialDesignFlatButton}" Visibility="{Binding LogoutButtonVisibility}">
+                    <!--<TextBox x:Name="TB_UserName" Cursor="Hand" VerticalAlignment="Center" FontSize="14" Foreground="{DynamicResource PrimaryHueLightBrush}" Text="{Binding myUser.Name}" VerticalContentAlignment="Center" TextChanged="TB_UserName_TextChanged" IsReadOnly="True">
+                    </TextBox>-->
+                </Button>
+                <materialDesign:PackIcon Kind="User" Width="25" Height="25" Foreground="{DynamicResource PrimaryHueLightBrush}" />
+            </StackPanel>
+            <Grid x:Name="Grid_Core" Height="150" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="StackPanel_Logo_User" VerticalAlignment="Center">
+                    <Image x:Name="Img_Logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
+                    <Grid x:Name="Grid_User">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="User:" Height="29" Width="75" VerticalAlignment="Center" VerticalContentAlignment="Top"/>
+                        <Label Content="&lt;username&gt;" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
+                    </Grid>
+                </StackPanel>
+                <Grid x:Name="Grid_Record" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="StackPanel_RecordSettings" VerticalAlignment="Center" Margin="20,0,0,0">
+                        <ComboBox
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                        IsEditable="True"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        materialDesign:TextFieldAssist.SuffixText=""
+                        materialDesign:HintAssist.HelperText=""
+                        x:Name="Combo_Customer" Margin="0,0,0,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" VerticalAlignment="Center" SelectionChanged="Combo_Customer_SelectionChanged" ToolTip="{Binding Text, ElementName=Combo_Customer}">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                    <materialDesign:PackIcon Kind="User" />
+                                    <TextBlock>Customer</TextBlock>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
+                        <ComboBox
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                        IsEditable="True"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        materialDesign:TextFieldAssist.SuffixText=""
+                        materialDesign:HintAssist.HelperText=""
+                        x:Name="Combo_Project" Margin="0,10,0,0" ItemsSource="{Binding availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                    <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                    <TextBlock>Project</TextBlock>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
+                        <ComboBox
+                        materialDesign:TextFieldAssist.HasClearButton="True"
+                        IsEditable="True"
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                        materialDesign:TextFieldAssist.SuffixText=""
+                        materialDesign:HintAssist.HelperText=""
+                        x:Name="Combo_Task" ItemsSource="{Binding availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged" ToolTip="{Binding Text, RelativeSource={RelativeSource Self}}">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                    <materialDesign:PackIcon Kind="FileCheckOutline" />
+                                    <TextBlock>Task</TextBlock>
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
+                        <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
+                            <!--<Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand" MouseDown="Img_Play_MouseDown"/>-->
+                            <materialDesign:PackIcon x:Name="Icon_Play" Height="100" Width="100" Kind="PlayCircleOutline" Cursor="Hand" MouseDown="Img_Play_MouseDown" Foreground="{DynamicResource PrimaryHueDarkBrush}" Background="Transparent" />
+                            <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StartTime"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
                             materialDesign:HintAssist.Hint="Start time" SelectedTime="{Binding record_StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedTimeChanged="TimePicker_StartTime_SelectedTimeChanged"/>
-                    </StackPanel>
-                    <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
-                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown">
-                        </Image>
-                        <materialDesign:TimePicker
+                        </StackPanel>
+                        <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
+                            <!--<Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand" MouseDown="Img_Stopo_MouseDown"/>-->
+                            <materialDesign:PackIcon x:Name="Icon_Stopo" Kind="StopCircleOutline" Height="100" Width="100" Cursor="Hand" MouseDown="Img_Stopo_MouseDown" Foreground="{DynamicResource MaterialDesignBody}" Background="Transparent"/>
+                            <materialDesign:TimePicker
                             Is24Hours="True"
                             x:Name="TimePicker_StopTime"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
                             materialDesign:HintAssist.Hint="Stop time" SelectedTime="{Binding record_StopTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedTimeChanged="TimePicker_StopTime_SelectedTimeChanged"/>
-                    </StackPanel>
-                    <StackPanel x:Name="StackPanel_TimeEntry" Margin="20,0,0,0" VerticalAlignment="Center">
-                        <StackPanel x:Name="StackPanel_Duration" Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Clockwise" VerticalAlignment="Stretch" Width="32" Height="32" />
-                            <Label x:Name="Label_Duration" Content="{Binding record_Duration}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
                         </StackPanel>
-                        <StackPanel x:Name="StackPanel_Save_Delete" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-                            <Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand" IsEnabled="False">
+                        <StackPanel x:Name="StackPanel_TimeEntry" Margin="20,0,0,0" VerticalAlignment="Center">
+                            <StackPanel x:Name="StackPanel_Duration" Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="Clockwise" VerticalAlignment="Stretch" Width="32" Height="32" />
+                                <Label x:Name="Label_Duration" Content="{Binding record_Duration}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
+                            </StackPanel>
+                            <StackPanel x:Name="StackPanel_Save_Delete" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                                <materialDesign:PackIcon x:Name="Icon_Save" Kind="ContentSaveOutline" Height="50" Width="50" Cursor="Hand" IsEnabled="False" Background="Transparent">
+                                    <materialDesign:PackIcon.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddRecordedTimeEntry, Mode=Default}"/>
+                                    </materialDesign:PackIcon.InputBindings>
+                                </materialDesign:PackIcon>
+                                <!--<Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand" IsEnabled="False">
                                 <Image.InputBindings>
                                     <MouseBinding Gesture="LeftClick" Command="{Binding AddRecordedTimeEntry, Mode=Default}"/>
                                 </Image.InputBindings>
-                            </Image>
-                            <Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand">
+                            </Image>-->
+                                <materialDesign:PackIcon x:Name="Icon_Delete" Kind="Close" Height="50" Width="50" Cursor="Hand" Background="Transparent">
+                                    <materialDesign:PackIcon.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding RecordReset, Mode=Default}"/>
+                                    </materialDesign:PackIcon.InputBindings>
+                                </materialDesign:PackIcon>
+                                <!--<Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand">
                                 <Image.InputBindings>
                                     <MouseBinding Gesture="LeftClick" Command="{Binding RecordReset, Mode=Default}"/>
                                 </Image.InputBindings>
-                            </Image>
+                            </Image>-->
+                            </StackPanel>
                         </StackPanel>
+                        <Grid x:Name="Grid_ExtraButtons">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Image x:Name="Img_Expand2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Width="25" Source="/IMAGES/SortArrowUP_black.png" Cursor="Hand" MouseDown="Img_Expand2_MouseDown"/>
+                        </Grid>
                     </StackPanel>
-                    <Grid x:Name="Grid_ExtraButtons">
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Image x:Name="Img_Expand2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Width="25" Source="/IMAGES/SortArrowUP_black.png" Cursor="Hand" MouseDown="Img_Expand2_MouseDown"/>
-                    </Grid>
-                </StackPanel>
-                <Border x:Name="Border_Divider" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Left"/>
+                    <Border x:Name="Border_Divider" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Left"/>
+                </Grid>
             </Grid>
-        </Grid>
-        <Grid x:Name="Grid_Content" Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Border x:Name="Border_Top" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top" Panel.ZIndex="-5"/>
-            <StackPanel x:Name="StackPanel_ContentButtons" Background="#FF556A80">
-                <Image x:Name="Img_Configuration" Source="/IMAGES/Database_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Configuration_MouseDown" MouseEnter="Img_Configuration_MouseEnter" MouseLeave="Img_Configuration_MouseLeave"/>
-                <Image x:Name="Img_Reports" Source="/IMAGES/Statistics_Black.png" Cursor="Hand" MouseDown="Img_Reports_MouseDown" MouseEnter="Img_Reports_MouseEnter" MouseLeave="Img_Reports_MouseLeave"/>
-                <Image x:Name="Img_Settings" Source="/IMAGES/Settings_black.PNG" Cursor="Hand" MouseDown="Img_Settings_MouseDown" MouseEnter="Img_Settings_MouseEnter" MouseLeave="Img_Settings_MouseLeave"/>
-            </StackPanel>
-            <Border x:Name="Border_PrimaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-            <Grid x:Name="Grid_Configuration" Grid.Column="1">
+            <Grid x:Name="Grid_Content" Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="40"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="StackPanel_ConfigurationMenus" Margin="10,0,10,0">
@@ -363,59 +436,60 @@
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Name"
                                     x:Name="TB_Customer_Edit_Name" Text="{Binding customer_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
-                                        <TextBox
+                                            <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Last Name"
                                     x:Name="TB_Customer_Edit_Surname" Text="{Binding customer_edit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
-                                        <TextBox
+                                            <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Email"
                                     x:Name="TB_Customer_Edit_Email" Text="{Binding customer_edit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_Edit_Email_TextChanged"/>
-                                        <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Image x:Name="Img_ConfigCustomers_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit customer" Cursor="Hand" IsEnabled="False">
-                                                <Image.InputBindings>
-                                                    <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
-                                                </Image.InputBindings>
-                                            </Image>
-                                            <Image x:Name="Img_ConfigCustomers_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_Edit_Cancel_MouseDown"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </materialDesign:DialogHost.DialogContent>
-
-                            <materialDesign:DialogHost x:Name="Dialog_Customer_Add" CloseOnClickAway="True" DialogTheme="Inherit">
-                                <materialDesign:DialogHost.DialogContent>
-                                    <Grid x:Name="Grid_ConfigCustomers_AddEdit" MinWidth="450">
-                                        <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
-                                            <Label Content="Add new Customer" FontWeight="Bold" Foreground="Black"/>
-                                            <TextBox
-                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                materialDesign:HintAssist.Hint="Name"
-                                                x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
-                                            <TextBox
-                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                materialDesign:HintAssist.Hint="Last Name"
-                                                x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
-                                            <TextBox
-                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                materialDesign:HintAssist.Hint="Email"
-                                                x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
-                                            <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Image x:Name="Img_ConfigCustomers_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add customer" Cursor="Hand" IsEnabled="False">
+                                            <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image x:Name="Img_ConfigCustomers_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit customer" Cursor="Hand" IsEnabled="False">
                                                     <Image.InputBindings>
-                                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddCustomer, Mode=Default}"/>
+                                                        <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
                                                     </Image.InputBindings>
                                                 </Image>
-                                                <Image x:Name="Img_ConfigCustomers_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_AddEdit_Cancel_MouseDown"/>
+                                                <Image x:Name="Img_ConfigCustomers_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_Edit_Cancel_MouseDown"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
                                 </materialDesign:DialogHost.DialogContent>
-                                <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selindex}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding Projects.Name}" Header="Linked Projects"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+
+                                <materialDesign:DialogHost x:Name="Dialog_Customer_Add" CloseOnClickAway="True" DialogTheme="Inherit">
+                                    <materialDesign:DialogHost.DialogContent>
+                                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" MinWidth="450">
+                                            <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
+                                                <Label Content="Add new Customer" FontWeight="Bold" Foreground="Black"/>
+                                                <TextBox
+                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                materialDesign:HintAssist.Hint="Name"
+                                                x:Name="TB_Customer_AddEdit_Name" Text="{Binding customer_addedit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_AddEdit_Name_TextChanged"/>
+                                                <TextBox
+                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                materialDesign:HintAssist.Hint="Last Name"
+                                                x:Name="TB_Customer_AddEdit_Surname" Text="{Binding customer_addedit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Surname_TextChanged"/>
+                                                <TextBox
+                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                materialDesign:HintAssist.Hint="Email"
+                                                x:Name="TB_Customer_AddEdit_Email" Text="{Binding customer_addedit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_Customer_AddEdit_Email_TextChanged"/>
+                                                <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Image x:Name="Img_ConfigCustomers_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add customer" Cursor="Hand" IsEnabled="False">
+                                                        <Image.InputBindings>
+                                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddCustomer, Mode=Default}"/>
+                                                        </Image.InputBindings>
+                                                    </Image>
+                                                    <Image x:Name="Img_ConfigCustomers_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_AddEdit_Cancel_MouseDown"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </materialDesign:DialogHost.DialogContent>
+                                    <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selindex}" SelectionMode="Single" CanUserAddRows="False" CanUserDeleteRows="False">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Projects.Name}" Header="Linked Projects"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </materialDesign:DialogHost>
                             </materialDesign:DialogHost>
                         </materialDesign:DialogHost>
 
@@ -432,225 +506,162 @@
 
 
                     </Grid>
-                </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="0"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Projects" VerticalContentAlignment="Center" FontWeight="Bold"/>
-                        <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
-                        <Label Content="{Binding db_shownProjects.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
-                    </StackPanel>
-                    <Grid x:Name="Grid_ConfigProjects_content" Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="30"/>
-                        </Grid.ColumnDefinitions>
+                    <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="0"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Projects" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
+                            <Label Content="{Binding db_shownProjects.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
+                        </StackPanel>
+                        <Grid x:Name="Grid_ConfigProjects_content" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
 
-                        <materialDesign:DialogHost x:Name="Dialog_Project_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
-                            <materialDesign:DialogHost.DialogContent>
-                                <Grid x:Name="Grid_ConfigProjects_Edit" MinWidth="450">
-                                    <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
-                                        <Label Content="Edit Project" FontWeight="Bold" Foreground="Black"/>
-                                        <ComboBox
+                            <materialDesign:DialogHost x:Name="Dialog_Project_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
+                                <materialDesign:DialogHost.DialogContent>
+                                    <Grid x:Name="Grid_ConfigProjects_Edit" MinWidth="450">
+                                        <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
+                                            <Label Content="Edit Project" FontWeight="Bold" Foreground="Black"/>
+                                            <ComboBox
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
                                     x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding project_edit_selCustindex}" SelectionChanged="Combo_Project_Edit_AvailCustomers_SelectionChanged">
-                                            <materialDesign:HintAssist.Hint>
-                                                <StackPanel
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                                    <materialDesign:PackIcon Kind="User" />
-                                                    <TextBlock>Customer</TextBlock>
-                                                </StackPanel>
-                                            </materialDesign:HintAssist.Hint>
-                                        </ComboBox>
-                                        <TextBox
+                                                        <materialDesign:PackIcon Kind="User" />
+                                                        <TextBlock>Customer</TextBlock>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </ComboBox>
+                                            <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Name"
                                     x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Name_TextChanged"/>
-                                        <TextBox
+                                            <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Description"
                                     x:Name="TB_Project_Edit_Description" Text="{Binding project_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_Edit_Description_TextChanged"/>
-                                        <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Image x:Name="Img_ConfigProjects_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
-                                                <Image.InputBindings>
-                                                    <MouseBinding Gesture="LeftClick" Command="{Binding EditProject, Mode=Default}"/>
-                                                </Image.InputBindings>
-                                            </Image>
-                                            <Image x:Name="Img_ConfigProjects_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_Edit_Cancel_MouseDown"/>
+                                            <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image x:Name="Img_ConfigProjects_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
+                                                    <Image.InputBindings>
+                                                        <MouseBinding Gesture="LeftClick" Command="{Binding EditProject, Mode=Default}"/>
+                                                    </Image.InputBindings>
+                                                </Image>
+                                                <Image x:Name="Img_ConfigProjects_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_Edit_Cancel_MouseDown"/>
+                                            </StackPanel>
                                         </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </materialDesign:DialogHost.DialogContent>
+                                    </Grid>
+                                </materialDesign:DialogHost.DialogContent>
 
-                            <materialDesign:DialogHost x:Name="Dialog_Project_Add" CloseOnClickAway="True" DialogTheme="Inherit">
-                                <materialDesign:DialogHost.DialogContent>
-                                    <Grid x:Name="Grid_ConfigProjects_AddEdit" MinWidth="450">
-                                        <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
-                                            <Label Content="Add new Project" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
-                                            <ComboBox
+                                <materialDesign:DialogHost x:Name="Dialog_Project_Add" CloseOnClickAway="True" DialogTheme="Inherit">
+                                    <materialDesign:DialogHost.DialogContent>
+                                        <Grid x:Name="Grid_ConfigProjects_AddEdit" MinWidth="450">
+                                            <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
+                                                <Label Content="Add new Project" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
+                                                <ComboBox
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
                                     x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustindex}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged">
-                                                <materialDesign:HintAssist.Hint>
-                                                    <StackPanel
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                                        <materialDesign:PackIcon Kind="User" />
-                                                        <TextBlock>Customer</TextBlock>
-                                                    </StackPanel>
-                                                </materialDesign:HintAssist.Hint>
-                                            </ComboBox>
-                                            <TextBox
+                                                            <materialDesign:PackIcon Kind="User" />
+                                                            <TextBlock>Customer</TextBlock>
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </ComboBox>
+                                                <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Name"
                                     x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
-                                            <TextBox
+                                                <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Description"
                                     x:Name="TB_Project_AddEdit_Description" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_Project_AddEdit_Description_TextChanged" Text="{Binding project_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Image x:Name="Img_ConfigProjects_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
-                                                    <Image.InputBindings>
-                                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>
-                                                    </Image.InputBindings>
-                                                </Image>
-                                                <Image x:Name="Img_ConfigProjects_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_AddEdit_Cancel_MouseDown"/>
+                                                <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Image x:Name="Img_ConfigProjects_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
+                                                        <Image.InputBindings>
+                                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>
+                                                        </Image.InputBindings>
+                                                    </Image>
+                                                    <Image x:Name="Img_ConfigProjects_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_AddEdit_Cancel_MouseDown"/>
+                                                </StackPanel>
                                             </StackPanel>
-                                        </StackPanel>
-                                    </Grid>
-                                </materialDesign:DialogHost.DialogContent>
+                                        </Grid>
+                                    </materialDesign:DialogHost.DialogContent>
 
-                                <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_project_selindex}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
-                                        <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
-                                        <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
-                                        <DataGridTextColumn Binding="{Binding Customer.Name, Mode=OneWay}" Header="Customer"/>
-                                        <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer ID"/>
-                                        <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
-                                        <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                    <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_project_selindex}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
+                                            <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                                            <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                                            <DataGridTextColumn Binding="{Binding Customer.Name, Mode=OneWay}" Header="Customer"/>
+                                            <DataGridTextColumn Binding="{Binding CustomerId}" Header="Customer ID"/>
+                                            <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
+                                            <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </materialDesign:DialogHost>
                             </materialDesign:DialogHost>
-                        </materialDesign:DialogHost>
 
-                        <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
-                            <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
-                            <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
-                            <Image x:Name="Img_Projects_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="{Binding project_delete_IsEnabled}">
-                                <Image.InputBindings>
-                                    <MouseBinding Gesture="LeftClick" Command="{Binding DeleteProject, Mode=Default}"/>
-                                </Image.InputBindings>
-                            </Image>
-                        </StackPanel>
+                            <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
+                                <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
+                                <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
+                                <Image x:Name="Img_Projects_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="{Binding project_delete_IsEnabled}">
+                                    <Image.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding DeleteProject, Mode=Default}"/>
+                                    </Image.InputBindings>
+                                </Image>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
-                </Grid>
-                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="Tasks" VerticalContentAlignment="Center" FontWeight="Bold"/>
-                        <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
-                        <Label Content="{Binding db_shownTaskEntries.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
-                    </StackPanel>
-                    <Grid x:Name="Grid_ConfigTasks_content" Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="30"/>
-                        </Grid.ColumnDefinitions>
+                    <Grid x:Name="Grid_ConfigTasks" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Tasks" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
+                            <Label Content="{Binding db_shownTaskEntries.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
+                        </StackPanel>
+                        <Grid x:Name="Grid_ConfigTasks_content" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
 
-                        <materialDesign:DialogHost x:Name="Dialog_Task_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
-                            <materialDesign:DialogHost.DialogContent>
-                                <Grid x:Name="Grid_ConfigTaskEntries_Edit" MinWidth="450">
-                                    <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Properties">
-                                        <Label Content="Edit Task" FontWeight="Bold" Foreground="Black"/>
-                                        <ComboBox 
+                            <materialDesign:DialogHost x:Name="Dialog_Task_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
+                                <materialDesign:DialogHost.DialogContent>
+                                    <Grid x:Name="Grid_ConfigTaskEntries_Edit" MinWidth="450">
+                                        <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Properties">
+                                            <Label Content="Edit Task" FontWeight="Bold" Foreground="Black"/>
+                                            <ComboBox 
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
                                     x:Name="Combo_TaskEntry_Edit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_Edit_AvailCustomers_SelectionChanged" Margin="10,20,10,0">
-                                            <materialDesign:HintAssist.Hint>
-                                                <StackPanel
-                                                Orientation="Horizontal"
-                                                Margin="-2 0 0 0">
-                                                    <materialDesign:PackIcon Kind="User" />
-                                                    <TextBlock>Customer</TextBlock>
-                                                </StackPanel>
-                                            </materialDesign:HintAssist.Hint>
-                                        </ComboBox>
-                                        <ComboBox
-                                    materialDesign:TextFieldAssist.HasClearButton="True"
-                                    IsEditable="True"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    materialDesign:TextFieldAssist.SuffixText=""
-                                    materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TaskEntry_Edit_AvailProjects" Margin="10,20,10,0" ItemsSource="{Binding taskentry_edit_availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding taskentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Combo_TaskEntry_Edit_AvailProjects_SelectionChanged">
-                                            <materialDesign:HintAssist.Hint>
-                                                <StackPanel
-                                                Orientation="Horizontal"
-                                                Margin="-2 0 0 0">
-                                                    <materialDesign:PackIcon Kind="FolderOpenOutline" />
-                                                    <TextBlock>Project</TextBlock>
-                                                </StackPanel>
-                                            </materialDesign:HintAssist.Hint>
-                                        </ComboBox>
-                                        <TextBox 
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_TaskEntry_Edit_Name" Text="{Binding taskentry_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_TaskEntry_Edit_Name_TextChanged"/>
-                                        <TextBox
-                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                    materialDesign:HintAssist.Hint="Description"
-                                    x:Name="TB_TaskEntry_Edit_Description" Text="{Binding taskentry_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_TaskEntry_Edit_Description_TextChanged"/>
-                                        <Label Content="Status" Foreground="Black" Margin="0,20,0,0"/>
-                                        <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                                            <RadioButton x:Name="RB_TaskEntry_Edit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="Black" IsChecked="{Binding taskentry_edit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            <RadioButton x:Name="RB_TaskEntry_Edit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="Black" Margin="10,0,0,0" IsChecked="{Binding taskentry_edit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </StackPanel>
-                                        <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                            <Image x:Name="Img_ConfigTaskEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
-                                                <Image.InputBindings>
-                                                    <MouseBinding Gesture="LeftClick" Command="{Binding EditTaskEntry, Mode=Default}"/>
-                                                </Image.InputBindings>
-                                            </Image>
-                                            <Image x:Name="Img_ConfigTaskEntries_Edit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTaskEntries_Edit_Cancel_MouseDown"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </materialDesign:DialogHost.DialogContent>
-
-                            <materialDesign:DialogHost x:Name="Dialog_Task_Add" CloseOnClickAway="True" DialogTheme="Inherit">
-                                <materialDesign:DialogHost.DialogContent>
-                                    <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" MinWidth="450">
-                                        <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Properties">
-                                            <Label Content="Add new Task" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
-                                            <ComboBox
-                                    materialDesign:TextFieldAssist.HasClearButton="True"
-                                    IsEditable="True"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    materialDesign:TextFieldAssist.SuffixText=""
-                                    materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TaskEntry_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged" Margin="10,10,10,0">
                                                 <materialDesign:HintAssist.Hint>
                                                     <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
+                                                Orientation="Horizontal"
+                                                Margin="-2 0 0 0">
                                                         <materialDesign:PackIcon Kind="User" />
                                                         <TextBlock>Customer</TextBlock>
                                                     </StackPanel>
@@ -662,11 +673,11 @@
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TaskEntry_AddEdit_AvailProjects" ItemsSource="{Binding taskentry_addedit_availProjects}" HorizontalContentAlignment="Left" Margin="10,20,10,0" SelectedIndex="{Binding taskentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged">
+                                    x:Name="Combo_TaskEntry_Edit_AvailProjects" Margin="10,20,10,0" ItemsSource="{Binding taskentry_edit_availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding taskentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="Combo_TaskEntry_Edit_AvailProjects_SelectionChanged">
                                                 <materialDesign:HintAssist.Hint>
                                                     <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
+                                                Orientation="Horizontal"
+                                                Margin="-2 0 0 0">
                                                         <materialDesign:PackIcon Kind="FolderOpenOutline" />
                                                         <TextBlock>Project</TextBlock>
                                                     </StackPanel>
@@ -675,42 +686,104 @@
                                             <TextBox 
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Name"
-                                    x:Name="TB_TaskEntry_AddEdit_Name" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_TaskEntry_AddEdit_Name_TextChanged" Text="{Binding taskentry_addedit_Name}">
-                                            </TextBox>
+                                    x:Name="TB_TaskEntry_Edit_Name" Text="{Binding taskentry_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_TaskEntry_Edit_Name_TextChanged"/>
                                             <TextBox
                                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                     materialDesign:HintAssist.Hint="Description"
-                                    x:Name="TB_TaskEntry_AddEdit_Description" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_TaskEntry_AddEdit_Description_TextChanged" Text="{Binding taskentry_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    x:Name="TB_TaskEntry_Edit_Description" Text="{Binding taskentry_edit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,20,10,0" TextChanged="TB_TaskEntry_Edit_Description_TextChanged"/>
                                             <Label Content="Status" Foreground="Black" Margin="0,20,0,0"/>
                                             <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
-                                                <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="Black" IsChecked="{Binding taskentry_addedit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="Black" Margin="10,0,0,0" IsChecked="{Binding taskentry_addedit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <RadioButton x:Name="RB_TaskEntry_Edit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="Black" IsChecked="{Binding taskentry_edit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <RadioButton x:Name="RB_TaskEntry_Edit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="Black" Margin="10,0,0,0" IsChecked="{Binding taskentry_edit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                             </StackPanel>
-                                            <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Image x:Name="Img_ConfigTaskEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
+                                            <StackPanel x:Name="StackPanel_ConfigTaskEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                <Image x:Name="Img_ConfigTaskEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
                                                     <Image.InputBindings>
-                                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddTaskEntry, Mode=Default}"/>
+                                                        <MouseBinding Gesture="LeftClick" Command="{Binding EditTaskEntry, Mode=Default}"/>
                                                     </Image.InputBindings>
                                                 </Image>
-                                                <Image x:Name="Img_ConfigTaskEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown"/>
+                                                <Image x:Name="Img_ConfigTaskEntries_Edit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTaskEntries_Edit_Cancel_MouseDown"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
                                 </materialDesign:DialogHost.DialogContent>
 
-                                <DataGrid x:Name="DataGrid_Tasks" SelectionChanged="DataGrid_Tasks_SelectionChanged" ItemsSource="{Binding db_shownTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_taskentry_selindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
-                                        <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
-                                        <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
-                                        <DataGridTextColumn Binding="{Binding Project.Customer.Name}" Header="Customer"/>
-                                        <DataGridTextColumn Binding="{Binding Project.Name}" Header="Project"/>
-                                        <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
-                                        <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                <materialDesign:DialogHost x:Name="Dialog_Task_Add" CloseOnClickAway="True" DialogTheme="Inherit">
+                                    <materialDesign:DialogHost.DialogContent>
+                                        <Grid x:Name="Grid_ConfigTaskEntries_AddEdit" MinWidth="450">
+                                            <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Properties">
+                                                <Label Content="Add new Task" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
+                                                <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_TaskEntry_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectedIndex="{Binding taskentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged" Margin="10,10,10,0">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                                            <materialDesign:PackIcon Kind="User" />
+                                                            <TextBlock>Customer</TextBlock>
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </ComboBox>
+                                                <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_TaskEntry_AddEdit_AvailProjects" ItemsSource="{Binding taskentry_addedit_availProjects}" HorizontalContentAlignment="Left" Margin="10,20,10,0" SelectedIndex="{Binding taskentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayMemberPath="Name" SelectionChanged="Combo_TaksEntry_AddEdit_AvailProjects_SelectionChanged">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                                            <TextBlock>Project</TextBlock>
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </ComboBox>
+                                                <TextBox 
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Name"
+                                    x:Name="TB_TaskEntry_AddEdit_Name" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_TaskEntry_AddEdit_Name_TextChanged" Text="{Binding taskentry_addedit_Name}">
+                                                </TextBox>
+                                                <TextBox
+                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                    materialDesign:HintAssist.Hint="Description"
+                                    x:Name="TB_TaskEntry_AddEdit_Description" TextWrapping="Wrap" Margin="10,10,10,0" TextChanged="TB_TaskEntry_AddEdit_Description_TextChanged" Text="{Binding taskentry_addedit_Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <Label Content="Status" Foreground="Black" Margin="0,20,0,0"/>
+                                                <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusActive" Content="Active" GroupName="Group_Status" Foreground="Black" IsChecked="{Binding taskentry_addedit_Status_IsActive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                    <RadioButton x:Name="RB_TaskEntry_AddEdit_StatusInactive" Content="Inactive" GroupName="Group_Status" Foreground="Black" Margin="10,0,0,0" IsChecked="{Binding taskentry_addedit_Status_IsInactive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </StackPanel>
+                                                <StackPanel x:Name="StackPanel_ConfigTaskEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Image x:Name="Img_ConfigTaskEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
+                                                        <Image.InputBindings>
+                                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddTaskEntry, Mode=Default}"/>
+                                                        </Image.InputBindings>
+                                                    </Image>
+                                                    <Image x:Name="Img_ConfigTaskEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTaskEntries_AddEdit_Cancel_MouseDown"/>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+                                    </materialDesign:DialogHost.DialogContent>
+
+                                    <DataGrid x:Name="DataGrid_Tasks" SelectionChanged="DataGrid_Tasks_SelectionChanged" ItemsSource="{Binding db_shownTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding config_taskentry_selindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
+                                            <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                                            <DataGridTextColumn Binding="{Binding Description}" Header="Description"/>
+                                            <DataGridTextColumn Binding="{Binding Project.Customer.Name}" Header="Customer"/>
+                                            <DataGridTextColumn Binding="{Binding Project.Name}" Header="Project"/>
+                                            <DataGridTextColumn Binding="{Binding CreationDate}" Header="Creation Date"/>
+                                            <DataGridTextColumn Binding="{Binding Status}" Header="Status"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </materialDesign:DialogHost>
                             </materialDesign:DialogHost>
-                        </materialDesign:DialogHost>
 
                         <StackPanel x:Name="StackPanel_Tasks_buttons" Grid.Column="1">
                             <Image x:Name="Img_Tasks_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Tasks_Add_MouseDown"/>
@@ -735,19 +808,19 @@
                         <Label Content="Amount: " VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic" Margin="30,0,0,0"/>
                         <Label Content="{Binding db_shownTimeEntries.Count, Mode=OneWay}" VerticalContentAlignment="Center" FontWeight="Bold" FontSize="10" FontStyle="Italic"/>
 
-                    </StackPanel>
-                    <Grid x:Name="Grid_ConfigTimeEntries_content" Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="30"/>
-                        </Grid.ColumnDefinitions>
+                        </StackPanel>
+                        <Grid x:Name="Grid_ConfigTimeEntries_content" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
 
-                        <materialDesign:DialogHost x:Name="Dialog_TimeEntry_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
-                            <materialDesign:DialogHost.DialogContent>
-                                <Grid x:Name="Grid_ConfigTimeEntries_Edit" MinWidth="450" >
-                                    <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Properties">
-                                        <Label Content="Edit Time Entry" FontWeight="Bold" Foreground="Black"/>
-                                        <ComboBox 
+                            <materialDesign:DialogHost x:Name="Dialog_TimeEntry_Edit" CloseOnClickAway="True" DialogTheme="Inherit">
+                                <materialDesign:DialogHost.DialogContent>
+                                    <Grid x:Name="Grid_ConfigTimeEntries_Edit" MinWidth="450" >
+                                        <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Properties">
+                                            <Label Content="Edit Time Entry" FontWeight="Bold" Foreground="Black"/>
+                                            <ComboBox 
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
@@ -759,177 +832,177 @@
                                     DisplayMemberPath="Name" 
                                     SelectionChanged="Combo_TimeEntry_Edit_AvailCustomers_SelectionChanged" 
                                     Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <materialDesign:HintAssist.Hint>
-                                                <StackPanel
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                                    <materialDesign:PackIcon Kind="User" />
-                                                    <TextBlock>Customer</TextBlock>
-                                                </StackPanel>
-                                            </materialDesign:HintAssist.Hint>
-                                        </ComboBox>
-                                        <ComboBox 
+                                                        <materialDesign:PackIcon Kind="User" />
+                                                        <TextBlock>Customer</TextBlock>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </ComboBox>
+                                            <ComboBox 
                                     materialDesign:TextFieldAssist.HasClearButton="True"
                                     IsEditable="True"
                                     Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                     materialDesign:TextFieldAssist.SuffixText=""
                                     materialDesign:HintAssist.HelperText=""
                                     x:Name="Combo_TimeEntry_Edit_AvailProjects" Margin="10,10,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailProjects_SelectionChanged" ItemsSource="{Binding timeentry_edit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <materialDesign:HintAssist.Hint>
-                                                <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
-                                                    <materialDesign:PackIcon Kind="FolderOpenOutline" />
-                                                    <TextBlock>Project</TextBlock>
-                                                </StackPanel>
-                                            </materialDesign:HintAssist.Hint>
-                                        </ComboBox>
-                                        <ComboBox
-                                    materialDesign:TextFieldAssist.HasClearButton="True"
-                                    IsEditable="True"
-                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                    materialDesign:TextFieldAssist.SuffixText=""
-                                    materialDesign:HintAssist.HelperText=""
-                                    x:Name="Combo_TimeEntry_Edit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailTaskEntries_SelectionChanged" Margin="10,10,10,0" ItemsSource="{Binding timeentry_edit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <materialDesign:HintAssist.Hint>
-                                                <StackPanel
-                                            Orientation="Horizontal"
-                                            Margin="-2 0 0 0">
-                                                    <materialDesign:PackIcon Kind="FileCheckOutline" />
-                                                    <TextBlock>Task</TextBlock>
-                                                </StackPanel>
-                                            </materialDesign:HintAssist.Hint>
-                                        </ComboBox>
-                                        <StackPanel x:Name="StackPanel_TimeEntry_Edit_StartTime" Orientation="Horizontal" Margin="10,30,10,0">
-                                            <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime1" Width="100" materialDesign:HintAssist.Hint="Pick Start Moment" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_edit_DateTimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayDate="{Binding timeentry_edit_DateTimeStart}" />
-                                            <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </StackPanel>
-                                        <StackPanel x:Name="StackPanel_TimeEntry_Edit_StopTime" Orientation="Horizontal" Margin="10,20,10,0">
-                                            <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime1" Width="100" materialDesign:HintAssist.Hint="Pick Stop Moment" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_edit_DateTimeStop}" SelectedDate="{Binding timeentry_edit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                            <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </StackPanel>
-                                        <Label Foreground="Black" Content="Duration" Margin="0,10,0,0"/>
-                                        <StackPanel x:Name="StackPanel_TimeEntry_Edit_Duration" Orientation="Horizontal" Margin="10,0,10,0">
-                                            <TextBox x:Name="TB_TimeEntry_Edit_Duration_DD" Text="{Binding timeentry_edit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged"/>
-                                            <Label Content="days" Foreground="Black" Padding="0,5,5,5"/>
-                                            <TextBox x:Name="TB_TimeEntry_Edit_Duration_HH" Text="{Binding timeentry_edit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged"/>
-                                            <Label Content="hours" Foreground="Black" Padding="0,5,5,5"/>
-                                            <TextBox x:Name="TB_TimeEntry_Edit_Duration_MM" Text="{Binding timeentry_edit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_MM_TextChanged"/>
-                                            <Label Content="minutes" Foreground="Black" Padding="0,5,5,5"/>
-                                            <TextBox x:Name="TB_TimeEntry_Edit_Duration_SS" Text="{Binding timeentry_edit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_SS_TextChanged"/>
-                                            <Label Content="seconds" Foreground="Black" Padding="0,5,5,5"/>
-                                        </StackPanel>
-                                        <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center" Height="Auto">
-                                            <Image x:Name="Img_ConfigTimeEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand">
-                                                <Image.InputBindings>
-                                                    <MouseBinding Gesture="LeftClick" Command="{Binding EditTimeEntry, Mode=Default}"/>
-                                                </Image.InputBindings>
-                                            </Image>
-                                            <Image x:Name="Img_ConfigTimeEntries_Edit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTimeEntries_Edit_Cancel_MouseDown"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </Grid>
-                            </materialDesign:DialogHost.DialogContent>
-
-                            <materialDesign:DialogHost x:Name="Dialog_TimeEntry_Add" CloseOnClickAway="True" DialogTheme="Inherit">
-                                <materialDesign:DialogHost.DialogContent>
-                                    <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" MinWidth="450" >
-                                        <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
-                                            <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
-                                            <ComboBox 
-                                                materialDesign:TextFieldAssist.HasClearButton="True"
-                                                IsEditable="True"
-                                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                                materialDesign:TextFieldAssist.SuffixText=""
-                                                materialDesign:HintAssist.HelperText=""
-                                                x:Name="Combo_TimeEntry_AddEdit_AvailCustomers" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailCustomers_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                 <materialDesign:HintAssist.Hint>
                                                     <StackPanel
-                                                        Orientation="Horizontal"
-                                                        Margin="-2 0 0 0">
-                                                        <materialDesign:PackIcon Kind="User" />
-                                                        <TextBlock>Customer</TextBlock>
-                                                    </StackPanel>
-                                                </materialDesign:HintAssist.Hint>
-                                            </ComboBox>
-                                            <ComboBox
-                                                materialDesign:TextFieldAssist.HasClearButton="True"
-                                                IsEditable="True"
-                                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                                                materialDesign:TextFieldAssist.SuffixText=""
-                                                materialDesign:HintAssist.HelperText=""
-                                                x:Name="Combo_TimeEntry_AddEdit_AvailProjects" HorizontalContentAlignment="Left" Margin="10,20,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailProjects_SelectionChanged_1" ItemsSource="{Binding timeentry_addedit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                <materialDesign:HintAssist.Hint>
-                                                    <StackPanel
-                                                        Orientation="Horizontal"
-                                                        Margin="-2 0 0 0">
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
                                                         <materialDesign:PackIcon Kind="FolderOpenOutline" />
                                                         <TextBlock>Project</TextBlock>
                                                     </StackPanel>
                                                 </materialDesign:HintAssist.Hint>
                                             </ComboBox>
                                             <ComboBox
+                                    materialDesign:TextFieldAssist.HasClearButton="True"
+                                    IsEditable="True"
+                                    Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                    materialDesign:TextFieldAssist.SuffixText=""
+                                    materialDesign:HintAssist.HelperText=""
+                                    x:Name="Combo_TimeEntry_Edit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_Edit_AvailTaskEntries_SelectionChanged" Margin="10,10,10,0" ItemsSource="{Binding timeentry_edit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_edit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                <materialDesign:HintAssist.Hint>
+                                                    <StackPanel
+                                            Orientation="Horizontal"
+                                            Margin="-2 0 0 0">
+                                                        <materialDesign:PackIcon Kind="FileCheckOutline" />
+                                                        <TextBlock>Task</TextBlock>
+                                                    </StackPanel>
+                                                </materialDesign:HintAssist.Hint>
+                                            </ComboBox>
+                                            <StackPanel x:Name="StackPanel_TimeEntry_Edit_StartTime" Orientation="Horizontal" Margin="10,30,10,0">
+                                                <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime1" Width="100" materialDesign:HintAssist.Hint="Pick Start Moment" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_edit_DateTimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DisplayDate="{Binding timeentry_edit_DateTimeStart}" />
+                                                <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </StackPanel>
+                                            <StackPanel x:Name="StackPanel_TimeEntry_Edit_StopTime" Orientation="Horizontal" Margin="10,20,10,0">
+                                                <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime1" Width="100" materialDesign:HintAssist.Hint="Pick Stop Moment" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_edit_DateTimeStop}" SelectedDate="{Binding timeentry_edit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime1" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_edit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            </StackPanel>
+                                            <Label Foreground="Black" Content="Duration" Margin="0,10,0,0"/>
+                                            <StackPanel x:Name="StackPanel_TimeEntry_Edit_Duration" Orientation="Horizontal" Margin="10,0,10,0">
+                                                <TextBox x:Name="TB_TimeEntry_Edit_Duration_DD" Text="{Binding timeentry_edit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged"/>
+                                                <Label Content="days" Foreground="Black" Padding="0,5,5,5"/>
+                                                <TextBox x:Name="TB_TimeEntry_Edit_Duration_HH" Text="{Binding timeentry_edit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_HH_TextChanged"/>
+                                                <Label Content="hours" Foreground="Black" Padding="0,5,5,5"/>
+                                                <TextBox x:Name="TB_TimeEntry_Edit_Duration_MM" Text="{Binding timeentry_edit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_MM_TextChanged"/>
+                                                <Label Content="minutes" Foreground="Black" Padding="0,5,5,5"/>
+                                                <TextBox x:Name="TB_TimeEntry_Edit_Duration_SS" Text="{Binding timeentry_edit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_Edit_Duration_SS_TextChanged"/>
+                                                <Label Content="seconds" Foreground="Black" Padding="0,5,5,5"/>
+                                            </StackPanel>
+                                            <StackPanel x:Name="StackPanel_ConfigTimeEntries_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center" Height="Auto">
+                                                <Image x:Name="Img_ConfigTimeEntries_Edit_Edit" Height="30" Source="/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand">
+                                                    <Image.InputBindings>
+                                                        <MouseBinding Gesture="LeftClick" Command="{Binding EditTimeEntry, Mode=Default}"/>
+                                                    </Image.InputBindings>
+                                                </Image>
+                                                <Image x:Name="Img_ConfigTimeEntries_Edit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTimeEntries_Edit_Cancel_MouseDown"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </materialDesign:DialogHost.DialogContent>
+
+                                <materialDesign:DialogHost x:Name="Dialog_TimeEntry_Add" CloseOnClickAway="True" DialogTheme="Inherit">
+                                    <materialDesign:DialogHost.DialogContent>
+                                        <Grid x:Name="Grid_ConfigTimeEntries_AddEdit" MinWidth="450" >
+                                            <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Properties">
+                                                <Label Content="Add new Time Entry" FontWeight="Bold" Foreground="Black" HorizontalContentAlignment="Left"/>
+                                                <ComboBox 
+                                                materialDesign:TextFieldAssist.HasClearButton="True"
+                                                IsEditable="True"
+                                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                materialDesign:TextFieldAssist.SuffixText=""
+                                                materialDesign:HintAssist.HelperText=""
+                                                x:Name="Combo_TimeEntry_AddEdit_AvailCustomers" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailCustomers_SelectionChanged" Margin="10,0,10,0" ItemsSource="{Binding allCustomers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selCustindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Margin="-2 0 0 0">
+                                                            <materialDesign:PackIcon Kind="User" />
+                                                            <TextBlock>Customer</TextBlock>
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </ComboBox>
+                                                <ComboBox
+                                                materialDesign:TextFieldAssist.HasClearButton="True"
+                                                IsEditable="True"
+                                                Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                                materialDesign:TextFieldAssist.SuffixText=""
+                                                materialDesign:HintAssist.HelperText=""
+                                                x:Name="Combo_TimeEntry_AddEdit_AvailProjects" HorizontalContentAlignment="Left" Margin="10,20,10,0" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailProjects_SelectionChanged_1" ItemsSource="{Binding timeentry_addedit_availProjects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selProjindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
+                                                        Orientation="Horizontal"
+                                                        Margin="-2 0 0 0">
+                                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                                            <TextBlock>Project</TextBlock>
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </ComboBox>
+                                                <ComboBox
                                                 materialDesign:TextFieldAssist.HasClearButton="True"
                                                 IsEditable="True"
                                                 Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                                                 materialDesign:TextFieldAssist.SuffixText=""
                                                 materialDesign:HintAssist.HelperText=""
                                                 x:Name="Combo_TimeEntry_AddEdit_AvailTaskEntries" HorizontalContentAlignment="Left" DisplayMemberPath="Name" SelectionChanged="Combo_TimeEntry_AddEdit_AvailTaskEntries_SelectionChanged" Margin="10,20,10,0" ItemsSource="{Binding timeentry_addedit_availTaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedIndex="{Binding timeentry_addedit_selTaskEntryindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                <materialDesign:HintAssist.Hint>
-                                                    <StackPanel
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
                                                         Orientation="Horizontal"
                                                         Margin="-2 0 0 0">
-                                                        <materialDesign:PackIcon Kind="FileCheckOutline" />
-                                                        <TextBlock>Task</TextBlock>
-                                                    </StackPanel>
-                                                </materialDesign:HintAssist.Hint>
-                                            </ComboBox>
-                                            <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
-                                                <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime" Width="100" materialDesign:HintAssist.Hint="Pick Start Time
+                                                            <materialDesign:PackIcon Kind="FileCheckOutline" />
+                                                            <TextBlock>Task</TextBlock>
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </ComboBox>
+                                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StartTime" Orientation="Horizontal" Margin="10,0,10,0">
+                                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StartTime" Width="100" materialDesign:HintAssist.Hint="Pick Start Time
                                                 " Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" SelectedDate="{Binding timeentry_addedit_DateTimeStart}" DisplayDate="{Binding timeentry_addedit_DateTimeStart}" Margin="0,30,0,0" />
-                                                <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStart}" />
+                                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StartTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStart}" />
+                                                </StackPanel>
+                                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StopTime" Orientation="Horizontal" Margin="10,0,10,0">
+                                                    <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime" Width="100" materialDesign:HintAssist.Hint="Pick Stop Time" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_addedit_DateTimeStop}" SelectedDate="{Binding timeentry_addedit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" />
+                                                    <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                </StackPanel>
+                                                <Label Foreground="Black" Content="Duration" Margin="0,20,0,0"/>
+                                                <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_Duration" Orientation="Horizontal" Margin="10,0,9,0">
+                                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_DD" Text="{Binding timeentry_addedit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
+                                                    <Label Content="days" Foreground="Black" Padding="0,5,5,5"/>
+                                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_HH" Text="{Binding timeentry_addedit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
+                                                    <Label Content="hours" Foreground="Black" Padding="0,5,5,5"/>
+                                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_MM" Text="{Binding timeentry_addedit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_MM_TextChanged"/>
+                                                    <Label Content="minutes" Foreground="Black" Padding="0,5,5,5"/>
+                                                    <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_SS" Text="{Binding timeentry_addedit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_SS_TextChanged"/>
+                                                    <Label Content="seconds" Foreground="Black" Padding="0,5,5,5"/>
+                                                </StackPanel>
+                                                <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                                    <Image x:Name="Img_ConfigTimeEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand">
+                                                        <Image.InputBindings>
+                                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddTimeEntry, Mode=Default}"/>
+                                                        </Image.InputBindings>
+                                                    </Image>
+                                                    <Image x:Name="Img_ConfigTimeEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTimeEntries_AddEdit_Cancel_MouseDown"/>
+                                                </StackPanel>
                                             </StackPanel>
-                                            <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_StopTime" Orientation="Horizontal" Margin="10,0,10,0">
-                                                <DatePicker x:Name="DatePicker_TimeEntry_AddEdit_StopTime" Width="100" materialDesign:HintAssist.Hint="Pick Stop Time" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" DisplayDate="{Binding timeentry_addedit_DateTimeStop}" SelectedDate="{Binding timeentry_addedit_DateTimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,20,0,0" />
-                                                <materialDesign:TimePicker Is24Hours="True" x:Name="TimePicker_TimeEntry_AddEdit_StopTime" Width="100" VerticalAlignment="Bottom" Margin="20,0,0,0" SelectedTime="{Binding timeentry_addedit_TimeStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                            </StackPanel>
-                                            <Label Foreground="Black" Content="Duration" Margin="0,20,0,0"/>
-                                            <StackPanel x:Name="StackPanel_TimeEntry_AddEdit_Duration" Orientation="Horizontal" Margin="10,0,9,0">
-                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_DD" Text="{Binding timeentry_addedit_Duration.Days, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
-                                                <Label Content="days" Foreground="Black" Padding="0,5,5,5"/>
-                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_HH" Text="{Binding timeentry_addedit_Duration.Hours, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_HH_TextChanged"/>
-                                                <Label Content="hours" Foreground="Black" Padding="0,5,5,5"/>
-                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_MM" Text="{Binding timeentry_addedit_Duration.Minutes, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_MM_TextChanged"/>
-                                                <Label Content="minutes" Foreground="Black" Padding="0,5,5,5"/>
-                                                <TextBox x:Name="TB_TimeEntry_AddEdit_Duration_SS" Text="{Binding timeentry_addedit_Duration.Seconds, Mode=OneWay}" TextWrapping="Wrap" VerticalContentAlignment="Center" Background="{x:Null}" Foreground="Black" BorderBrush="{x:Null}" TextChanged="TB_TimeEntry_AddEdit_Duration_SS_TextChanged"/>
-                                                <Label Content="seconds" Foreground="Black" Padding="0,5,5,5"/>
-                                            </StackPanel>
-                                            <StackPanel x:Name="StackPanel_ConfigTimeEntries_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
-                                                <Image x:Name="Img_ConfigTimeEntries_AddEdit_AddorEdit" Height="30" Source="/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand">
-                                                    <Image.InputBindings>
-                                                        <MouseBinding Gesture="LeftClick" Command="{Binding AddTimeEntry, Mode=Default}"/>
-                                                    </Image.InputBindings>
-                                                </Image>
-                                                <Image x:Name="Img_ConfigTimeEntries_AddEdit_Cancel" Height="70" Source="/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigTimeEntries_AddEdit_Cancel_MouseDown"/>
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Grid>
-                                </materialDesign:DialogHost.DialogContent>
+                                        </Grid>
+                                    </materialDesign:DialogHost.DialogContent>
 
-                                <DataGrid x:Name="DataGrid_TimeEntries" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="DataGrid_TimeEntries_SelectionChanged" ItemsSource="{Binding db_shownTimeEntries}" AutoGenerateColumns="False" SelectedIndex="{Binding config_timeentry_selindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <DataGrid.Columns>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Customer.Name}" Header="Customer"/>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Name}" Header="Project"/>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Name}" Header="Task"/>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding Date}" Header="Date"/>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding Start.TimeOfDay, Mode=OneWay}" Header="Start"/>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding Stop.TimeOfDay, Mode=OneWay}" Header="Stop"/>
-                                        <materialDesign:DataGridTextColumn Binding="{Binding Duration}" Header="Duration (hours : minutes : seconds)"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
+                                    <DataGrid x:Name="DataGrid_TimeEntries" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="DataGrid_TimeEntries_SelectionChanged" ItemsSource="{Binding db_shownTimeEntries}" AutoGenerateColumns="False" SelectedIndex="{Binding config_timeentry_selindex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <DataGrid.Columns>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Id}" Header="ID"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Customer.Name}" Header="Customer"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Project.Name}" Header="Project"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding TaskEntry.Name}" Header="Task"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Date}" Header="Date"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Start.TimeOfDay, Mode=OneWay}" Header="Start"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Stop.TimeOfDay, Mode=OneWay}" Header="Stop"/>
+                                            <materialDesign:DataGridTextColumn Binding="{Binding Duration}" Header="Duration (hours : minutes : seconds)"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </materialDesign:DialogHost>
                             </materialDesign:DialogHost>
-                        </materialDesign:DialogHost>
 
                         <StackPanel x:Name="StackPanel_TimeEntries_buttons" Grid.Column="1">
                             <Image x:Name="Img_TimeEntries_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_TimeEntries_Add_MouseDown"/>
@@ -943,276 +1016,284 @@
 
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid x:Name="Grid_Settings" Grid.Column="1" d:IsHidden="True">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel x:Name="StackPanel_Settings_Menu" Margin="10,0,10,0">
-                    <StackPanel x:Name="StackPanel_LogFileButton" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_LogFileButton_MouseEnter" MouseLeave="StackPanel_LogFileButton_MouseLeave" MouseDown="StackPanel_LogFileButton_MouseDown">
-                        <Image x:Name="Img_LogFileButton" Height="20" Source="/IMAGES/Report_black_transp.png"/>
-                        <Label Content="Log file" VerticalContentAlignment="Center"/>
-                    </StackPanel>
-                    <Border x:Name="Border_StyleButton" BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueDarkBrush}" Margin="0,10,0,0" CornerRadius="2,2,2,2">
-                        <StackPanel x:Name="StackPanel_StyleButton" Orientation="Horizontal" Cursor="Hand" MouseEnter="StackPanel_StyleButton_MouseEnter" ForceCursor="True" MouseDown="StackPanel_StyleButton_MouseDown">
-                            <materialDesign:PackIcon x:Name="Icon_Style" Kind="StyleOutline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-                            <Label x:Name="Label_StyleButton" Content="Style" VerticalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"/>
+                <Grid x:Name="Grid_Settings" Grid.Column="1" d:IsHidden="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="StackPanel_Settings_Menu" Margin="10,0,10,0">
+                        <StackPanel x:Name="StackPanel_LogFileButton" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_LogFileButton_MouseEnter" MouseLeave="StackPanel_LogFileButton_MouseLeave" MouseDown="StackPanel_LogFileButton_MouseDown">
+                            <Image x:Name="Img_LogFileButton" Height="20" Source="/IMAGES/Report_black_transp.png"/>
+                            <Label Content="Log file" VerticalContentAlignment="Center"/>
                         </StackPanel>
-                    </Border>
-                </StackPanel>
-                <Border x:Name="Border_SettingsMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1" Visibility="Visible" d:IsHidden="True">
-                    <TextBlock x:Name="TextBlock_LogFile" Text="TextBlock" TextWrapping="Wrap"/>
-                </ScrollViewer>
-                <StackPanel x:Name="StackPanel_Style" Grid.Column="1" Margin="0,1,0,0">
-                    <materialDesign:Card
+                        <Border x:Name="Border_StyleButton" BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueDarkBrush}" Margin="0,10,0,0" CornerRadius="2,2,2,2">
+                            <StackPanel x:Name="StackPanel_StyleButton" Orientation="Horizontal" Cursor="Hand" MouseEnter="StackPanel_StyleButton_MouseEnter" ForceCursor="True" MouseDown="StackPanel_StyleButton_MouseDown">
+                                <materialDesign:PackIcon x:Name="Icon_Style" Kind="StyleOutline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                                <Label x:Name="Label_StyleButton" Content="Style" VerticalContentAlignment="Center" Style="{DynamicResource MaterialDesignLabel}"/>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                    <Border x:Name="Border_SettingsMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
+                    <ScrollViewer x:Name="ScrollViewer_LogFile" Grid.Column="1" Visibility="Visible">
+                        <TextBlock x:Name="TextBlock_LogFile" Text="TextBlock" TextWrapping="Wrap"/>
+                    </ScrollViewer>
+                    <StackPanel x:Name="StackPanel_Style" Grid.Column="1" Margin="0,1,0,0">
+                        <materialDesign:Card
                         Background="{DynamicResource MaterialDesignBackground}" Margin="5,5,5,5">
-                        <StackPanel>
-                            <Expander HorizontalAlignment="Stretch" Header="Main Theme" Cursor="Hand">
-                                <StackPanel
+                            <StackPanel>
+                                <Expander HorizontalAlignment="Stretch" Header="Main Theme" Cursor="Hand">
+                                    <StackPanel
                                 Orientation="Horizontal"
                                 TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                 Margin="24,8,24,16">
-                                    <Label Content="Light"/>
-                                    <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Default ToggleButton Style" Margin="10,0,10,0" Command="{Binding ApplyBaseTheme, Mode=OneWay}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
-                                    <Label Content="Dark"/>
-                                </StackPanel>
-                            </Expander>
-                        </StackPanel>
-                    </materialDesign:Card>
-                </StackPanel>
-            </Grid>
-            <Grid x:Name="Grid_Reports" Grid.Column="1" d:IsHidden="True">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel x:Name="StackPanel_ReportsMenu" Margin="10,0,10,0">
-                    <StackPanel x:Name="StackPanel_OpenAirButton" Margin="0,10,0,0" Orientation="Horizontal" MouseEnter="StackPanel_OpenAirButton_MouseEnter" MouseLeave="StackPanel_OpenAirButton_MouseLeave" Cursor="Hand">
-                        <Image x:Name="Img_OpenAir" Height="20" Source="/IMAGES/OpenAir_Logo_transp.png" Width="Auto"/>
-                        <Label Content="OpenAir" VerticalContentAlignment="Center"/>
+                                        <Label Content="Light"/>
+                                        <ToggleButton Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Default ToggleButton Style" Margin="10,0,10,0" Command="{Binding ApplyBaseTheme, Mode=OneWay}" CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+                                        <Label Content="Dark"/>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </materialDesign:Card>
                     </StackPanel>
-                    <StackPanel x:Name="StackPanel_TotalsButton" Orientation="Horizontal" Cursor="Hand" Margin="0,10,0,0" MouseEnter="StackPanel_TotalsButton_MouseEnter" MouseLeave="StackPanel_TotalsButton_MouseLeave">
-                        <Image x:Name="Img_Totals" Height="30" Source="/IMAGES/Task_Black.png" Width="Auto"/>
-                        <Label Content="Totals" VerticalContentAlignment="Center"/>
-                    </StackPanel>
-                </StackPanel>
-                <Border BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <ScrollViewer Grid.Column="1">
-                    <StackPanel x:Name="StackPanel_Report_Totals" Grid.Column="1">
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
-                            <materialDesign:PackIcon Kind="ChartLine" VerticalAlignment="Center" Width="24" Height="24" />
-                            <Label Content="Totals" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Center"/>
+                </Grid>
+                <Grid x:Name="Grid_Reports" Grid.Column="1" d:IsHidden="True">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel x:Name="StackPanel_ReportsMenu" Margin="10,0,10,0">
+                        <StackPanel x:Name="StackPanel_OpenAirButton" Margin="0,10,0,0" Orientation="Horizontal" MouseEnter="StackPanel_OpenAirButton_MouseEnter" MouseLeave="StackPanel_OpenAirButton_MouseLeave" Cursor="Hand">
+                            <Image x:Name="Img_OpenAir" Height="20" Source="/IMAGES/OpenAir_Logo_transp.png" Width="Auto"/>
+                            <Label Content="OpenAir" VerticalContentAlignment="Center"/>
                         </StackPanel>
-                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                            <StackPanel x:Name="StackPanel_Report_Totals_Filters" Orientation="Horizontal" VerticalAlignment="Stretch">
-                                <ComboBox
+                        <StackPanel x:Name="StackPanel_TotalsButton" Orientation="Horizontal" Cursor="Hand" Margin="0,10,0,0" MouseEnter="StackPanel_TotalsButton_MouseEnter" MouseLeave="StackPanel_TotalsButton_MouseLeave">
+                            <Image x:Name="Img_Totals" Height="30" Source="/IMAGES/Task_Black.png" Width="Auto"/>
+                            <Label Content="Totals" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Border BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
+                    <ScrollViewer Grid.Column="1">
+                        <StackPanel x:Name="StackPanel_Report_Totals" Grid.Column="1">
+                            <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
+                                <materialDesign:PackIcon Kind="ChartLine" VerticalAlignment="Center" Width="24" Height="24" />
+                                <Label Content="Totals" FontWeight="Bold" FontSize="14" VerticalContentAlignment="Center"/>
+                            </StackPanel>
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                <StackPanel x:Name="StackPanel_Report_Totals_Filters" Orientation="Horizontal" VerticalAlignment="Stretch">
+                                    <ComboBox
                             materialDesign:TextFieldAssist.HasClearButton="True"
                             IsEditable="True"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
                             x:Name="TotalReport_Combo_Customer" Margin="10,0,17,0" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Name" Cursor="Hand" VerticalAlignment="Center" ItemsSource="{Binding allCustomers}" SelectedIndex="{Binding report_totals_selCustomerIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                            <materialDesign:PackIcon Kind="User" />
-                                            <TextBlock><Run Text="Customer"/></TextBlock>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </ComboBox>
-                                <ComboBox
+                                                <materialDesign:PackIcon Kind="User" />
+                                                <TextBlock><Run Text="Customer"/></TextBlock>
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </ComboBox>
+                                    <ComboBox
                             materialDesign:TextFieldAssist.HasClearButton="True"
                             IsEditable="True"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
                             x:Name="TotalReport_Combo_Project" Margin="0,0,20,0" DisplayMemberPath="Name" Cursor="Hand" SelectionChanged="Combo_Project_SelectionChanged" SelectedIndex="{Binding report_totals_selProjectIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding report_totals_availProjects}">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                            <materialDesign:PackIcon Kind="FolderOpenOutline" />
-                                            <TextBlock><Run Text="Project"/></TextBlock>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </ComboBox>
-                                <ComboBox
+                                                <materialDesign:PackIcon Kind="FolderOpenOutline" />
+                                                <TextBlock><Run Text="Project"/></TextBlock>
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </ComboBox>
+                                    <ComboBox
                             materialDesign:TextFieldAssist.HasClearButton="True"
                             IsEditable="True"
                             Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                             materialDesign:TextFieldAssist.SuffixText=""
                             materialDesign:HintAssist.HelperText=""
                             x:Name="TotalReport_Combo_Task" DisplayMemberPath="Name" Margin="0,0,20,0" Cursor="Hand" SelectionChanged="Combo_Task_SelectionChanged" ItemsSource="{Binding report_totals_availTaskEntries}" SelectedIndex="{Binding report_totals_selTaskEntryIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <materialDesign:HintAssist.Hint>
-                                        <StackPanel
+                                        <materialDesign:HintAssist.Hint>
+                                            <StackPanel
                                             Orientation="Horizontal"
                                             Margin="-2 0 0 0">
-                                            <materialDesign:PackIcon Kind="FileCheckOutline" />
-                                            <TextBlock><Run Text="Task"/></TextBlock>
-                                        </StackPanel>
-                                    </materialDesign:HintAssist.Hint>
-                                </ComboBox>
-                                <DatePicker x:Name="DatePicker_Report_Totals_FromDate" Width="100" 
+                                                <materialDesign:PackIcon Kind="FileCheckOutline" />
+                                                <TextBlock><Run Text="Task"/></TextBlock>
+                                            </StackPanel>
+                                        </materialDesign:HintAssist.Hint>
+                                    </ComboBox>
+                                    <DatePicker x:Name="DatePicker_Report_Totals_FromDate" Width="100" 
                                     materialDesign:HintAssist.Hint="From Date" 
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" SelectedDate="{Binding report_totals_filter_FromDate}" DisplayDate="{Binding report_totals_filter_FromDate}" />
-                                <DatePicker x:Name="DatePicker_Report_Totals_ToDate" Width="100" 
+                                    <DatePicker x:Name="DatePicker_Report_Totals_ToDate" Width="100" 
                                     materialDesign:HintAssist.Hint="To Date"
                                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalContentAlignment="Top" Margin="0,0,20,0" DisplayDate="{Binding report_totals_filter_ToDate}" SelectedDate="{Binding report_totals_filter_ToDate}" />
-                                <Button
+                                    <Button
                             Style="{StaticResource MaterialDesignOutlinedButton}"
                             ToolTip="Clear all filters" Padding="4,0,4,0" Height="24" FontSize="12" Command="{Binding ReportTotals_ClearFilters, Mode=Default}">
-                                    Clear all
-                                </Button>
-                            </StackPanel>
-                        </ScrollViewer>
-                        <StackPanel x:Name="StackPanel_Report_Totals_Summary" Margin="0,20,0,0">
-                            <Label Content="Summary of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                            <Grid x:Name="Grid_Report_Totals_Summary_Content">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid x:Name="Grid_Report_Totals_Summary_Amounts" Margin="0,0,30,0">
+                                        Clear all
+                                    </Button>
+                                </StackPanel>
+                            </ScrollViewer>
+                            <StackPanel x:Name="StackPanel_Report_Totals_Summary" Margin="0,20,0,0">
+                                <Label Content="Summary of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                <Grid x:Name="Grid_Report_Totals_Summary_Content">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <Label Content="# Customers" Margin="0,0,10,0"/>
-                                    <Label Content="# Projects" Grid.Row="1"/>
-                                    <Label Content="# Tasks" Grid.Row="2"/>
-                                    <Label Content="{Binding report_totals_targCustomerColl.Count, Mode=OneWay}" Grid.Column="1" ToolTip="Number of Customers you recorded time for"/>
-                                    <Label Content="{Binding report_totals_targProjectColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="1" ToolTip="Number of Projects you recorded time for"/>
-                                    <Label Content="{Binding report_totals_targTaskEntryColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="2" ToolTip="Number of Tasks you recorded time for"/>
+                                    <Grid x:Name="Grid_Report_Totals_Summary_Amounts" Margin="0,0,30,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Content="# Customers" Margin="0,0,10,0"/>
+                                        <Label Content="# Projects" Grid.Row="1"/>
+                                        <Label Content="# Tasks" Grid.Row="2"/>
+                                        <Label Content="{Binding report_totals_targCustomerColl.Count, Mode=OneWay}" Grid.Column="1" ToolTip="Number of Customers you recorded time for"/>
+                                        <Label Content="{Binding report_totals_targProjectColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="1" ToolTip="Number of Projects you recorded time for"/>
+                                        <Label Content="{Binding report_totals_targTaskEntryColl.Count, Mode=OneWay}" Grid.Column="1" Grid.Row="2" ToolTip="Number of Tasks you recorded time for"/>
+                                    </Grid>
+                                    <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                                        <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Label x:Name="Label_Report_Totals_Summary_Hours" Content="{Binding report_totals_targTimeSpan.Hours}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                            <Label Content="hours" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+                                            <Label x:Name="Label_Report_Totals_Summary_Minutes" Content="{Binding report_totals_targTimeSpan.Minutes}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                            <Label Content="minutes" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
+                                            <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="{Binding report_totals_targTimeSpan.Seconds}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
+                                            <Label Content="seconds" VerticalContentAlignment="Center" FontSize="16"/>
+                                        </StackPanel>
+                                    </ScrollViewer>
                                 </Grid>
-                                <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <StackPanel x:Name="StackPanel_Report_Totals_Summary_Values" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                                        <Label x:Name="Label_Report_Totals_Summary_Hours" Content="{Binding report_totals_targTimeSpan.Hours}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
-                                        <Label Content="hours" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-                                        <Label x:Name="Label_Report_Totals_Summary_Minutes" Content="{Binding report_totals_targTimeSpan.Minutes}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
-                                        <Label Content="minutes" VerticalContentAlignment="Center" FontSize="16" Margin="0,0,10,0"/>
-                                        <Label x:Name="Label_Report_Totals_Summary_Seconds" Content="{Binding report_totals_targTimeSpan.Seconds}" VerticalContentAlignment="Center" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="16" FontWeight="Bold"/>
-                                        <Label Content="seconds" VerticalContentAlignment="Center" FontSize="16"/>
-                                    </StackPanel>
-                                </ScrollViewer>
-                            </Grid>
+                            </StackPanel>
+                            <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
+                                <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+
+                                <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                    <TreeView.ItemTemplate>
+
+                                        <HierarchicalDataTemplate ItemsSource="{Binding Projects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DataType="{x:Type MODELS_Report:CustomerReport}">
+                                            <Grid Width="500" Background="#33556A80">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <materialDesign:PackIcon Kind="User" VerticalAlignment="Center" />
+                                                    <Label Content="{Binding Customer.Name}"/>
+                                                </StackPanel>
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                                    <Label Content="{Binding AmTaskEntries}"/>
+                                                    <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
+                                                    <Label Content="{Binding AmProjects}"/>
+                                                    <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
+                                                    <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
+                                                    <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
+                                                    <Label Content="m" Padding="0,4,0,4"/>
+                                                    <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
+                                                    <Label Content="h" Padding="0,4,0,4"/>
+                                                    <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            <HierarchicalDataTemplate.ItemTemplate>
+
+                                                <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DataType="{x:Type MODELS_Report:ProjectReport}">
+                                                    <Grid Width="485">
+                                                        <Grid.Background>
+                                                            <SolidColorBrush Color="#333FC1C9"/>
+                                                        </Grid.Background>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto"/>
+                                                            <ColumnDefinition/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
+                                                            <Label Content="{Binding Project.Name}"/>
+                                                        </StackPanel>
+                                                        <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                                            <Label Content="{Binding AmTaskEntries}"/>
+                                                            <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
+                                                            <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
+                                                            <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
+                                                            <Label Content="m" Padding="0,4,0,4"/>
+                                                            <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
+                                                            <Label Content="h" Padding="0,4,0,4"/>
+                                                            <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
+                                                        </StackPanel>
+                                                    </Grid>
+                                                    <HierarchicalDataTemplate.ItemTemplate>
+
+                                                        <HierarchicalDataTemplate DataType="{x:Type MODELS_Report:TaskEntryReport}">
+                                                            <Grid Width="470" Background="#33349689">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                    <ColumnDefinition/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
+                                                                    <Label Content="{Binding TaskEntry.Name}"/>
+                                                                </StackPanel>
+                                                                <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                                                                    <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
+                                                                    <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
+                                                                    <Label Content="m" Padding="0,4,0,4"/>
+                                                                    <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
+                                                                    <Label Content="h" Padding="0,4,0,4"/>
+                                                                    <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </HierarchicalDataTemplate>
+
+                                                    </HierarchicalDataTemplate.ItemTemplate>
+                                                </HierarchicalDataTemplate>
+
+                                            </HierarchicalDataTemplate.ItemTemplate>
+                                        </HierarchicalDataTemplate>
+
+                                    </TreeView.ItemTemplate>
+                                </TreeView>
+
+                            </StackPanel>
                         </StackPanel>
-                        <StackPanel x:Name="StackPanel_Report_Totals_TreeView" Margin="0,19.8,0,0">
-                            <Label Content="Details of recorded time" FontStyle="Italic" Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-
-                            <TreeView x:Name="TreeView_Report_Totals" ItemsSource="{Binding report_totals_targCustomerColl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                <TreeView.ItemTemplate>
-
-                                    <HierarchicalDataTemplate ItemsSource="{Binding Projects, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DataType="{x:Type MODELS_Report:CustomerReport}">
-                                        <Grid Width="500" Background="#33556A80">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition/>
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel Orientation="Horizontal">
-                                                <materialDesign:PackIcon Kind="User" VerticalAlignment="Center" />
-                                                <Label Content="{Binding Customer.Name}"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                                <Label Content="{Binding AmTaskEntries}"/>
-                                                <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
-                                                <Label Content="{Binding AmProjects}"/>
-                                                <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
-                                                <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
-                                                <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
-                                                <Label Content="m" Padding="0,4,0,4"/>
-                                                <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
-                                                <Label Content="h" Padding="0,4,0,4"/>
-                                                <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
-                                            </StackPanel>
-                                        </Grid>
-                                        <HierarchicalDataTemplate.ItemTemplate>
-
-                                            <HierarchicalDataTemplate ItemsSource="{Binding TaskEntries, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DataType="{x:Type MODELS_Report:ProjectReport}">
-                                                <Grid Width="485">
-                                                    <Grid.Background>
-                                                        <SolidColorBrush Color="#333FC1C9"/>
-                                                    </Grid.Background>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="FolderOpenOutline" VerticalAlignment="Center" />
-                                                        <Label Content="{Binding Project.Name}"/>
-                                                    </StackPanel>
-                                                    <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                                        <Label Content="{Binding AmTaskEntries}"/>
-                                                        <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
-                                                        <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
-                                                        <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
-                                                        <Label Content="m" Padding="0,4,0,4"/>
-                                                        <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
-                                                        <Label Content="h" Padding="0,4,0,4"/>
-                                                        <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
-                                                    </StackPanel>
-                                                </Grid>
-                                                <HierarchicalDataTemplate.ItemTemplate>
-
-                                                    <HierarchicalDataTemplate DataType="{x:Type MODELS_Report:TaskEntryReport}">
-                                                        <Grid Width="470" Background="#33349689">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <materialDesign:PackIcon Kind="FileCheckOutline" VerticalAlignment="Center" />
-                                                                <Label Content="{Binding TaskEntry.Name}"/>
-                                                            </StackPanel>
-                                                            <StackPanel Grid.Column="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                                                                <Label Content="s" Margin="90,0,0,0" Padding="0,4,0,4"/>
-                                                                <Label Content="{Binding TimeTotal.Seconds}" Padding="2,4,4,4"/>
-                                                                <Label Content="m" Padding="0,4,0,4"/>
-                                                                <Label Content="{Binding TimeTotal.Minutes}" Padding="2,4,4,4"/>
-                                                                <Label Content="h" Padding="0,4,0,4"/>
-                                                                <Label Content="{Binding TimeTotal.Hours}" Padding="2,4,4,4"/>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </HierarchicalDataTemplate>
-
-                                                </HierarchicalDataTemplate.ItemTemplate>
-                                            </HierarchicalDataTemplate>
-
-                                        </HierarchicalDataTemplate.ItemTemplate>
-                                    </HierarchicalDataTemplate>
-
-                                </TreeView.ItemTemplate>
-                            </TreeView>
-
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
+                    </ScrollViewer>
+                </Grid>
             </Grid>
-        </Grid>
-        <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
-            <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
-        </Grid>
-        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
-            <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
-                <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <Label Content="Close" Cursor="Hand" HorizontalContentAlignment="Center" Foreground="White" FontStyle="Italic" FontSize="16">
-                    <Label.InputBindings>
-                        <MouseBinding Gesture="LeftClick" Command="{Binding CloseLoadingScreen, Mode=Default}"/>
-                    </Label.InputBindings>
-                </Label>
-                <ProgressBar
+            <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
+                <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
+                    <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="Close" Cursor="Hand" HorizontalContentAlignment="Center" Foreground="White" FontStyle="Italic" FontSize="16">
+                        <Label.InputBindings>
+                            <MouseBinding Gesture="LeftClick" Command="{Binding CloseLoadingScreen, Mode=Default}"/>
+                        </Label.InputBindings>
+                    </Label>
+                    <ProgressBar
                     Style="{StaticResource MaterialDesignCircularProgressBar}"
                     Value="0"
                     IsIndeterminate="True" />
-            </StackPanel>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="Grid_Login" Grid.RowSpan="3" Background="#B2FFFFFF" Visibility="{Binding LoginScreen_Visibility}" d:IsHidden="True">
+                <StackPanel x:Name="StackPanel_Login" VerticalAlignment="Center">
+                    <Image x:Name="Img_Login_logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
+                    <TextBlock Text="Welcome to TimeFrame!" TextWrapping="Wrap" FontSize="24" HorizontalAlignment="Center" FontWeight="Normal" Margin="0,25,0,0" Foreground="{DynamicResource MaterialDesignBody}"/>
+                    <Button x:Name="Button_Login" 
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Margin="0,50,0,0" HorizontalAlignment="Center" Command="{Binding LogIn, Mode=OneWay}">
+                        LOG IN
+                    </Button>
+                    <TextBlock Text="{Binding LoginScreen_message}" TextWrapping="Wrap" FontWeight="Normal" Foreground="{DynamicResource ValidationErrorBrush}" HorizontalAlignment="Center" Margin="0,10,0,0"/>
+                </StackPanel>
+            </Grid>
         </Grid>
-
-    </Grid>
+    </materialDesign:DrawerHost>
 </Window>

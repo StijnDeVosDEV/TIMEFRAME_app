@@ -13,6 +13,7 @@ namespace TIMEFRAME_windows.MODELS
         public TimeSpan Duration { get; set; }
         public DateTime Date { get; set; }
         public DateTime CreationDate { get; set; }
+        public string UserID { get; set; }
 
         // Relationships
         public int TaskEntryId { get; set; }
