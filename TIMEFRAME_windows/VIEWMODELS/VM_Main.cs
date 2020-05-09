@@ -2011,6 +2011,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
             db_shownCustomers = allCustomers;
+            config_expander_shownCustomers = allCustomers;
         }
 
         private void ParseProjectData()
