@@ -807,6 +807,10 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Icon_Config_Overview_Expander_Customer_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
+        private void Icon_Config_Overview_Expander_Customer_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Customer_Add.IsOpen = !Dialog_Customer_Add.IsOpen;
+        }
 
         private void Icon_Config_Overview_Expander_Customer_Edit_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -1282,6 +1286,27 @@ namespace TIMEFRAME_windows.VIEWS
             Regex regex = new Regex("[^0-9]+");
             return regex.IsMatch(inputText);
         }
+
         #endregion
+
+        private void Icon_Config_Overview_Expander_Customer_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
+        }
+
+        private void Icon_Config_Overview_Expander_Project_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Project_Add.IsOpen = !Dialog_Project_Add.IsOpen;
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Add_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
+        }
     }
 }
