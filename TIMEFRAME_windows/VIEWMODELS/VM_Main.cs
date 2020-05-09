@@ -64,14 +64,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private TimeSpan _record_Duration;
 
 
-        // CONFIG block
-        // --------------
-        // --------------
-        private ObservableCollection<Customer> _db_shownCustomers;
-        private ObservableCollection<Project> _db_shownProjects;
-        private ObservableCollection<TaskEntry> _db_shownTaskEntries;
-        private ObservableCollection<TimeEntry> _db_shownTimeEntries;
-
         // CONFIG - EXPANDER
         // -----------------
         // -----------------
@@ -94,6 +86,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // ---------------
         private int _config_expander_task_selTaskEntryIndex;
         private TaskEntry _config_expander_task_selTaskEntry;
+
+        // CONFIG block
+        // --------------
+        // --------------
+        private ObservableCollection<Customer> _db_shownCustomers;
+        private ObservableCollection<Project> _db_shownProjects;
+        private ObservableCollection<TaskEntry> _db_shownTaskEntries;
+        private ObservableCollection<TimeEntry> _db_shownTimeEntries;
 
 
         // CUSTOMER CONFIG
@@ -317,6 +317,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
             db_shownProjects = new ObservableCollection<Project>();
             db_shownTaskEntries = new ObservableCollection<TaskEntry>();
             db_shownTimeEntries = new ObservableCollection<TimeEntry>();
+
+            config_expander_shownCustomers = new ObservableCollection<Customer>();
+            config_expander_shownProjects = new ObservableCollection<Project>();
+            config_expander_shownTaskEntries = new ObservableCollection<TaskEntry>();
+
+            config_expander_customer_selCustomerIndex = -1;
+            config_expander_project_selProjectIndex = -1;
+            config_expander_task_selTaskEntryIndex = -1;
 
             config_customer_selindex = -1;
             customer_addedit_Visibility = Visibility.Hidden;
