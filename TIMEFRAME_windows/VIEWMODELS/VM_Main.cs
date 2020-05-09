@@ -33,16 +33,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<TimeEntry> _allTimeEntries;
         private List<TimeEntry> _allTimeEntries_fromDB;
 
+        private string _UInotification;
         private Visibility _LoadingScreen_Visibility;
-        private ISnackbarMessageQueue _myMessageQueue;
-
-
-        // LOGIN elements
-        // --------------
-        private Visibility _LoginScreen_Visibility;
-        private MODELS.User _myUser;
-        private string _LoginScreen_message;
-        private Visibility _LogoutButtonVisibility;
 
 
         // RECORD block
@@ -260,14 +252,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private VIEWMODELS.Base.GEN_RelayCommand _ApplyBaseTheme;
 
-        private VIEWMODELS.Base.GEN_RelayCommand _LogIn;
-        private VIEWMODELS.Base.GEN_RelayCommand _LogOut;
-
-        private VIEWMODELS.Base.GEN_RelayCommand _ShowMessage;
-
         // Services
         private IBackendService myBackendService;
-        private IAuthenticationService myAuthenticator;
+
 
         //  -----------------------------
         //  Actual Class variables
@@ -280,21 +267,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public VM_Main()
         {
             // Initialization
-            LoadingScreen_Visibility = Visibility.Hidden;
-
-            myMessageQueue = new SnackbarMessageQueue();
+            UInotification = "";
+            LoadingScreen_Visibility = Visibility.Visible;
 
             // Inject Services
             //InitializeServiceInjections(new BackendService());
             myBackendService = new BackendService();
-            myAuthenticator = new AuthenticationService();
-
-
-            // Initialize Properties
-            LoginScreen_Visibility = Visibility.Visible;
-            LogoutButtonVisibility = Visibility.Hidden;
-            myUser = new MODELS.User();
-            LoginScreen_message = "";
 
             allCustomers = new ObservableCollection<Customer>();
             allCustomers_fromDB = new List<Customer>();
@@ -387,7 +365,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
             // Initializations
-            //LoadDatabaseData();   // --> DO THIS ONLY AFTER LOGGING IN SUCCESSFULLY!
+            LoadDatabaseData();
 
             // Load commands
             LoadCommands();
@@ -402,33 +380,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // ----------------------------
         // Public variable declarations
         // ----------------------------
-        #region LOGIN
-        public User myUser
-        {
-            get { return _myUser; }
-            set { if (value != _myUser) { _myUser = value; RaisePropertyChangedEvent("myUser"); } }
-        }
-
-        public Visibility LoginScreen_Visibility
-        {
-            get { return _LoginScreen_Visibility; }
-            set { if (value != _LoginScreen_Visibility) { _LoginScreen_Visibility = value; RaisePropertyChangedEvent("LoginScreen_Visibility");
-                    LogoutButtonVisibility = LoginScreen_Visibility != Visibility.Visible ? Visibility.Visible : Visibility.Hidden;
-                } }
-        }
-
-        public string LoginScreen_message
-        {
-            get { return _LoginScreen_message; }
-            set { if (value != _LoginScreen_message) { _LoginScreen_message = value; RaisePropertyChangedEvent("LoginScreen_message"); } }
-        }
-        public Visibility LogoutButtonVisibility
-        {
-            get { return _LogoutButtonVisibility; }
-            set { if (value != _LogoutButtonVisibility) { _LogoutButtonVisibility = value; RaisePropertyChangedEvent("LogoutButtonVisibility"); } }
-        }
-        #endregion
-
         #region GENERAL
         public ObservableCollection<Customer> allCustomers
         {
@@ -486,16 +437,16 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 } }
         }
 
+        public string UInotification
+        {
+            get { return _UInotification; }
+            set { if (value != _UInotification) { _UInotification = value; RaisePropertyChangedEvent("UInotification"); } }
+        }
+
         public Visibility LoadingScreen_Visibility
         {
             get { return _LoadingScreen_Visibility; }
             set { if (value != _LoadingScreen_Visibility) { _LoadingScreen_Visibility = value; RaisePropertyChangedEvent("LoadingScreen_Visibility"); } }
-        }
-
-        public ISnackbarMessageQueue myMessageQueue
-        {
-            get { return _myMessageQueue; }
-            set { if (value != _myMessageQueue) { _myMessageQueue = value; RaisePropertyChangedEvent("myMessageQueue"); } }
         }
         #endregion
 
@@ -1945,11 +1896,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
         public ICommand ApplyBaseTheme { get { return _ApplyBaseTheme; } }
-
-        public ICommand LogIn { get { return _LogIn; } }
-        public ICommand LogOut { get { return _LogOut; } }
-
-        public ICommand ShowMessage { get { return _ShowMessage; } }
         #endregion
 
 
@@ -1961,10 +1907,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             LoadingScreen_Visibility = Visibility.Visible;
 
             // Get all data from database
-            allCustomers_fromDB = await myBackendService.GetCustomers(myUser);
-            allProjects_fromDB = await myBackendService.GetProjects(myUser);
-            allTaskEntries_fromDB = await myBackendService.GetTaskEntries(myUser);
-            allTimeEntries_fromDB = await myBackendService.GetTimeEntries(myUser);
+            allCustomers_fromDB = await myBackendService.GetCustomers();
+            allProjects_fromDB = await myBackendService.GetProjects();
+            allTaskEntries_fromDB = await myBackendService.GetTaskEntries();
+            allTimeEntries_fromDB = await myBackendService.GetTimeEntries();
 
             FullyPopulateObservableCollections();
 
@@ -2192,7 +2138,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private void ShowUINotification(string message)
         {
-            
+            UInotification = message;
         }
 
         private void Update_EditSelectionData(dataCategory targetEditView)
@@ -2548,25 +2494,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _CloseLoadingScreen = new Base.GEN_RelayCommand(param => this.Perform_CloseLoadingScreen());
 
             _ApplyBaseTheme = new Base.GEN_RelayCommand(param => this.Perform_ApplyBaseTheme((bool)param));
-
-            _LogIn = new Base.GEN_RelayCommand(param => this.Perform_LogIn());
-            _LogOut = new Base.GEN_RelayCommand(param => this.Perform_LogOut());
-
-            _ShowMessage = new Base.GEN_RelayCommand(param => this.Perform_ShowMessage());
         }
 
-        private void Perform_ShowMessage()
-        {
-            myMessageQueue.Enqueue("Hello world?");
-            Logger.Write("Tried to enqueue message  in myMessageQueue...");
-        }
 
         private void Perform_ApplyBaseTheme(bool isDark)
         {
             ModifyTheme(theme => theme.SetBaseTheme(isDark ? Theme.Dark : Theme.Light));
         }
 
-        private void ModifyTheme(Action<ITheme> modificationAction)
+        private static void ModifyTheme(Action<ITheme> modificationAction)
         {
             PaletteHelper paletteHelper = new PaletteHelper();
             ITheme theme = paletteHelper.GetTheme();
@@ -2577,39 +2513,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
         }
 
 
-        private async void Perform_LogIn()
-        {
-            bool logoutSuccess = await myAuthenticator.Login();
-
-            if (logoutSuccess)
-            {
-                LoginScreen_message = "";
-                LoginScreen_Visibility = Visibility.Hidden;
-                myUser = myAuthenticator.User;
-                LoadDatabaseData();
-            }
-            else
-            {
-                LoginScreen_message = "Login process failed.";
-            }
-        }
-
-        private async void Perform_LogOut()
-        {
-            bool logoutSuccess = await myAuthenticator.Logout();
-
-            if (logoutSuccess)
-            {
-                LoginScreen_Visibility = Visibility.Visible;
-                myUser = new User();
-            }
-            else
-            {
-                LoginScreen_Visibility = Visibility.Hidden;
-            }
-        }
-
-
         private async void Perform_AddRecordedTimeEntry()
         {
             try
@@ -2617,7 +2520,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Time Entry
                 TimeEntry newTimeEntry = new TimeEntry()
                 {
-                    UserID = myUser.UserID,
                     CreationDate = DateTime.Now,
                     Duration = record_Duration,
                     Start = record_StartTime,
@@ -2627,22 +2529,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 };
 
                 // Update in database
-                //await myBackendService.AddTimeEntry(newTimeEntry);
-                bool success = await myBackendService.AddTimeEntry(newTimeEntry);
-
-                if (!success)
-                {
-                    myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
-                    return;
-                }
-                else
-                {
-                    myMessageQueue.Enqueue("Added new Time Entry!");
-                }
+                await myBackendService.AddTimeEntry(newTimeEntry);
 
                 // Update in current app session
-                newTimeEntry.Id = myBackendService.TimeEntry_maxIndex;
-                //newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
+                newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTimeEntries.Add(newTimeEntry);
 
                 // Update UI
@@ -2653,11 +2543,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start adding new Time Entry: " + Environment.NewLine +
                     e.ToString());
-
-                myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
             }
         }
-
         private void Perform_RecordReset()
         {
             Reset("RECORD_TIMEENTRY");
@@ -2671,7 +2558,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Customer
                 Customer newCustomer = new Customer()
                 {
-                    UserID = myUser.UserID,
                     Name = customer_addedit_Name,
                     Surname = customer_addedit_Surname,
                     Email = customer_addedit_Email,
@@ -2683,8 +2569,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.AddCustomer(newCustomer);
 
                 // Update in current app session
-                //newCustomer.Id = allCustomers.Count > 0 ? allCustomers.Select(x => x.Id).Max() + 1 : 1;
-                newCustomer.Id = myBackendService.Customer_maxIndex + 1;
+                newCustomer.Id = allCustomers.Select(x => x.Id).Max() + 1;
                 allCustomers.Add(newCustomer);
 
                 // Update UI
@@ -2708,7 +2593,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Get modified Customer
                 Customer modCustomer = new Customer()
                 {
-                    UserID = myUser.UserID,
                     Id = config_customer_selCustomer.Id,
                     Name = customer_edit_Name,
                     Surname = customer_edit_Surname,
@@ -2766,7 +2650,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Project
                 Project newProject = new Project()
                 {
-                    UserID = myUser.UserID,
                     CustomerId = project_addedit_selCust.Id,
                     //Customer = project_addedit_selCust,
                     Name = project_addedit_Name,
@@ -2775,20 +2658,19 @@ namespace TIMEFRAME_windows.VIEWMODELS
                     Status = "Active"
                 };
 
-                //Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine +
-                //    "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine +
-                //    //"Customer      = " + newProject.Customer.Name + Environment.NewLine +
-                //    "Name          = " + newProject.Name + Environment.NewLine +
-                //    "Description   = " + newProject.Description + Environment.NewLine +
-                //    "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine +
-                //    "Status        = " + newProject.Status);
+                Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine +
+                    "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine +
+                    //"Customer      = " + newProject.Customer.Name + Environment.NewLine +
+                    "Name          = " + newProject.Name + Environment.NewLine +
+                    "Description   = " + newProject.Description + Environment.NewLine +
+                    "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine +
+                    "Status        = " + newProject.Status);
 
                 // Update in database
                 await myBackendService.AddProject(newProject);
 
                 // Update in current app session
-                newProject.Id = myBackendService.Project_maxIndex + 1;
-                //newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
+                newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
                 allProjects.Add(newProject);
 
                 // Update UI
@@ -2866,7 +2748,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Task Entry
                 TaskEntry newTaskEntry = new TaskEntry()
                 {
-                    UserID = myUser.UserID,
                     ProjectId = taskentry_addedit_selProj.Id,
                     Name = taskentry_addedit_Name,
                     Description = taskentry_addedit_Description,
@@ -2878,8 +2759,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.AddTaskEntry(newTaskEntry);
 
                 // Update in current app session
-                newTaskEntry.Id = myBackendService.TaskEntry_maxIndex + 1; ;
-                //newTaskEntry.Id = allTaskEntries.Count > 0 ? allTaskEntries.Select(x => x.Id).Max() + 1 : 1;
+                newTaskEntry.Id = allTaskEntries.Count > 0 ? allTaskEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTaskEntries.Add(newTaskEntry);
 
                 // Update UI
@@ -2959,7 +2839,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Time Entry
                 TimeEntry newTimeEntry = new TimeEntry()
                 {
-                    UserID = myUser.UserID,
                     CreationDate = DateTime.Now,
                     Duration = timeentry_addedit_Duration,
                     Start = timeentry_addedit_DateTimeStart,
@@ -2969,21 +2848,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 };
 
                 // Update in database
-                bool success = await myBackendService.AddTimeEntry(newTimeEntry);
-
-                if (!success)
-                {
-                    myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
-                    return;
-                }
-                else
-                {
-                    myMessageQueue.Enqueue("Added new Time Entry!");
-                }
+                await myBackendService.AddTimeEntry(newTimeEntry);
 
                 // Update in current app session
-                newTimeEntry.Id = myBackendService.TimeEntry_maxIndex;
-                //newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
+                newTimeEntry.Id = allTimeEntries.Count > 0 ? allTimeEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTimeEntries.Add(newTimeEntry);
 
                 // Update UI
@@ -3001,8 +2869,6 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start adding new Time Entry: " + Environment.NewLine +
                     e.ToString());
-
-                myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
             }
         }
 

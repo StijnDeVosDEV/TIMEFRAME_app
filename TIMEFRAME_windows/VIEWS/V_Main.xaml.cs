@@ -84,7 +84,7 @@ namespace TIMEFRAME_windows.VIEWS
                 Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
 
                 OrigHeight = V_Main1.Height;
-                V_Main1.Height = Grid_Core.Height + 65;
+                V_Main1.Height = Grid_Core.Height + 35;
             }
             else
             {
@@ -1269,81 +1269,5 @@ namespace TIMEFRAME_windows.VIEWS
             return regex.IsMatch(inputText);
         }
         #endregion
-
-
-        // RECORD COMPONENT
-        private void Img_Play_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            TimePicker_StartTime.SelectedTime = DateTime.Now;
-        }
-
-        private void Img_Stopo_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            TimePicker_StopTime.SelectedTime = DateTime.Now;
-        }
-
-        private void SetEnablement_SaveButton()
-        {
-            if (Icon_Save != null)
-            {
-                if (Combo_Customer.SelectedIndex > -1 &&
-                Combo_Project.SelectedIndex > -1 &&
-                Combo_Task.SelectedIndex > -1 &&
-                ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
-                {
-                    Icon_Save.IsEnabled = true;
-                }
-                else
-                {
-                    Icon_Save.IsEnabled = false;
-                }
-            }
-
-            //if (Img_Save != null)
-            //{
-            //    if (Combo_Customer.SelectedIndex > -1 &&
-            //    Combo_Project.SelectedIndex > -1 &&
-            //    Combo_Task.SelectedIndex > -1 &&
-            //    ((TimeSpan)Label_Duration.Content).TotalSeconds > 0)
-            //    {
-            //        Img_Save.IsEnabled = true;
-            //    }
-            //    else
-            //    {
-            //        Img_Save.IsEnabled = false;
-            //    }
-            //}
-        }
-
-        private void Combo_Customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void Combo_Project_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void Combo_Task_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void TimePicker_StartTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void TimePicker_StopTime_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-            SetEnablement_SaveButton();
-        }
-
-        private void TB_UserName_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            //Button_Logout.Visibility = TB_UserName.Text != "" ? Visibility.Visible : Visibility.Hidden;
-            //Button_Logout.Visibility = Button_UserName.Content.ToString() != "" ? Visibility.Visible : Visibility.Hidden;
-        }
     }
 }

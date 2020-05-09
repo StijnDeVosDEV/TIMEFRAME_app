@@ -23,7 +23,7 @@ namespace TIMEFRAME_windows.MODELS.Report
                 }
             }
 
-            AmTaskEntries = project.TaskEntries != null ? project.TaskEntries.Count : 0;
+            AmTaskEntries = project.TaskEntries.Count;
             TimeTotal = HelperService.CalculateTimespanHMS(project);
         }
 

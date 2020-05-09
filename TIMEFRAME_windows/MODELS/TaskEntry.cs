@@ -12,7 +12,6 @@ namespace TIMEFRAME_windows.MODELS
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public string Status { get; set; }
-        public string UserID { get; set; }
 
         // Relationships
         public int ProjectId { get; set; }

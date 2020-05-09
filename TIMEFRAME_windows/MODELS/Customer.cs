@@ -13,7 +13,6 @@ namespace TIMEFRAME_windows.MODELS
         public string Email { get; set; }
         public DateTime CreationDate { get; set; }
         public string Status { get; set; }
-        public string UserID { get; set; }
 
         // Relationships
         public ICollection<Project> Projects { get; set; }

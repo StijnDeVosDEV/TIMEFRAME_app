@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Xps.Serialization;
 using TIMEFRAME_windows.MODELS;
 using TIMEFRAME_windows.SERVICES.Interfaces;
 
@@ -15,10 +13,6 @@ namespace TIMEFRAME_windows.SERVICES
     {
         // FIELDS
         private HttpClient client = new HttpClient();
-        private int _Customer_maxIndex;
-        private int _Project_maxIndex;
-        private int _TaskEntry_maxIndex;
-        private int _TimeEntry_maxIndex;
 
 
         // CONSTRUCTOR
@@ -26,35 +20,9 @@ namespace TIMEFRAME_windows.SERVICES
         {
             // Initialize HTTP client
             InitializeHTTPclient();
-
-            // Initialize Properties
-            Customer_maxIndex = 0;
-            Project_maxIndex = 0;
-            TaskEntry_maxIndex = 0;
-            TimeEntry_maxIndex = 0;
         }
 
         // PROPERTIES
-        public int Customer_maxIndex
-        {
-            get { return _Customer_maxIndex; }
-            set { if (value != _Customer_maxIndex) { _Customer_maxIndex = value; } }
-        }
-        public int Project_maxIndex
-        {
-            get { return _Project_maxIndex; }
-            set { if (value != _Project_maxIndex) { _Project_maxIndex = value; } }
-        }
-        public int TaskEntry_maxIndex
-        {
-            get { return _TaskEntry_maxIndex; }
-            set { if (value != _TaskEntry_maxIndex) { _TaskEntry_maxIndex = value; } }
-        }
-        public int TimeEntry_maxIndex
-        {
-            get { return _TimeEntry_maxIndex; }
-            set { if (value != _TimeEntry_maxIndex) { _TimeEntry_maxIndex = value; } }
-        }
 
 
         // METHODS
@@ -84,7 +52,7 @@ namespace TIMEFRAME_windows.SERVICES
         }
 
         // GET all Customers
-        public async Task<List<Customer>> GetCustomers(MODELS.User myUser)
+        public async Task<List<Customer>> GetCustomers()
         {
             List<Customer> allCustomers = null;
 
@@ -95,16 +63,13 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allCustomers = await response.Content.ReadAsAsync<List<Customer>>();
-
-                    Customer_maxIndex = allCustomers.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
-                    return allCustomers;
                 }
 
-                return allCustomers.Where(x => x.UserID == myUser.UserID).ToList();
+                return allCustomers;
             }
             catch (Exception e)
             {
@@ -172,7 +137,7 @@ namespace TIMEFRAME_windows.SERVICES
         }
         
         // GET all Projects
-        public async Task<List<Project>> GetProjects(MODELS.User myUser)
+        public async Task<List<Project>> GetProjects()
         {
             List<Project> allProjects = null;
 
@@ -183,16 +148,13 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allProjects = await response.Content.ReadAsAsync<List<Project>>();
-
-                    Project_maxIndex = allProjects.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
-                    return allProjects;
                 }
 
-                return allProjects.Where(x => x.UserID == myUser.UserID).ToList();
+                return allProjects;
             }
             catch (Exception e)
             {
@@ -258,7 +220,7 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
 
-        public async Task<List<TaskEntry>> GetTaskEntries(MODELS.User myUser)
+        public async Task<List<TaskEntry>> GetTaskEntries()
         {
             List<TaskEntry> allTaskEntries = null;
 
@@ -269,16 +231,13 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allTaskEntries = await response.Content.ReadAsAsync<List<TaskEntry>>();
-
-                    TaskEntry_maxIndex = allTaskEntries.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
-                    return allTaskEntries;
                 }
 
-                return allTaskEntries.Where(x => x.UserID == myUser.UserID).ToList();
+                return allTaskEntries;
             }
             catch (Exception e)
             {
@@ -318,7 +277,7 @@ namespace TIMEFRAME_windows.SERVICES
         #endregion
 
         #region TIME ENTRIES
-        public async Task<bool> AddTimeEntry(TimeEntry timeEntry)
+        public async Task AddTimeEntry(TimeEntry timeEntry)
         {
             try
             {
@@ -333,50 +292,16 @@ namespace TIMEFRAME_windows.SERVICES
                         "Content        : " + response.Content + Environment.NewLine +
                         "RequestMessage : " + response.RequestMessage + Environment.NewLine +
                         "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Time Entry in database");
-
-                    return false;
-                }
-                else
-                {
-                    TimeEntry_maxIndex += 1;
-
-                    return true;
                 }
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while adding new time entry (BackendService - AddTimeEntry) : " + Environment.NewLine +
                     e.ToString());
-
-                return false;
             }
         }
 
-        public async Task<bool> TimeEntryExists(int index)
-        {
-            bool TimeEntryExists = false;
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + @"api/timeentries/" + index.ToString());
-
-                if (response.IsSuccessStatusCode)
-                {
-                    TimeEntryExists = true;
-                }
-
-                return TimeEntryExists;
-            }
-            catch (Exception e)
-            {
-                Logger.Write("!ERROR occurred while retrieving time entry (BackendService - TimeEntryExists) : " + Environment.NewLine +
-                    e.ToString());
-
-                return TimeEntryExists;
-            }
-        }
-
-        public async Task<List<TimeEntry>> GetTimeEntries(MODELS.User myUser)
+        public async Task<List<TimeEntry>> GetTimeEntries()
         {
             List<TimeEntry> allTimeEntries = null;
 
@@ -387,16 +312,13 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allTimeEntries = await response.Content.ReadAsAsync<List<TimeEntry>>();
-
-                    TimeEntry_maxIndex = allTimeEntries.Max(x => x.Id);
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
-                    return allTimeEntries;
                 }
 
-                return allTimeEntries.Where(x => x.UserID == myUser.UserID).ToList();
+                return allTimeEntries;
             }
             catch (Exception e)
             {
