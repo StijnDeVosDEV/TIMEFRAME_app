@@ -72,6 +72,30 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<TaskEntry> _db_shownTaskEntries;
         private ObservableCollection<TimeEntry> _db_shownTimeEntries;
 
+        // CONFIG - EXPANDER
+        // -----------------
+        // -----------------
+        private ObservableCollection<Customer> _config_expander_shownCustomers;
+        private ObservableCollection<Project> _config_expander_shownProjects;
+        private ObservableCollection<TaskEntry> _config_expander_shownTaskEntries;
+        //private ObservableCollection<TimeEntry> _config_expander_shownTimeEntries;
+
+        // EXPANDER - Customer
+        // -------------------
+        private int _config_expander_customer_selCustomerIndex;
+        private Customer _config_expander_customer_selCustomer;
+
+        // EXPANDER - Project
+        // ------------------
+        private int _config_expander_project_selProjectIndex;
+        private Project _config_expander_project_selProject;
+
+        // EXPANDER - Task
+        // ---------------
+        private int _config_expander_task_selTaskEntryIndex;
+        private TaskEntry _config_expander_task_selTaskEntry;
+
+
         // CUSTOMER CONFIG
         // ---------------
         // Customer: selection
