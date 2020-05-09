@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -74,98 +75,12 @@ namespace TIMEFRAME_windows.VIEWS
             StackPanel_Style.Visibility = Visibility.Hidden;
         }
 
-        private void StackPanel_Config_Customer_MouseEnter(object sender, MouseEventArgs e)
+        #region MENU - MAIN
+        private enum Menu_Main
         {
-            StackPanel_Config_Customer.Background = highlightColor_SecondMenu;
-        }
-
-        private void StackPanel_Config_Customer_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (Config_ActiveState != ConfigBlocks.Customers)
-            {
-                StackPanel_Config_Customer.Background = highlightColor_Transparent;
-            }
-        }
-
-        private void StackPanel_Config_Project_MouseEnter(object sender, MouseEventArgs e)
-        {
-            StackPanel_Config_Project.Background = highlightColor_SecondMenu;
-        }
-
-        private void StackPanel_Config_Project_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (Config_ActiveState != ConfigBlocks.Projects)
-            {
-                StackPanel_Config_Project.Background = highlightColor_Transparent;
-            }
-        }
-
-        private void StackPanel_Config_Task_MouseEnter(object sender, MouseEventArgs e)
-        {
-            StackPanel_Config_Task.Background = highlightColor_SecondMenu;
-        }
-
-        private void StackPanel_Config_Task_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (Config_ActiveState != ConfigBlocks.Tasks)
-            {
-                StackPanel_Config_Task.Background = highlightColor_Transparent;
-            }
-        }
-
-        private void StackPanel_Config_TimeEntry_MouseEnter(object sender, MouseEventArgs e)
-        {
-            StackPanel_Config_TimeEntry.Background = highlightColor_SecondMenu;
-        }
-
-        private void StackPanel_Config_TimeEntry_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (Config_ActiveState != ConfigBlocks.TimeEntries)
-            {
-                StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
-            }
-        }
-
-        private void Img_Expand2_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (Grid_Content.Visibility == Visibility.Visible)
-            {
-                Grid_Content.Visibility = Visibility.Collapsed;
-                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
-
-                OrigHeight = V_Main1.Height;
-                V_Main1.Height = Grid_Core.Height + 65;
-            }
-            else
-            {
-                Grid_Content.Visibility = Visibility.Visible;
-                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
-
-                V_Main1.Height = OrigHeight;
-            }
-
-            //if (Grid_Content.Height > 0)
-            //{
-            //    OrigHeight = Grid_Content.Height;
-            //    Grid_Content.Height = 0;
-                
-            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
-            //}
-            //else
-            //{
-            //    Grid_Content.Height = OrigHeight;
-            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
-            //}
-        }
-
-        private void StackPanel_LogFileButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            StackPanel_LogFileButton.Background = highlightColor_SecondMenu;
-        }
-
-        private void StackPanel_LogFileButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            StackPanel_LogFileButton.Background = highlightColor_Transparent;
+            Configuration,
+            Reports,
+            Settings
         }
 
         private void Img_Configuration_MouseDown(object sender, MouseButtonEventArgs e)
@@ -248,6 +163,200 @@ namespace TIMEFRAME_windows.VIEWS
                 Img_Settings.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Settings_black.PNG"));
             }
         }
+        #endregion
+
+        #region MENU - CONFIG
+        private enum Menu_Config
+        {
+            Overview,
+            Customers,
+            Projects,
+            Tasks,
+            TimeEntries
+        }
+
+        private void StackPanel_Config_OverviewMenu_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ActivateMenu_Configuration(Menu_Config.Overview);
+        }
+        private void StackPanel_Config_OverviewMenu_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_Config_OverviewMenu.SetResourceReference(BackgroundProperty, FontState.Hover);
+        }
+
+        private void StackPanel_Config_OverviewMenu_MouseLeave(object sender, MouseEventArgs e)
+        {
+            StackPanel_Config_OverviewMenu.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_Customer_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_Config_Customer.SetResourceReference(BackgroundProperty, FontState.Hover);
+        }
+
+        private void StackPanel_Config_Customer_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //if (Config_ActiveState != ConfigBlocks.Customers)
+            //{
+            StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            //}
+        }
+
+        private void StackPanel_Config_Project_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_Config_Project.SetResourceReference(BackgroundProperty, FontState.Hover); ;
+        }
+
+        private void StackPanel_Config_Project_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //if (Config_ActiveState != ConfigBlocks.Projects)
+            //{
+            StackPanel_Config_Project.Background = highlightColor_Transparent;
+            //}
+        }
+
+        private void StackPanel_Config_Task_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_Config_Task.SetResourceReference(BackgroundProperty, FontState.Hover);
+        }
+
+        private void StackPanel_Config_Task_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //if (Config_ActiveState != ConfigBlocks.Tasks)
+            //{
+            StackPanel_Config_Task.Background = highlightColor_Transparent;
+            //}
+        }
+
+        private void StackPanel_Config_TimeEntry_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_Config_TimeEntry.SetResourceReference(BackgroundProperty, FontState.Hover);
+        }
+
+        private void StackPanel_Config_TimeEntry_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //if (Config_ActiveState != ConfigBlocks.TimeEntries)
+            //{
+            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+            //}
+        }
+
+        private void StackPanel_Config_Customer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Config_ActiveState = ConfigBlocks.Customers;
+
+            ActivateMenu_Configuration(Menu_Config.Customers);
+            //Grid_ConfigCustomers.Visibility = Visibility.Visible;
+            //Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            //Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            //Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+
+            //StackPanel_Config_Project.Background = highlightColor_Transparent;
+            //StackPanel_Config_Task.Background = highlightColor_Transparent;
+            //StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_Project_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Config_ActiveState = ConfigBlocks.Projects;
+
+            ActivateMenu_Configuration(Menu_Config.Projects);
+            //Grid_ConfigCustomers.Visibility = Visibility.Hidden;
+            //Grid_ConfigProjects.Visibility = Visibility.Visible;
+            //Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            //Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+
+            //StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            //StackPanel_Config_Task.Background = highlightColor_Transparent;
+            //StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_Task_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Config_ActiveState = ConfigBlocks.Tasks;
+
+            ActivateMenu_Configuration(Menu_Config.Tasks);
+            //Grid_ConfigCustomers.Visibility = Visibility.Hidden;
+            //Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            //Grid_ConfigTasks.Visibility = Visibility.Visible;
+            //Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+
+            //StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            //StackPanel_Config_Project.Background = highlightColor_Transparent;
+            //StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_TimeEntry_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Config_ActiveState = ConfigBlocks.TimeEntries;
+
+            ActivateMenu_Configuration(Menu_Config.TimeEntries);
+            //Grid_ConfigCustomers.Visibility = Visibility.Hidden;
+            //Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            //Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            //Grid_ConfigTimeEntries.Visibility = Visibility.Visible;
+
+            //StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            //StackPanel_Config_Project.Background = highlightColor_Transparent;
+            //StackPanel_Config_Task.Background = highlightColor_Transparent;
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+        private void Img_Expand2_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Grid_Content.Visibility == Visibility.Visible)
+            {
+                Grid_Content.Visibility = Visibility.Collapsed;
+                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
+
+                OrigHeight = V_Main1.Height;
+                V_Main1.Height = Grid_Core.Height + 65;
+            }
+            else
+            {
+                Grid_Content.Visibility = Visibility.Visible;
+                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
+
+                V_Main1.Height = OrigHeight;
+            }
+
+            //if (Grid_Content.Height > 0)
+            //{
+            //    OrigHeight = Grid_Content.Height;
+            //    Grid_Content.Height = 0;
+                
+            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
+            //}
+            //else
+            //{
+            //    Grid_Content.Height = OrigHeight;
+            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
+            //}
+        }
+
+        private void StackPanel_LogFileButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_LogFileButton.Background = highlightColor_SecondMenu;
+        }
+
+        private void StackPanel_LogFileButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            StackPanel_LogFileButton.Background = highlightColor_Transparent;
+        }
+
+        
+
+        
 
         private void StackPanel_LogFileButton_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -277,61 +386,7 @@ namespace TIMEFRAME_windows.VIEWS
             StackPanel_TotalsButton.Background = highlightColor_Transparent;
         }
 
-        private void StackPanel_Config_Customer_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Config_ActiveState = ConfigBlocks.Customers;
-
-            Grid_ConfigCustomers.Visibility = Visibility.Visible;
-            Grid_ConfigProjects.Visibility = Visibility.Hidden;
-            Grid_ConfigTasks.Visibility = Visibility.Hidden;
-            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
-
-            StackPanel_Config_Project.Background = highlightColor_Transparent;
-            StackPanel_Config_Task.Background = highlightColor_Transparent;
-            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
-        }
-
-        private void StackPanel_Config_Project_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Config_ActiveState = ConfigBlocks.Projects;
-
-            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
-            Grid_ConfigProjects.Visibility = Visibility.Visible;
-            Grid_ConfigTasks.Visibility = Visibility.Hidden;
-            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
-
-            StackPanel_Config_Customer.Background = highlightColor_Transparent;
-            StackPanel_Config_Task.Background = highlightColor_Transparent;
-            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
-        }
-
-        private void StackPanel_Config_Task_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Config_ActiveState = ConfigBlocks.Tasks;
-
-            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
-            Grid_ConfigProjects.Visibility = Visibility.Hidden;
-            Grid_ConfigTasks.Visibility = Visibility.Visible;
-            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
-
-            StackPanel_Config_Customer.Background = highlightColor_Transparent;
-            StackPanel_Config_Project.Background = highlightColor_Transparent;
-            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
-        }
-
-        private void StackPanel_Config_TimeEntry_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Config_ActiveState = ConfigBlocks.TimeEntries;
-
-            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
-            Grid_ConfigProjects.Visibility = Visibility.Hidden;
-            Grid_ConfigTasks.Visibility = Visibility.Hidden;
-            Grid_ConfigTimeEntries.Visibility = Visibility.Visible;
-
-            StackPanel_Config_Customer.Background = highlightColor_Transparent;
-            StackPanel_Config_Project.Background = highlightColor_Transparent;
-            StackPanel_Config_Task.Background = highlightColor_Transparent;
-        }
+        
 
 
 
@@ -751,6 +806,77 @@ namespace TIMEFRAME_windows.VIEWS
         // -------------------------
         // CUSTOM METHODS
         // -------------------------
+        private void ActivateMenu_Configuration(Menu_Config requestor)
+        {
+            // Deactivate all Configuration panels and set Font styles to Normal
+            Grid_ConfigOverview.Visibility = Visibility.Hidden;
+            Icon_Config_Overview.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Overview.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Overview.FontWeight = FontWeights.Normal;
+
+            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
+            Icon_Config_Customer.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Customer.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Customer.FontWeight = FontWeights.Normal;
+
+            Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            Icon_Config_Project.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Project.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Project.FontWeight = FontWeights.Normal;
+
+            Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            Icon_Config_Task.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Task.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_Task.FontWeight = FontWeights.Normal;
+
+            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+            Icon_Config_TimeEntry.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_TimeEntry.SetResourceReference(ForegroundProperty, FontState.Normal);
+            Label_Config_TimeEntry.FontWeight = FontWeights.Normal;
+
+            // Activate requested Configuration panel
+            switch (requestor)
+            {
+                case Menu_Config.Overview:
+                    Grid_ConfigOverview.Visibility = Visibility.Visible;
+                    Icon_Config_Overview.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Overview.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Overview.FontWeight = FontWeights.Bold;
+                    break;
+
+                case Menu_Config.Customers:
+                    Grid_ConfigCustomers.Visibility = Visibility.Visible;
+                    Icon_Config_Customer.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Customer.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Customer.FontWeight = FontWeights.Bold;
+                    break;
+
+                case Menu_Config.Projects:
+                    Grid_ConfigProjects.Visibility = Visibility.Visible;
+                    Icon_Config_Project.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Project.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Project.FontWeight = FontWeights.Bold;
+                    break;
+
+                case Menu_Config.Tasks:
+                    Grid_ConfigTasks.Visibility = Visibility.Visible;
+                    Icon_Config_Task.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Task.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_Task.FontWeight = FontWeights.Bold;
+                    break;
+
+                case Menu_Config.TimeEntries:
+                    Grid_ConfigTimeEntries.Visibility = Visibility.Visible;
+                    Icon_Config_TimeEntry.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_TimeEntry.SetResourceReference(ForegroundProperty, FontState.Active);
+                    Label_Config_TimeEntry.FontWeight = FontWeights.Bold;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private void Update_CustomerConfig_AddButton()
         {
             if (TB_Customer_AddEdit_Name.Text != "" && TB_Customer_AddEdit_Surname.Text != "" && TB_Customer_AddEdit_Email.Text != "")
