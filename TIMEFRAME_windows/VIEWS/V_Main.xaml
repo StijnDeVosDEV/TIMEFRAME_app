@@ -290,8 +290,8 @@
                                         <materialDesign:PackIcon Kind="User" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
                                         <TextBlock Text="Customers" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
 
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Add_MouseLeave" />
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Edit_MouseLeave">
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Add_MouseLeave" Background="#00000000" />
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Edit_MouseLeave" Background="#00000000">
                                             <materialDesign:PackIcon.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
@@ -301,7 +301,7 @@
                                                 </TransformGroup>
                                             </materialDesign:PackIcon.RenderTransform>
                                         </materialDesign:PackIcon>
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Delete_MouseLeave" >
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Delete_MouseLeave" Background="#00000000" >
                                             <materialDesign:PackIcon.LayoutTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
@@ -338,8 +338,8 @@
                                         <materialDesign:PackIcon Kind="FolderOpenOutline" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
                                         <TextBlock Text="Projects" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
 
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Add_MouseLeave" />
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Edit_MouseLeave">
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Add_MouseLeave" Background="#00000000" />
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Edit_MouseLeave" Background="#00000000">
                                             <materialDesign:PackIcon.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
@@ -349,7 +349,7 @@
                                                 </TransformGroup>
                                             </materialDesign:PackIcon.RenderTransform>
                                         </materialDesign:PackIcon>
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Delete_MouseLeave" >
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Delete_MouseLeave" Background="#00000000" >
                                             <materialDesign:PackIcon.LayoutTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
@@ -386,8 +386,8 @@
                                         <materialDesign:PackIcon Kind="FileCheckOutline" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
                                         <TextBlock Text="Tasks" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
 
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Add_MouseLeave" />
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Edit_MouseLeave">
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Add_MouseLeave" Background="#00000000" />
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Edit_MouseLeave" Background="#00000000">
                                             <materialDesign:PackIcon.RenderTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
@@ -397,7 +397,7 @@
                                                 </TransformGroup>
                                             </materialDesign:PackIcon.RenderTransform>
                                         </materialDesign:PackIcon>
-                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Delete_MouseLeave" >
+                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Delete_MouseLeave" Background="#00000000" >
                                             <materialDesign:PackIcon.LayoutTransform>
                                                 <TransformGroup>
                                                     <ScaleTransform/>
