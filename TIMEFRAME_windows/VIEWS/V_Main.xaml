@@ -256,23 +256,27 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <StackPanel x:Name="StackPanel_ConfigurationMenus" Margin="10,0,10,0">
+                        <StackPanel x:Name="StackPanel_Config_OverviewMenu" Orientation="Horizontal" Cursor="Hand" Margin="0,10,0,0" MouseDown="StackPanel_Config_OverviewMenu_MouseDown" MouseEnter="StackPanel_Config_OverviewMenu_MouseEnter" MouseLeave="StackPanel_Config_OverviewMenu_MouseLeave">
+                            <materialDesign:PackIcon x:Name="Icon_Config_Overview" Kind="FileTree" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="25" Height="25" Foreground="{DynamicResource MaterialDesignBody}" />
+                            <Label x:Name="Label_Config_Overview" Content="Overview" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}"></Label>
+                        </StackPanel>
+                        <Border Background="{DynamicResource MaterialDesignDivider}" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" Height="1" Margin="5,10,5,0"/>
                         <StackPanel x:Name="StackPanel_Config_Customer" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_Customer_MouseEnter" MouseLeave="StackPanel_Config_Customer_MouseLeave" UseLayoutRounding="False" MouseDown="StackPanel_Config_Customer_MouseDown">
-                            <Image x:Name="Img_Config_Customer" Height="25" Source="/IMAGES/Team2_Black.png"/>
-                            <Label x:Name="Label_Config_Customer" Content="Customers" FontWeight="Normal" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon x:Name="Icon_Config_Customer" Kind="UserGroup" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="25" Height="25" />
+                            <Label x:Name="Label_Config_Customer" Content="Customers" FontWeight="Normal" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}"/>
                         </StackPanel>
                         <StackPanel x:Name="StackPanel_Config_Project" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_Project_MouseEnter" MouseLeave="StackPanel_Config_Project_MouseLeave" MouseDown="StackPanel_Config_Project_MouseDown">
-                            <Image x:Name="Img_Config_Project" Width="25" Source="/IMAGES/Folder.png"/>
+                            <materialDesign:PackIcon x:Name="Icon_Config_Project" Kind="FolderOpenOutline" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="25" Height="25" />
                             <Label x:Name="Label_Config_Project" Content="Projects" VerticalContentAlignment="Center"/>
                         </StackPanel>
                         <StackPanel x:Name="StackPanel_Config_Task" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_Task_MouseEnter" MouseLeave="StackPanel_Config_Task_MouseLeave" MouseDown="StackPanel_Config_Task_MouseDown">
-                            <Image x:Name="Img_Config_Task" Width="25" Source="/IMAGES/SelectAll_Black.png"/>
-                            <Label Content="Tasks" VerticalContentAlignment="Center"/>
+                            <materialDesign:PackIcon x:Name="Icon_Config_Task" Kind="FileCheckOutline" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="{DynamicResource MaterialDesignBody}" Width="25" Height="25" />
+                            <Label x:Name="Label_Config_Task" Content="Tasks" VerticalContentAlignment="Center"/>
                         </StackPanel>
                         <StackPanel x:Name="StackPanel_Config_TimeEntry" Orientation="Horizontal" Margin="0,10,0,0" Cursor="Hand" MouseEnter="StackPanel_Config_TimeEntry_MouseEnter" MouseLeave="StackPanel_Config_TimeEntry_MouseLeave" MouseDown="StackPanel_Config_TimeEntry_MouseDown">
-                            <Image x:Name="Img_Config_TimeEntry" Width="25" Source="/IMAGES/TimeFrame__TimeEntry.png"/>
+                            <materialDesign:PackIcon x:Name="Icon_Config_TimeEntry" Kind="Clockwise" Foreground="{DynamicResource MaterialDesignBody}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="25" Height="25" />
                             <Label x:Name="Label_Config_TimeEntry" Content="Time Entries" VerticalContentAlignment="Center"/>
                         </StackPanel>
-                        <Button Command="{Binding ShowMessage, Mode=OneWay}">Show Message</Button>
                     </StackPanel>
                     <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
                     <Grid x:Name="Grid_ConfigOverview" Grid.Column="1">
