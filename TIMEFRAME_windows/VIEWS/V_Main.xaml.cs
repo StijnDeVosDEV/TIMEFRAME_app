@@ -822,6 +822,11 @@ namespace TIMEFRAME_windows.VIEWS
             Icon_Config_Overview_Expander_Customer_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
 
+        private void Icon_Config_Overview_Expander_Customer_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
+        }
+
         private void Icon_Config_Overview_Expander_Customer_Delete_MouseEnter(object sender, MouseEventArgs e)
         {
             Icon_Config_Overview_Expander_Customer_Delete.SetResourceReference(ForegroundProperty, FontState.Active);
@@ -842,6 +847,11 @@ namespace TIMEFRAME_windows.VIEWS
             Icon_Config_Overview_Expander_Project_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
 
+        private void Icon_Config_Overview_Expander_Project_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Project_Add.IsOpen = !Dialog_Project_Add.IsOpen;
+        }
+
         private void Icon_Config_Overview_Expander_Project_Edit_MouseEnter(object sender, MouseEventArgs e)
         {
             Icon_Config_Overview_Expander_Project_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
@@ -850,6 +860,11 @@ namespace TIMEFRAME_windows.VIEWS
         private void Icon_Config_Overview_Expander_Project_Edit_MouseLeave(object sender, MouseEventArgs e)
         {
             Icon_Config_Overview_Expander_Project_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
+        }
+
+        private void Icon_Config_Overview_Expander_Task_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
         }
 
         private void Icon_Config_Overview_Expander_Project_Delete_MouseEnter(object sender, MouseEventArgs e)
@@ -1289,24 +1304,5 @@ namespace TIMEFRAME_windows.VIEWS
 
         #endregion
 
-        private void Icon_Config_Overview_Expander_Customer_Edit_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
-        }
-
-        private void Icon_Config_Overview_Expander_Project_Add_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Dialog_Project_Add.IsOpen = !Dialog_Project_Add.IsOpen;
-        }
-
-        private void Icon_Config_Overview_Expander_Task_Add_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
-        }
-
-        private void Icon_Config_Overview_Expander_Task_Add_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
-        }
     }
 }

@@ -18,37 +18,37 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
         public void InitializeHTTPclient();
 
         #region CRUD - CUSTOMER
-        public Task AddCustomer(Customer customer);
+        public Task<bool> AddCustomer(Customer customer);
 
         public Task<List<Customer>> GetCustomers(MODELS.User myUser);
 
-        public Task EditCustomer(Customer customer);
+        public Task<bool> EditCustomer(Customer customer);
 
-        public Task DeleteCustomer(int customerID);
+        public Task<bool> DeleteCustomer(int customerID);
         #endregion
 
         #region PROJECTS
         // POST Project
-        public Task AddProject(Project project);
+        public Task<bool> AddProject(Project project);
 
         // GET all Projects
         public Task<List<Project>> GetProjects(MODELS.User myUser);
 
-        public Task EditProject(Project project);
+        public Task<bool> EditProject(Project project);
 
-        public Task DeleteProject(int projectID);
+        public Task<bool> DeleteProject(int projectID);
         #endregion
 
         #region TASK ENTRIES
         // POST Task Entry
-        public Task AddTaskEntry(TaskEntry taskEntry);
+        public Task<bool> AddTaskEntry(TaskEntry taskEntry);
 
         // GET all Task Entries
         public Task<List<TaskEntry>> GetTaskEntries(MODELS.User myUser);
 
-        public Task EditTaskEntry(TaskEntry taskEntry);
+        public Task<bool> EditTaskEntry(TaskEntry taskEntry);
 
-        public Task DeleteTaskEntry(int taskEntryID);
+        public Task<bool> DeleteTaskEntry(int taskEntryID);
         #endregion
 
         #region TIME ENTRIES
@@ -60,9 +60,9 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
 
         public Task<List<TimeEntry>> GetTimeEntries(MODELS.User myUser);
 
-        public Task EditTimeEntry(TimeEntry timeEntry);
+        public Task<bool> EditTimeEntry(TimeEntry timeEntry);
 
-        public Task DeleteTimeEntry(int timeEntryID);
+        public Task<bool> DeleteTimeEntry(int timeEntryID);
         #endregion
     }
 }

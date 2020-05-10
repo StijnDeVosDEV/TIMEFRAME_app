@@ -68,18 +68,30 @@ namespace TIMEFRAME_windows.SERVICES
 
         #region CUSTOMERS
         // POST Customer
-        public async Task AddCustomer(Customer customer)
+        public async Task<bool> AddCustomer(Customer customer)
         {
             try
             {
                 Logger.Write("--- ADDING NEW CUSTOMER ---");
                 
                 HttpResponseMessage response = await client.PostAsJsonAsync("api/customers", customer);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Customer_maxIndex += 1;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while adding new customer : " + Environment.NewLine +
                     e.ToString());
+
+                return false;
             }
         }
 
@@ -117,37 +129,45 @@ namespace TIMEFRAME_windows.SERVICES
         }
 
         // PUT Customer
-        public async Task EditCustomer(Customer customer)
+        public async Task<bool> EditCustomer(Customer customer)
         {
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/customers/" + customer.Id.ToString(), customer);
+
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while modifying customer : " + Environment.NewLine +
                     e.ToString());
+
+                return false;
             }
         }
 
         // DELETE Customer
-        public async Task DeleteCustomer(int customerID)
+        public async Task<bool> DeleteCustomer(int customerID)
         {
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/customers/" + customerID.ToString());
+
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while deleting customer : " + Environment.NewLine +
                     e.ToString());
+
+                return false;
             }
         }
         #endregion
 
         #region PROJECTS
         // POST Project
-        public async Task AddProject(Project project)
+        public async Task<bool> AddProject(Project project)
         {
             try
             {
@@ -162,12 +182,21 @@ namespace TIMEFRAME_windows.SERVICES
                         "Content        : " + response.Content + Environment.NewLine +
                         "RequestMessage : " + response.RequestMessage + Environment.NewLine + 
                         "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Project in database");
+
+                    return false;
+                }
+                else
+                {
+                    Project_maxIndex += 1;
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while adding new project (BackendService - AddProject) : " + Environment.NewLine +
                     e.ToString());
+
+                return false;
             }
         }
         
@@ -205,36 +234,40 @@ namespace TIMEFRAME_windows.SERVICES
         }
 
         // PUT Project
-        public async Task EditProject(Project project)
+        public async Task<bool> EditProject(Project project)
         {
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/projects/" + project.Id.ToString(), project);
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while modifying project : " + Environment.NewLine +
                     e.ToString());
+                return false;
             }
         }
 
         // DELETE Project
-        public async Task DeleteProject(int projectID)
+        public async Task<bool> DeleteProject(int projectID)
         {
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/projects/" + projectID.ToString());
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while deleting project : " + Environment.NewLine +
                     e.ToString());
+                return false;
             }
         }
         #endregion
 
         #region TASK ENTRIES
-        public async Task AddTaskEntry(TaskEntry taskEntry)
+        public async Task<bool> AddTaskEntry(TaskEntry taskEntry)
         {
             try
             {
@@ -249,12 +282,20 @@ namespace TIMEFRAME_windows.SERVICES
                         "Content        : " + response.Content + Environment.NewLine +
                         "RequestMessage : " + response.RequestMessage + Environment.NewLine +
                         "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Task Entry in database");
+
+                    return false;
+                }
+                else
+                {
+                    TaskEntry_maxIndex += 1;
+                    return true;
                 }
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while adding new task entry (BackendService - AddTaskEntry) : " + Environment.NewLine +
                     e.ToString());
+                return false;
             }
         }
 
@@ -290,29 +331,33 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
 
-        public async Task EditTaskEntry(TaskEntry taskEntry)
+        public async Task<bool> EditTaskEntry(TaskEntry taskEntry)
         {
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/taskentries/" + taskEntry.Id.ToString(), taskEntry);
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while modifying task entry : " + Environment.NewLine +
                     e.ToString());
+                return false;
             }
         }
 
-        public async Task DeleteTaskEntry(int taskEntryID)
+        public async Task<bool> DeleteTaskEntry(int taskEntryID)
         {
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/taskentries/" + taskEntryID.ToString());
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while deleting task entry : " + Environment.NewLine +
                     e.ToString());
+                return false;
             }
         }
         #endregion
@@ -408,29 +453,33 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
 
-        public async Task EditTimeEntry(TimeEntry timeEntry)
+        public async Task<bool> EditTimeEntry(TimeEntry timeEntry)
         {
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/timeentries/" + timeEntry.Id.ToString(), timeEntry);
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while modifying time entry : " + Environment.NewLine +
                     e.ToString());
+                return false;
             }
         }
 
-        public async Task DeleteTimeEntry(int timeEntryID)
+        public async Task<bool> DeleteTimeEntry(int timeEntryID)
         {
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/timeentries/" + timeEntryID.ToString());
+                return response.IsSuccessStatusCode ? true : false;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while deleting time entry : " + Environment.NewLine +
                     e.ToString());
+                return false;
             }
         }
         #endregion

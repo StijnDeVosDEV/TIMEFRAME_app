@@ -2169,6 +2169,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
             db_shownTaskEntries = PopulateTaskEntriesRelatedProjectObjects(allTaskEntries);
             db_shownTimeEntries = PopulateTimeEntriesRelatedTaskEntryObjects(allTimeEntries);
 
+            config_expander_shownCustomers = allCustomers;
+
             GetTargetCollections_ReportTotals();
         }
 
@@ -2694,11 +2696,21 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 };
 
                 // Update in database
-                await myBackendService.AddCustomer(newCustomer);
+                bool success = await myBackendService.AddCustomer(newCustomer);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while adding the new Customer...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Added new customer: " + customer_addedit_Name);
+                }
 
                 // Update in current app session
                 //newCustomer.Id = allCustomers.Count > 0 ? allCustomers.Select(x => x.Id).Max() + 1 : 1;
-                newCustomer.Id = myBackendService.Customer_maxIndex + 1;
+                newCustomer.Id = myBackendService.Customer_maxIndex;
                 allCustomers.Add(newCustomer);
 
                 // Update UI
@@ -2712,6 +2724,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while adding the new Customer...");
             }
         }
 
@@ -2732,7 +2745,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 };
 
                 // Update in database
-                await myBackendService.EditCustomer(modCustomer);
+                bool success = await myBackendService.EditCustomer(modCustomer);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while modifying customer...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Modified customer");
+                }
 
                 // Update in current app session
                 allCustomers[allCustomers.IndexOf(allCustomers.Single(x => x.Id == modCustomer.Id))] = modCustomer;
@@ -2746,6 +2769,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start editing existing customer: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while modifying customer...");
             }
         }
 
@@ -2754,10 +2778,34 @@ namespace TIMEFRAME_windows.VIEWMODELS
             try
             {
                 // Update in database
-                await myBackendService.DeleteCustomer(config_customer_selCustomer.Id);
+                bool success = await myBackendService.DeleteCustomer(config_customer_selCustomer.Id);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while deleting customer...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Deleted customer: " + config_customer_selCustomer.Name);
+                }
 
                 // Update in current app session
                 allCustomers.Remove(allCustomers.Single(x => x.Id == config_customer_selCustomer.Id));
+                foreach (Project project in allProjects.Where(x => x.CustomerId == config_customer_selCustomer.Id))
+                {
+                    foreach (TaskEntry taskEntry in allTaskEntries.Where(y => y.ProjectId == project.Id))
+                    {
+                        foreach (TimeEntry timeEntry in allTimeEntries.Where(z => z.TaskEntryId == taskEntry.Id))
+                        {
+                            allTimeEntries.Remove(timeEntry);
+                        }
+
+                        allTaskEntries.Remove(taskEntry);
+                    }
+
+                    allProjects.Remove(project);
+                }
                 selCustomerindex = -1;
                 config_customer_selindex = -1;
 
@@ -2768,6 +2816,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start deleting existing customer: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while deleting customer...");
             }
         }
         #endregion
@@ -2798,10 +2847,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 //    "Status        = " + newProject.Status);
 
                 // Update in database
-                await myBackendService.AddProject(newProject);
+                bool success = await myBackendService.AddProject(newProject);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while adding the new project...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Added new project: " + project_addedit_Name);
+                }
 
                 // Update in current app session
-                newProject.Id = myBackendService.Project_maxIndex + 1;
+                newProject.Id = myBackendService.Project_maxIndex;
                 //newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
                 allProjects.Add(newProject);
 
@@ -2816,6 +2875,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start adding new Project: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while adding the new project...");
             }
         }
 
@@ -2831,7 +2891,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 modProject.CustomerId = project_edit_selCust.Id;
 
                 // Update in database
-                await myBackendService.EditProject(modProject);
+                bool success = await myBackendService.EditProject(modProject);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while modifying the project...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Modified project");
+                }
 
                 // Update in current app session
                 allProjects[allProjects.IndexOf(allProjects.Single(x => x.Id == config_project_selProject.Id))] = modProject;
@@ -2847,6 +2917,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start editing existing project: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while modifying the project...");
             }
         }
 
@@ -2855,7 +2926,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
             try
             {
                 // Delete in database
-                await myBackendService.DeleteProject(config_project_selProject.Id);
+                bool success = await myBackendService.DeleteProject(config_project_selProject.Id);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while deleting the project...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Deleted project: " + config_project_selProject.Name);
+                }
 
                 // Delete in current session
                 allProjects.Remove(config_project_selProject);
@@ -2868,6 +2949,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start delete existing project: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while deleting the project...");
             }
         }
         #endregion
@@ -2889,10 +2971,20 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 };
 
                 // Update in database
-                await myBackendService.AddTaskEntry(newTaskEntry);
+                bool success = await myBackendService.AddTaskEntry(newTaskEntry);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while adding the new task...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Added new task: " + taskentry_addedit_Name);
+                }
 
                 // Update in current app session
-                newTaskEntry.Id = myBackendService.TaskEntry_maxIndex + 1; ;
+                newTaskEntry.Id = myBackendService.TaskEntry_maxIndex;
                 //newTaskEntry.Id = allTaskEntries.Count > 0 ? allTaskEntries.Select(x => x.Id).Max() + 1 : 1;
                 allTaskEntries.Add(newTaskEntry);
 
@@ -2908,6 +3000,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start adding new Task Entry: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while adding the new task...");
             }
         }
 
@@ -2925,7 +3018,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 modTaskEntry.Status = taskentry_edit_Status;
 
                 // Update in database
-                await myBackendService.EditTaskEntry(modTaskEntry);
+                bool success = await myBackendService.EditTaskEntry(modTaskEntry);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while modifying the task...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Modified task");
+                }
 
                 // Update in current app session
                 allTaskEntries[allTaskEntries.IndexOf(allTaskEntries.Single(x => x.Id == modTaskEntry.Id))] = modTaskEntry;
@@ -2940,6 +3043,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start editing existing task entry: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while modifying the task...");
             }
         }
 
@@ -2948,7 +3052,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
             try
             {
                 // Delete in database
-                await myBackendService.DeleteTaskEntry(config_taskentry_selTaskEntry.Id);
+                bool success = await myBackendService.DeleteTaskEntry(config_taskentry_selTaskEntry.Id);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while deleting the task...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Deleted task: " + config_taskentry_selTaskEntry.Name);
+                }
 
                 // Delete in current session
                 allTaskEntries.Remove(config_taskentry_selTaskEntry);
@@ -2961,6 +3075,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start delete existing task entry: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while deleting the task...");
             }
         }
         #endregion
@@ -2987,12 +3102,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 if (!success)
                 {
-                    myMessageQueue.Enqueue("Something went wrong while adding the new Time Entry...");
+                    myMessageQueue.Enqueue("Something went wrong while adding the new time entry...");
                     return;
                 }
                 else
                 {
-                    myMessageQueue.Enqueue("Added new Time Entry!");
+                    myMessageQueue.Enqueue("Added new time entry!");
                 }
 
                 // Update in current app session
@@ -3034,7 +3149,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 modTimeEntry.Duration = timeentry_edit_Duration;
 
                 // Update in database
-                await myBackendService.EditTimeEntry(modTimeEntry);
+                bool success = await myBackendService.EditTimeEntry(modTimeEntry);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while modifying the time entry...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Modified time entry");
+                }
 
                 // Update in current app session
                 allTimeEntries[allTimeEntries.IndexOf(allTimeEntries.Single(x => x.Id == modTimeEntry.Id))] = modTimeEntry;
@@ -3049,6 +3174,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start editing existing time entry: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while modifying the time entry...");
             }
         }
 
@@ -3057,7 +3183,17 @@ namespace TIMEFRAME_windows.VIEWMODELS
             try
             {
                 // Delete in database
-                await myBackendService.DeleteTimeEntry(config_timeentry_selTimeEntry.Id);
+                bool success = await myBackendService.DeleteTimeEntry(config_timeentry_selTimeEntry.Id);
+
+                if (!success)
+                {
+                    myMessageQueue.Enqueue("Something went wrong while deleting the time entry...");
+                    return;
+                }
+                else
+                {
+                    myMessageQueue.Enqueue("Deleted time entry");
+                }
 
                 // Delete in current session
                 allTimeEntries.Remove(config_timeentry_selTimeEntry);
@@ -3070,6 +3206,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             {
                 Logger.Write("!ERROR occurred while trying to start delete existing time entry: " + Environment.NewLine +
                     e.ToString());
+                myMessageQueue.Enqueue("Something went wrong while deleting the time entry...");
             }
         }
         #endregion
