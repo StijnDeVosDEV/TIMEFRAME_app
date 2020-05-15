@@ -646,7 +646,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public Customer config_expander_customer_selCustomer
         {
             get { return _config_expander_customer_selCustomer; }
-            set { if (value != _config_expander_customer_selCustomer) { _config_expander_customer_selCustomer = value; RaisePropertyChangedEvent("config_expander_customer_selCustomer"); } }
+            set { if (value != _config_expander_customer_selCustomer) { _config_expander_customer_selCustomer = value; RaisePropertyChangedEvent("config_expander_customer_selCustomer");
+                    SetDetails_Customer_Edit(config_expander_customer_selCustomer);
+                } }
         }
 
         // EXPANDER - Project
@@ -679,7 +681,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public Project config_expander_project_selProject
         {
             get { return _config_expander_project_selProject; }
-            set { if (value != _config_expander_project_selProject) { _config_expander_project_selProject = value; RaisePropertyChangedEvent("config_expander_project_selProject"); } }
+            set { if (value != _config_expander_project_selProject) { _config_expander_project_selProject = value; RaisePropertyChangedEvent("config_expander_project_selProject");
+                    SetDetails_Project_Edit(config_expander_project_selProject);
+                } }
         }
 
         // EXPANDER - Task
@@ -705,7 +709,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public TaskEntry config_expander_task_selTaskEntry
         {
             get { return _config_expander_task_selTaskEntry; }
-            set { if (value != _config_expander_task_selTaskEntry) { _config_expander_task_selTaskEntry = value; RaisePropertyChangedEvent("config_expander_task_selTaskEntry"); } }
+            set { if (value != _config_expander_task_selTaskEntry) { _config_expander_task_selTaskEntry = value; RaisePropertyChangedEvent("config_expander_task_selTaskEntry");
+                    SetDetails_Task_Edit(config_expander_task_selTaskEntry);
+                } }
         }
         #endregion
 
@@ -2535,7 +2541,30 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
         }
 
-        
+        // Methods for applying object details for Edit operations
+        private void SetDetails_Customer_Edit(Customer selCustomer)
+        {
+            customer_edit_Name = selCustomer.Name;
+            customer_edit_Surname = selCustomer.Surname;
+            customer_edit_Email = selCustomer.Email;
+        }
+
+        private void SetDetails_Project_Edit(Project selProject)
+        {
+            project_edit_Name = selProject.Name;
+            project_edit_Description = selProject.Description;
+            project_edit_selCustindex = allCustomers.IndexOf(selProject.Customer);
+        }
+
+        private void SetDetails_Task_Edit(TaskEntry selTaskEntry)
+        {
+            taskentry_edit_Name = selTaskEntry.Name;
+            taskentry_edit_Description = selTaskEntry.Description;
+            taskentry_edit_Status = selTaskEntry.Status;
+            taskentry_edit_selCustindex = allCustomers.IndexOf(selTaskEntry.Project.Customer);
+            taskentry_edit_selProjindex = config_expander_shownProjects.IndexOf(selTaskEntry.Project);
+        }
+
         //  ----------------------
         // COMMAND RELATED METHODS
         //  ----------------------
