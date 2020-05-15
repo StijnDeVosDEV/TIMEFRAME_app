@@ -822,10 +822,13 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Icon_Config_Overview_Expander_Customer_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
-        private void Icon_Config_Overview_Expander_Customer_Add_MouseDown(object sender, MouseButtonEventArgs e)
+
+        private void Button_Config_Overview_Expander_Customer_Add_Click(object sender, RoutedEventArgs e)
         {
             Dialog_Customer_Add.IsOpen = !Dialog_Customer_Add.IsOpen;
         }
+
+
 
         private void Icon_Config_Overview_Expander_Customer_Edit_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -837,10 +840,12 @@ namespace TIMEFRAME_windows.VIEWS
             Icon_Config_Overview_Expander_Customer_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
 
-        private void Icon_Config_Overview_Expander_Customer_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Button_Config_Overview_Expander_Customer_Edit_Click(object sender, RoutedEventArgs e)
         {
             Dialog_Customer_Edit.IsOpen = !Dialog_Customer_Edit.IsOpen;
         }
+
+
 
         private void Icon_Config_Overview_Expander_Customer_Delete_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -852,6 +857,8 @@ namespace TIMEFRAME_windows.VIEWS
             Icon_Config_Overview_Expander_Customer_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
 
+
+
         private void Icon_Config_Overview_Expander_Project_Add_MouseEnter(object sender, MouseEventArgs e)
         {
             Icon_Config_Overview_Expander_Project_Add.SetResourceReference(ForegroundProperty, FontState.Active);
@@ -862,10 +869,12 @@ namespace TIMEFRAME_windows.VIEWS
             Icon_Config_Overview_Expander_Project_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
 
-        private void Icon_Config_Overview_Expander_Project_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Button_Config_Overview_Expander_Project_Add_Click(object sender, RoutedEventArgs e)
         {
             Dialog_Project_Add.IsOpen = !Dialog_Project_Add.IsOpen;
         }
+
+
 
         private void Icon_Config_Overview_Expander_Project_Edit_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -876,11 +885,12 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Icon_Config_Overview_Expander_Project_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
-
-        private void Icon_Config_Overview_Expander_Task_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Button_Config_Overview_Expander_Project_Edit_Click(object sender, RoutedEventArgs e)
         {
-            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
+            Dialog_Project_Edit.IsOpen = !Dialog_Project_Edit.IsOpen;
         }
+
+
 
         private void Icon_Config_Overview_Expander_Project_Delete_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -892,6 +902,8 @@ namespace TIMEFRAME_windows.VIEWS
             Icon_Config_Overview_Expander_Project_Delete.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
 
+
+
         private void Icon_Config_Overview_Expander_Task_Add_MouseEnter(object sender, MouseEventArgs e)
         {
             Icon_Config_Overview_Expander_Task_Add.SetResourceReference(ForegroundProperty, FontState.Active);
@@ -902,6 +914,13 @@ namespace TIMEFRAME_windows.VIEWS
             Icon_Config_Overview_Expander_Task_Add.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
 
+        private void Button_Config_Overview_Expander_Task_Add_Click(object sender, RoutedEventArgs e)
+        {
+            Dialog_Task_Add.IsOpen = !Dialog_Task_Add.IsOpen;
+        }
+
+
+
         private void Icon_Config_Overview_Expander_Task_Edit_MouseEnter(object sender, MouseEventArgs e)
         {
             Icon_Config_Overview_Expander_Task_Edit.SetResourceReference(ForegroundProperty, FontState.Active);
@@ -911,6 +930,13 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Icon_Config_Overview_Expander_Task_Edit.SetResourceReference(ForegroundProperty, FontState.Normal);
         }
+
+        private void Button_Config_Overview_Expander_Task_Edit_Click(object sender, RoutedEventArgs e)
+        {
+            Dialog_Task_Edit.IsOpen = !Dialog_Task_Edit.IsOpen;
+        }
+
+
 
         private void Icon_Config_Overview_Expander_Task_Delete_MouseEnter(object sender, MouseEventArgs e)
         {
@@ -1319,5 +1345,6 @@ namespace TIMEFRAME_windows.VIEWS
 
         #endregion
 
+        
     }
 }

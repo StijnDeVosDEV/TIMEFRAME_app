@@ -745,27 +745,39 @@
                                                                         <materialDesign:PackIcon Kind="User" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
                                                                         <TextBlock Text="Customers" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
 
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Add_MouseLeave" Background="#00000000" MouseDown="Icon_Config_Overview_Expander_Customer_Add_MouseDown" />
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Edit_MouseLeave" Background="#00000000" MouseDown="Icon_Config_Overview_Expander_Customer_Edit_MouseDown">
-                                                                            <materialDesign:PackIcon.RenderTransform>
-                                                                                <TransformGroup>
-                                                                                    <ScaleTransform/>
-                                                                                    <SkewTransform/>
-                                                                                    <RotateTransform Angle="-90"/>
-                                                                                    <TranslateTransform/>
-                                                                                </TransformGroup>
-                                                                            </materialDesign:PackIcon.RenderTransform>
-                                                                        </materialDesign:PackIcon>
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Delete_MouseLeave" Background="#00000000" >
-                                                                            <materialDesign:PackIcon.LayoutTransform>
-                                                                                <TransformGroup>
-                                                                                    <ScaleTransform/>
-                                                                                    <SkewTransform/>
-                                                                                    <RotateTransform Angle="-90"/>
-                                                                                    <TranslateTransform/>
-                                                                                </TransformGroup>
-                                                                            </materialDesign:PackIcon.LayoutTransform>
-                                                                        </materialDesign:PackIcon>
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Customer_Add" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Add_Click" Margin="0,0,10,0">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Add" Kind="Plus" Margin="0,0,0,0" Cursor="Hand" ToolTip="Add new customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Add_MouseLeave" Background="#00000000" />
+                                                                            </Button.Content>
+                                                                        </Button>
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Customer_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Edit_Click" Margin="0,0,10,0">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0" Cursor="Hand" ToolTip="Edit customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Edit_MouseLeave" Background="#00000000">
+                                                                                    <materialDesign:PackIcon.RenderTransform>
+                                                                                        <TransformGroup>
+                                                                                            <ScaleTransform/>
+                                                                                            <SkewTransform/>
+                                                                                            <RotateTransform Angle="-90"/>
+                                                                                            <TranslateTransform/>
+                                                                                        </TransformGroup>
+                                                                                    </materialDesign:PackIcon.RenderTransform>
+                                                                                </materialDesign:PackIcon>
+                                                                            </Button.Content>
+                                                                        </Button>
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Customer_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Delete_MouseLeave" Background="#00000000" >
+                                                                                    <materialDesign:PackIcon.LayoutTransform>
+                                                                                        <TransformGroup>
+                                                                                            <ScaleTransform/>
+                                                                                            <SkewTransform/>
+                                                                                            <RotateTransform Angle="-90"/>
+                                                                                            <TranslateTransform/>
+                                                                                        </TransformGroup>
+                                                                                    </materialDesign:PackIcon.LayoutTransform>
+                                                                                </materialDesign:PackIcon>
+                                                                            </Button.Content>
+                                                                        </Button>
                                                                     </StackPanel>
                                                                 </Expander.Header>
                                                                 <StackPanel
@@ -793,27 +805,41 @@
                                                                         <materialDesign:PackIcon Kind="FolderOpenOutline" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
                                                                         <TextBlock Text="Projects" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
 
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Add_MouseLeave" Background="#00000000" MouseDown="Icon_Config_Overview_Expander_Project_Add_MouseDown" />
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Edit_MouseLeave" Background="#00000000">
-                                                                            <materialDesign:PackIcon.RenderTransform>
-                                                                                <TransformGroup>
-                                                                                    <ScaleTransform/>
-                                                                                    <SkewTransform/>
-                                                                                    <RotateTransform Angle="-90"/>
-                                                                                    <TranslateTransform/>
-                                                                                </TransformGroup>
-                                                                            </materialDesign:PackIcon.RenderTransform>
-                                                                        </materialDesign:PackIcon>
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Delete_MouseLeave" Background="#00000000" >
-                                                                            <materialDesign:PackIcon.LayoutTransform>
-                                                                                <TransformGroup>
-                                                                                    <ScaleTransform/>
-                                                                                    <SkewTransform/>
-                                                                                    <RotateTransform Angle="-90"/>
-                                                                                    <TranslateTransform/>
-                                                                                </TransformGroup>
-                                                                            </materialDesign:PackIcon.LayoutTransform>
-                                                                        </materialDesign:PackIcon>
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Project_Add" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Project_Add_Click" Margin="0,0,10,0">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Add" Kind="Plus" Margin="0,0,0,0" Cursor="Hand" ToolTip="Add new project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Add_MouseLeave" Background="#00000000" />
+                                                                            </Button.Content>
+                                                                        </Button>
+
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Project_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Project_Edit_Click" Margin="0,0,10,0">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0" Cursor="Hand" ToolTip="Edit project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Edit_MouseLeave" Background="#00000000">
+                                                                                    <materialDesign:PackIcon.RenderTransform>
+                                                                                        <TransformGroup>
+                                                                                            <ScaleTransform/>
+                                                                                            <SkewTransform/>
+                                                                                            <RotateTransform Angle="-90"/>
+                                                                                            <TranslateTransform/>
+                                                                                        </TransformGroup>
+                                                                                    </materialDesign:PackIcon.RenderTransform>
+                                                                                </materialDesign:PackIcon>
+                                                                            </Button.Content>
+                                                                        </Button>
+
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Project_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Add_Click">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Delete_MouseLeave" Background="#00000000" >
+                                                                                    <materialDesign:PackIcon.LayoutTransform>
+                                                                                        <TransformGroup>
+                                                                                            <ScaleTransform/>
+                                                                                            <SkewTransform/>
+                                                                                            <RotateTransform Angle="-90"/>
+                                                                                            <TranslateTransform/>
+                                                                                        </TransformGroup>
+                                                                                    </materialDesign:PackIcon.LayoutTransform>
+                                                                                </materialDesign:PackIcon>
+                                                                            </Button.Content>
+                                                                        </Button>
                                                                     </StackPanel>
                                                                 </Expander.Header>
                                                                 <StackPanel
@@ -841,27 +867,41 @@
                                                                         <materialDesign:PackIcon Kind="FileCheckOutline" Foreground="{DynamicResource PrimaryHueDarkBrush}" Width="24" Height="24" />
                                                                         <TextBlock Text="Tasks" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="5,0,30,0" FontSize="16" VerticalAlignment="Center" Width="80"></TextBlock>
 
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Add" Kind="Plus" Margin="0,0,10,0" Cursor="Hand" ToolTip="Add new task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Add_MouseLeave" Background="#00000000" MouseDown="Icon_Config_Overview_Expander_Task_Add_MouseDown" />
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,10,0" Cursor="Hand" ToolTip="Edit task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Edit_MouseLeave" Background="#00000000">
-                                                                            <materialDesign:PackIcon.RenderTransform>
-                                                                                <TransformGroup>
-                                                                                    <ScaleTransform/>
-                                                                                    <SkewTransform/>
-                                                                                    <RotateTransform Angle="-90"/>
-                                                                                    <TranslateTransform/>
-                                                                                </TransformGroup>
-                                                                            </materialDesign:PackIcon.RenderTransform>
-                                                                        </materialDesign:PackIcon>
-                                                                        <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Delete_MouseLeave" Background="#00000000" >
-                                                                            <materialDesign:PackIcon.LayoutTransform>
-                                                                                <TransformGroup>
-                                                                                    <ScaleTransform/>
-                                                                                    <SkewTransform/>
-                                                                                    <RotateTransform Angle="-90"/>
-                                                                                    <TranslateTransform/>
-                                                                                </TransformGroup>
-                                                                            </materialDesign:PackIcon.LayoutTransform>
-                                                                        </materialDesign:PackIcon>
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Task_Add" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Task_Add_Click" Margin="0,0,10,0">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Add" Kind="Plus" Margin="0,0,0,0" Cursor="Hand" ToolTip="Add new task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Add_MouseLeave" Background="#00000000" />
+                                                                            </Button.Content>
+                                                                        </Button>
+                                                                        
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Task_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Task_Edit_Click" Margin="0,0,10,0">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0" Cursor="Hand" ToolTip="Edit task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Edit_MouseLeave" Background="#00000000">
+                                                                                    <materialDesign:PackIcon.RenderTransform>
+                                                                                        <TransformGroup>
+                                                                                            <ScaleTransform/>
+                                                                                            <SkewTransform/>
+                                                                                            <RotateTransform Angle="-90"/>
+                                                                                            <TranslateTransform/>
+                                                                                        </TransformGroup>
+                                                                                    </materialDesign:PackIcon.RenderTransform>
+                                                                                </materialDesign:PackIcon>
+                                                                            </Button.Content>
+                                                                        </Button>
+                                                                        
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Task_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Add_Click">
+                                                                            <Button.Content>
+                                                                                <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Delete_MouseLeave" Background="#00000000" >
+                                                                                    <materialDesign:PackIcon.LayoutTransform>
+                                                                                        <TransformGroup>
+                                                                                            <ScaleTransform/>
+                                                                                            <SkewTransform/>
+                                                                                            <RotateTransform Angle="-90"/>
+                                                                                            <TranslateTransform/>
+                                                                                        </TransformGroup>
+                                                                                    </materialDesign:PackIcon.LayoutTransform>
+                                                                                </materialDesign:PackIcon>
+                                                                            </Button.Content>
+                                                                        </Button>
                                                                     </StackPanel>
                                                                 </Expander.Header>
                                                                 <StackPanel

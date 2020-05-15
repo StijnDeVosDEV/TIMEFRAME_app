@@ -2814,21 +2814,23 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 }
 
                 // Update in current app session
-                allCustomers.Remove(allCustomers.Single(x => x.Id == config_customer_selCustomer.Id));
-                foreach (Project project in allProjects.Where(x => x.CustomerId == config_customer_selCustomer.Id))
-                {
-                    foreach (TaskEntry taskEntry in allTaskEntries.Where(y => y.ProjectId == project.Id))
-                    {
-                        foreach (TimeEntry timeEntry in allTimeEntries.Where(z => z.TaskEntryId == taskEntry.Id))
-                        {
-                            allTimeEntries.Remove(timeEntry);
-                        }
+                await Perform_ReloadData();
+                //allCustomers.Remove(allCustomers.Single(x => x.Id == config_customer_selCustomer.Id));
+                //foreach (Project project in allProjects.Where(x => x.CustomerId == config_customer_selCustomer.Id))
+                //{
+                //    foreach (TaskEntry taskEntry in allTaskEntries.Where(y => y.ProjectId == project.Id))
+                //    {
+                //        foreach (TimeEntry timeEntry in allTimeEntries.Where(z => z.TaskEntryId == taskEntry.Id))
+                //        {
+                //            allTimeEntries.Remove(timeEntry);
+                //        }
 
-                        allTaskEntries.Remove(taskEntry);
-                    }
+                //        allTaskEntries.Remove(taskEntry);
+                //    }
 
-                    allProjects.Remove(project);
-                }
+                //    allProjects.Remove(project);
+                //}
+
                 selCustomerindex = -1;
                 config_customer_selindex = -1;
 
