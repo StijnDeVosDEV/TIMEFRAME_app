@@ -750,7 +750,7 @@
                                                                                 <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Add" Kind="Plus" Margin="0,0,0,0" Cursor="Hand" ToolTip="Add new customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Add_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Add_MouseLeave" Background="#00000000" />
                                                                             </Button.Content>
                                                                         </Button>
-                                                                        <Button x:Name="Button_Config_Overview_Expander_Customer_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Edit_Click" Margin="0,0,10,0">
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Customer_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Edit_Click" Margin="0,0,10,0" IsEnabled="False">
                                                                             <Button.Content>
                                                                                 <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0" Cursor="Hand" ToolTip="Edit customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Edit_MouseLeave" Background="#00000000">
                                                                                     <materialDesign:PackIcon.RenderTransform>
@@ -764,7 +764,7 @@
                                                                                 </materialDesign:PackIcon>
                                                                             </Button.Content>
                                                                         </Button>
-                                                                        <Button x:Name="Button_Config_Overview_Expander_Customer_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}">
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Customer_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" IsEnabled="False">
                                                                             <Button.Content>
                                                                                 <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Customer_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete customer" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Customer_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Customer_Delete_MouseLeave" Background="#00000000" >
                                                                                     <materialDesign:PackIcon.LayoutTransform>
@@ -784,7 +784,7 @@
                                                     Orientation="Vertical"
                                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                                     Margin="8,24,16,24">
-                                                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Customers" ItemsSource="{Binding config_expander_shownCustomers}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_customer_selCustomerIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None">
+                                                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Customers" ItemsSource="{Binding config_expander_shownCustomers}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_customer_selCustomerIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None" SelectionChanged="DataGrid_Config_Overview_Expander_Customers_SelectionChanged">
                                                                         <DataGrid.Columns>
                                                                             <materialDesign:DataGridTextColumn Binding="{Binding Name}" Width="{Binding ActualWidth, ElementName=DataGrid_Config_Overview_Expander_Customers, Mode=OneWay}"/>
                                                                         </DataGrid.Columns>
@@ -811,7 +811,7 @@
                                                                             </Button.Content>
                                                                         </Button>
 
-                                                                        <Button x:Name="Button_Config_Overview_Expander_Project_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Project_Edit_Click" Margin="0,0,10,0">
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Project_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Project_Edit_Click" Margin="0,0,10,0" IsEnabled="False">
                                                                             <Button.Content>
                                                                                 <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0" Cursor="Hand" ToolTip="Edit project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Edit_MouseLeave" Background="#00000000">
                                                                                     <materialDesign:PackIcon.RenderTransform>
@@ -826,7 +826,7 @@
                                                                             </Button.Content>
                                                                         </Button>
 
-                                                                        <Button x:Name="Button_Config_Overview_Expander_Project_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Add_Click">
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Project_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Add_Click" IsEnabled="False">
                                                                             <Button.Content>
                                                                                 <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Project_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete project" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Project_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Project_Delete_MouseLeave" Background="#00000000" >
                                                                                     <materialDesign:PackIcon.LayoutTransform>
@@ -846,7 +846,7 @@
                                                     Orientation="Vertical"
                                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                                     Margin="8,24,16,24">
-                                                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Projects" ItemsSource="{Binding config_expander_shownProjects}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_project_selProjectIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None">
+                                                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Projects" ItemsSource="{Binding config_expander_shownProjects}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_project_selProjectIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None" SelectionChanged="DataGrid_Config_Overview_Expander_Projects_SelectionChanged">
                                                                         <DataGrid.Columns>
                                                                             <materialDesign:DataGridTextColumn Binding="{Binding Name}"/>
                                                                         </DataGrid.Columns>
@@ -873,7 +873,7 @@
                                                                             </Button.Content>
                                                                         </Button>
                                                                         
-                                                                        <Button x:Name="Button_Config_Overview_Expander_Task_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Task_Edit_Click" Margin="0,0,10,0">
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Task_Edit" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Task_Edit_Click" Margin="0,0,10,0" IsEnabled="False">
                                                                             <Button.Content>
                                                                                 <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Edit" Kind="Pencil" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,0" Cursor="Hand" ToolTip="Edit task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Edit_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Edit_MouseLeave" Background="#00000000">
                                                                                     <materialDesign:PackIcon.RenderTransform>
@@ -888,7 +888,7 @@
                                                                             </Button.Content>
                                                                         </Button>
                                                                         
-                                                                        <Button x:Name="Button_Config_Overview_Expander_Task_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Add_Click">
+                                                                        <Button x:Name="Button_Config_Overview_Expander_Task_Delete" Padding="0,0,0,0" Width="24" Height="24" Background="Transparent" BorderBrush="#00009688" Foreground="{DynamicResource MaterialDesignBody}" Click="Button_Config_Overview_Expander_Customer_Add_Click" IsEnabled="False">
                                                                             <Button.Content>
                                                                                 <materialDesign:PackIcon x:Name="Icon_Config_Overview_Expander_Task_Delete" Kind="DeleteForeverOutline" Cursor="Hand" ToolTip="Delete task" Width="24" Height="24" MouseEnter="Icon_Config_Overview_Expander_Task_Delete_MouseEnter" MouseLeave="Icon_Config_Overview_Expander_Task_Delete_MouseLeave" Background="#00000000" >
                                                                                     <materialDesign:PackIcon.LayoutTransform>
@@ -908,7 +908,7 @@
                                                     Orientation="Vertical"
                                                     TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                                     Margin="8,24,16,24">
-                                                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Tasks" ItemsSource="{Binding config_expander_shownTaskEntries}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_task_selTaskEntryIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None">
+                                                                    <DataGrid x:Name="DataGrid_Config_Overview_Expander_Tasks" ItemsSource="{Binding config_expander_shownTaskEntries}" AutoGenerateColumns="False" SelectedIndex="{Binding config_expander_task_selTaskEntryIndex}" CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" MinWidth="200" HeadersVisibility="None" GridLinesVisibility="None" SelectionChanged="DataGrid_Config_Overview_Expander_Tasks_SelectionChanged">
                                                                         <DataGrid.Columns>
                                                                             <materialDesign:DataGridTextColumn Binding="{Binding Name}"/>
                                                                         </DataGrid.Columns>

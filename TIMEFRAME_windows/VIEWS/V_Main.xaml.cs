@@ -1343,8 +1343,40 @@ namespace TIMEFRAME_windows.VIEWS
             return regex.IsMatch(inputText);
         }
 
+
         #endregion
 
-        
+        private void DataGrid_Config_Overview_Expander_Customers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Button_Config_Overview_Expander_Customer_Edit.IsEnabled = DataGrid_Config_Overview_Expander_Customers.SelectedIndex > -1
+                ? true
+                : false;
+
+            Button_Config_Overview_Expander_Customer_Delete.IsEnabled = DataGrid_Config_Overview_Expander_Customers.SelectedIndex > -1
+                ? true
+                : false;
+        }
+
+        private void DataGrid_Config_Overview_Expander_Projects_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Button_Config_Overview_Expander_Project_Edit.IsEnabled = DataGrid_Config_Overview_Expander_Projects.SelectedIndex > -1
+                ? true
+                : false;
+
+            Button_Config_Overview_Expander_Project_Delete.IsEnabled = DataGrid_Config_Overview_Expander_Projects.SelectedIndex > -1
+                ? true
+                : false;
+        }
+
+        private void DataGrid_Config_Overview_Expander_Tasks_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Button_Config_Overview_Expander_Task_Edit.IsEnabled = DataGrid_Config_Overview_Expander_Tasks.SelectedIndex > -1
+                ? true
+                : false;
+
+            Button_Config_Overview_Expander_Task_Delete.IsEnabled = DataGrid_Config_Overview_Expander_Tasks.SelectedIndex > -1
+                ? true
+                : false;
+        }
     }
 }
