@@ -544,7 +544,11 @@
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <StackPanel x:Name="StackPanel_PrimaryMenu" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Width="22" Height="22" Margin="10,0,0,0">
-                                                    <materialDesign:PackIcon x:Name="Icon_ReloadApp" Kind="Reload" Width="24" Height="24" Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" Cursor="Hand" ToolTip="Reload application" Background="#00000000" />
+                                                    <materialDesign:PackIcon x:Name="Icon_ReloadApp" Kind="Reload" Width="22" Height="22" Foreground="{DynamicResource PrimaryHueLightForegroundBrush}" Cursor="Hand" ToolTip="Reload application" Background="#00000000">
+                                                        <materialDesign:PackIcon.InputBindings>
+                                                            <MouseBinding Gesture="LeftClick" Command="{Binding ReloadData, Mode=Default}"/>
+                                                        </materialDesign:PackIcon.InputBindings>
+                                                    </materialDesign:PackIcon>
                                                 </StackPanel>
                                                 <StackPanel x:Name="StackPanel_MenuBar" FlowDirection="RightToLeft" Orientation="Horizontal" Margin="0,0,20,0" Grid.Column="1">
                                                     <Button x:Name="Button_Logout" 

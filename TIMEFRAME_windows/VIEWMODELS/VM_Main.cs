@@ -265,6 +265,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
         private VIEWMODELS.Base.GEN_RelayCommand _ShowMessage;
 
+        private VIEWMODELS.Base.GEN_RelayCommand _ReloadData;
+
         // Services
         private IBackendService myBackendService;
         private IAuthenticationService myAuthenticator;
@@ -1964,6 +1966,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand LogOut { get { return _LogOut; } }
 
         public ICommand ShowMessage { get { return _ShowMessage; } }
+
+        public ICommand ReloadData { get { return _ReloadData; } }
         #endregion
 
 
@@ -2569,6 +2573,25 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _LogOut = new Base.GEN_RelayCommand(param => this.Perform_LogOut());
 
             _ShowMessage = new Base.GEN_RelayCommand(param => this.Perform_ShowMessage());
+
+            _ReloadData = new Base.GEN_RelayCommand(param => this.Perform_ReloadData());
+        }
+
+        private async Task Perform_ReloadData()
+        {
+            try
+            {
+                await LoadDatabaseData();
+                myMessageQueue.Enqueue("Reloaded TimeFrame data from database!");
+
+                Logger.Write("Reloaded TimeFrame data from database!");
+            }
+            catch (Exception e)
+            {
+                myMessageQueue.Enqueue("Something went wrong with reloading TimeFrame data ...");
+                Logger.Write("!ERROR occurred while reloading TimeFrame data from database : " + Environment.NewLine +
+                    e.ToString());
+            }
         }
 
         private void Perform_ShowMessage()
