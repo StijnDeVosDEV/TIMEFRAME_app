@@ -27,6 +27,9 @@ namespace TIMEFRAME_windows.VIEWS
         private System.Windows.Media.Brush highlightColor_Transparent = new SolidColorBrush(Colors.Transparent);
 
         private static double OrigHeight = 0.0;
+        private static double OrigWidth = 0.0;
+        private static double OrigLeft = 0.0;
+        private static double OrigTop = 0.0;
 
         private static bool IsActive_Configuration = true;
         private static bool IsActive_Reports = false;
@@ -85,6 +88,15 @@ namespace TIMEFRAME_windows.VIEWS
 
                 OrigHeight = V_Main1.Height;
                 V_Main1.Height = Grid_Core.Height + 65;
+
+                OrigWidth = V_Main1.Width;
+                V_Main1.Width = 600;
+
+                OrigLeft = V_Main1.Left;
+                V_Main1.Left = System.Windows.SystemParameters.WorkArea.Right - V_Main1.Width;
+
+                OrigTop = V_Main1.Top;
+                V_Main1.Top = System.Windows.SystemParameters.WorkArea.Bottom - V_Main1.Height;
             }
             else
             {
@@ -92,6 +104,9 @@ namespace TIMEFRAME_windows.VIEWS
                 Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
 
                 V_Main1.Height = OrigHeight;
+                V_Main1.Width = OrigWidth;
+                V_Main1.Left = OrigLeft;
+                V_Main1.Top = OrigTop;
             }
 
             //if (Grid_Content.Height > 0)

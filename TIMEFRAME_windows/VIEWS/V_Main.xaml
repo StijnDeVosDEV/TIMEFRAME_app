@@ -16,7 +16,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="TIMEFRAME" Width="950" Height="650">
+        Title="TIMEFRAME" Width="950" Height="650" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <VIEWMODELS:VM_Main></VIEWMODELS:VM_Main>
     </Window.DataContext>
