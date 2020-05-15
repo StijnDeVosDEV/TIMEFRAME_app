@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -83,6 +84,9 @@ namespace TIMEFRAME_windows.SERVICES
                 }
                 else
                 {
+                    Logger.Write("!ERROR occurred while adding new customer : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+
                     return false;
                 }
             }
@@ -113,6 +117,8 @@ namespace TIMEFRAME_windows.SERVICES
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    Logger.Write("!ERROR occurred while getting all customers : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
                     return allCustomers;
                 }
 
@@ -135,7 +141,16 @@ namespace TIMEFRAME_windows.SERVICES
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/customers/" + customer.Id.ToString(), customer);
 
-                return response.IsSuccessStatusCode ? true : false;
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while modifying customer : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -153,7 +168,16 @@ namespace TIMEFRAME_windows.SERVICES
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/customers/" + customerID.ToString());
 
-                return response.IsSuccessStatusCode ? true : false;
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while deleting customer : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -177,11 +201,14 @@ namespace TIMEFRAME_windows.SERVICES
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString() + Environment.NewLine +
-                        Environment.NewLine +
-                        "Content        : " + response.Content + Environment.NewLine +
-                        "RequestMessage : " + response.RequestMessage + Environment.NewLine + 
-                        "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Project in database");
+                    //System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString() + Environment.NewLine +
+                    //    Environment.NewLine +
+                    //    "Content        : " + response.Content + Environment.NewLine +
+                    //    "RequestMessage : " + response.RequestMessage + Environment.NewLine + 
+                    //    "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Project in database");
+
+                    Logger.Write("!ERROR occurred while adding new project (BackendService - AddProject) : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
 
                     return false;
                 }
@@ -218,6 +245,9 @@ namespace TIMEFRAME_windows.SERVICES
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    Logger.Write("!ERROR occurred while getting all projects : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+
                     return allProjects;
                 }
 
@@ -239,7 +269,17 @@ namespace TIMEFRAME_windows.SERVICES
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/projects/" + project.Id.ToString(), project);
-                return response.IsSuccessStatusCode ? true : false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while modifying project : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -255,7 +295,17 @@ namespace TIMEFRAME_windows.SERVICES
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/projects/" + projectID.ToString());
-                return response.IsSuccessStatusCode ? true : false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while deleting project : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -282,6 +332,9 @@ namespace TIMEFRAME_windows.SERVICES
                         "Content        : " + response.Content + Environment.NewLine +
                         "RequestMessage : " + response.RequestMessage + Environment.NewLine +
                         "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Task Entry in database");
+
+                    Logger.Write("!ERROR occurred while adding new task entry (BackendService - AddTaskEntry) : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
 
                     return false;
                 }
@@ -316,6 +369,9 @@ namespace TIMEFRAME_windows.SERVICES
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    Logger.Write("!ERROR occurred while getting all task entries : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+
                     return allTaskEntries;
                 }
 
@@ -336,7 +392,17 @@ namespace TIMEFRAME_windows.SERVICES
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/taskentries/" + taskEntry.Id.ToString(), taskEntry);
-                return response.IsSuccessStatusCode ? true : false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while modifying task entry : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -351,7 +417,17 @@ namespace TIMEFRAME_windows.SERVICES
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/taskentries/" + taskEntryID.ToString());
-                return response.IsSuccessStatusCode ? true : false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while deleting task entry : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -378,6 +454,9 @@ namespace TIMEFRAME_windows.SERVICES
                         "Content        : " + response.Content + Environment.NewLine +
                         "RequestMessage : " + response.RequestMessage + Environment.NewLine +
                         "ReasonPhrase   : " + response.ReasonPhrase, "Adding new Time Entry in database");
+
+                    Logger.Write("!ERROR occurred while adding new time entry (BackendService - AddTimeEntry) : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
 
                     return false;
                 }
@@ -438,6 +517,9 @@ namespace TIMEFRAME_windows.SERVICES
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                    Logger.Write("!ERROR occurred while getting all time entries : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+
                     return allTimeEntries;
                 }
 
@@ -458,7 +540,17 @@ namespace TIMEFRAME_windows.SERVICES
             try
             {
                 HttpResponseMessage response = await client.PutAsJsonAsync("api/timeentries/" + timeEntry.Id.ToString(), timeEntry);
-                return response.IsSuccessStatusCode ? true : false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while modifying time entry : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
@@ -473,7 +565,17 @@ namespace TIMEFRAME_windows.SERVICES
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync("api/timeentries/" + timeEntryID.ToString());
-                return response.IsSuccessStatusCode ? true : false;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Logger.Write("!ERROR occurred while deleting time entry : " + Environment.NewLine +
+                    response.ReasonPhrase.ToString());
+                    return false;
+                }
             }
             catch (Exception e)
             {
