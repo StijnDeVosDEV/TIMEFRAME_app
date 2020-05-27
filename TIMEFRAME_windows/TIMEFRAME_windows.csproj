@@ -6,6 +6,10 @@
     <UseWPF>true</UseWPF>
     <ApplicationIcon>TimeFrame__Logo.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64</Platforms>
+    <Authors>Stijn De Vos</Authors>
+    <Company>The Dot Father</Company>
+    <Product>TimeFrame</Product>
+    <PackageIcon>TimeFrame__Logo.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -49,6 +53,10 @@
     <None Remove="IMAGES\TimeFrame__Logo.png" />
     <None Remove="IMAGES\TimeFrame__TimeEntry.png" />
     <None Remove="VIEWS\Task2.png" />
+    <None Include="IMAGES\TimeFrame__Logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
